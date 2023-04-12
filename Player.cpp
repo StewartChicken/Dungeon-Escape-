@@ -32,6 +32,8 @@ Player::Player()
     //Player name
     this -> name = "Player";
 
+    this -> combatScore = 0;
+
 }
 
 //Parameterized constructor
@@ -53,6 +55,8 @@ Player::Player(std::string name)
     this -> flamingAxes = 0;
     this -> vorpalSwords = 0;
 
+    this -> numWeapons = 0;
+
     //Number armor suits
     this -> armorSuits = 0; 
 
@@ -68,6 +72,53 @@ Player::Player(std::string name)
 
     //Player keys
     this -> numKeys = 0;
+}
+
+//Calculates the combat score for the team based on the weapons within the inventory
+//Formula : (r1 * w + d) - (r2 * c)/a
+// w is the number of weapons the party possesses + bonus points for upgraded weapons
+//  + (number of mythrilRapiers) + 2*(number of flaming axes) + 3*(number of vorbalSwords)
+// d is 4 if each party member has a different weapon and is 0 if not
+// a is the number of armor suits the party has
+// c is the challenge rating of the monster
+
+//TODO - random numbers for r1, r2. Return combat score
+void Player::calculateCombatScore(int monsterChallengeRating)
+{
+    int w = numWeapons + mythrilRapiers + 2 * flamingAxes + 3 * vorpalSwords;
+
+    //Calculate d
+    int d;
+    if(stoneClubs == 1 && ironSpears == 1 && mythrilRapiers == 1 && flamingAxes == 1 && vorpalSwords == 1)
+    {
+        d = 4;
+    }
+    else
+    {
+        d = 0;
+
+    }
+
+    //number of armor suits
+    int a = armorSuits;
+
+    int c = monsterChallengeRating;
+
+    //int r1 = [RANDOM NUMBER]
+    //int r2 = [RANDOM NUMBER]
+
+}
+
+//Player::cookFood function definition
+//Cooks food in incrememnts of 5 kg since there are 5 team members
+//The input argument is the number of servings that will be cooked
+// total food cooked will be servings * 5
+//Successful cooks will increase fullness by 1 for each team member
+//If the pot breaks, cook fails and the food is lost
+//Returns void
+void Player::cookFood(int servings)
+{
+    //Todo
 }
 
 //Getters
@@ -159,6 +210,11 @@ int Player::getGemGoblets()
 int Player::getNumKeys()
 {
     return numKeys;
+}
+
+int Player::getNumWeapons()
+{
+    return numWeapons;
 }
 
 std::string Player::getName()
@@ -258,6 +314,11 @@ void Player::setNumKeys(int numKeys)
     this -> numKeys = numKeys;
 }
 
+void Player::setNumWeapons(int numWeapons)
+{
+    this -> numWeapons = numWeapons;
+}
+
 void Player::setName(std::string name)
 {
     this -> name = name;
@@ -287,14 +348,3 @@ void Player::decrementKeys()
     this -> numKeys --;
 }
 
-//Player::cookFood function definition
-//Cooks food in incrememnts of 5 kg since there are 5 team members
-//The input argument is the number of servings that will be cooked
-// total food cooked will be servings * 5
-//Successful cooks will increase fullness by 1 for each team member
-//If the pot breaks, cook fails and the food is lost
-//Returns void
-void Player::cookFood(int servings)
-{
-    //Todo
-}

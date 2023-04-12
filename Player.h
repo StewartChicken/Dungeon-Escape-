@@ -24,6 +24,9 @@ class Player
         int flamingAxes; //15 gold - +2 attack - denoted B
         int vorpalSwords; //50 gold - +3 attack - denoted L
 
+        //Number of weapons
+        int numWeapons;
+
         //Purchasing 1 per team member maximizes survival chance. Purchasing
         //more than this value does not increase survival chance. 
         int armorSuits; //5 gold
@@ -40,6 +43,9 @@ class Player
 
         //Playername
         std::string name;
+
+        //Team combat score depending on the weapons carried by team
+        int combatScore;
 
     public:
         //Constructors
@@ -65,6 +71,7 @@ class Player
         void setDiamondCirclets(int);
         void setGemGoblets(int);
         void setNumKeys(int);
+        void setNumWeapons(int);
         void setName(std::string);
   
         //Getters
@@ -86,6 +93,7 @@ class Player
         int getDiamondCirclets();
         int getGemGoblets();
         int getNumKeys();
+        int getNumWeapons();
         std::string getName();
         
         //Incremental Methods
@@ -97,6 +105,10 @@ class Player
 
         //Cooks and eats food in increments of 5kgs
         void cookFood(int);
+
+        //Calculates combat score - chance of winning a fight against
+        // a monster. Takes the current monster challenge rating as an argument. 
+        void calculateCombatScore(int);
 
 };
 
