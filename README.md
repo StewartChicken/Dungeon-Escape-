@@ -1,1 +1,1 @@
-Final project for CSCI 1300 - Dungeon Escape
+Final project for CSCI 1300 - Dungeon Escape.
