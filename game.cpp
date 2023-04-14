@@ -1,4 +1,7 @@
 #include <iostream>
 #include "game.h"
 
-//TODO - implement
+void Game::start()
+{
+    cout << "Hello World\n";
+}

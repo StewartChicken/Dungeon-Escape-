@@ -8,10 +8,10 @@ class Merchant
     private:
 
         //Number of rooms cleared by player - impacts multiplier
-        static int roomsCleared;
+        int roomsCleared;
 
         //Determines the multiplier for the price of goods
-        static float multiplier;
+        float multiplier;
 
         //Default prices for each commodity
         const int ingredientPrice = 1;
