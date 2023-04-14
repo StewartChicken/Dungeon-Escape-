@@ -34,6 +34,18 @@ Player::Player()
 
     this -> combatScore = 0;
 
+    //Sets each team members' hunger to 50
+    for(int i{}; i < 4; i ++)
+    {
+        this -> memberHungerLevels[i] = 50;
+    }
+
+    for(int i{}; i < 4; i ++)
+    {
+        this -> memberNames[i] = "Member";
+        this -> memberNames[i] + std::to_string(i);
+    }
+
 }
 
 //Parameterized constructor

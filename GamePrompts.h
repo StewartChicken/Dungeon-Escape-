@@ -9,8 +9,9 @@ class Prompts
 {
 
     public:
-        //Prompts player to enter their name
+        //Player and team member names prompt
         string playerNamePrompt();
+        string teamMemberNamePrompt();
 };
 
 #endif

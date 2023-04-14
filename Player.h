@@ -47,6 +47,9 @@ class Player
         //Team combat score depending on the weapons carried by team
         int combatScore;
 
+        int memberHungerLevels[4];
+        string memberNames[4];
+
     public:
         //Constructors
         Player();
