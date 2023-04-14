@@ -13,10 +13,16 @@
 #include "Merchant.cpp"
 #include "TeamMember.h"
 #include "TeamMember.cpp"
+#include "GamePrompts.h"
+#include "GamePrompts.cpp"
 
 class Game
 {
     private:
+        Prompts prompts;
+
+        Player player;
+        teamMember members[4];
 
     public:
         void start();

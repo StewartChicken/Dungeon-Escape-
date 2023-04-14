@@ -5,7 +5,6 @@ class Prompts
 {
 
     public:
-        Prompts();
         //Define all prompts below
 };
 
