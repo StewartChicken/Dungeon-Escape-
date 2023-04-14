@@ -1,11 +1,16 @@
 #ifndef GAMEPROMPTS_H
 #define GAMEPROMPTS_H
 
+#include <iostream>
+
+using std::string;
+
 class Prompts
 {
 
     public:
-        //Define all prompts below
+        //Prompts player to enter their name
+        string playerNamePrompt();
 };
 
 #endif

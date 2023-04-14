@@ -3,5 +3,5 @@
 
 void Game::start()
 {
-    cout << "Hello World\n";
+    player.setName(prompts.playerNamePrompt());
 }
