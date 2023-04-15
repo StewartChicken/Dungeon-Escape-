@@ -174,7 +174,26 @@ int Prompts::purchaseCost(int choice, Merchant &merchant){
         cin>>quantity;
     break;
     case 5:
-        cout<<"During your journey, you may encounter pieces of treasure in each room. When you The price of each treasure depends upon the number of rooms cleared when it was found. Once you sell a piece of treasure, I cannot sell it back to you"
+        cout<<"During your journey, you may encounter pieces of treasure in each room. When you The price of each treasure"<<endl<<
+        "depends upon the number of rooms cleared when it was found. Once you sell a piece of treasure, I cannot sell"<<endl<<
+        "it back to you"<<endl<<
+        "1.) Silver ring ["<<merchant.getSilverRingValue()<<" gold]"<<endl<<
+        "2.) Emerald bracelet ["<<merchant.getSilverRingValue()<<" gold]"<<endl<<
+        "3.) Diamond circlet ["<<merchant.getSilverRingValue()<<" gold]"<<endl<<
+        "4.) Gem-encrusted goblet ["<<merchant.getSilverRingValue()<<" gold]"<<endl<<
+        "What do you have for me?"<<endl;
+        cin>>choice
+        switch (expression)
+        {
+        case /* constant-expression */:
+            /* code */
+            break;
+        
+        default:
+            break;
+        }
+
+
     break;
     }
 
