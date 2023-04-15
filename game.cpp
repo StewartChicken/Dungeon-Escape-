@@ -13,6 +13,8 @@ void Game::start()
     }
 }
 void Merchant::merchant(Player &player, Merchant &merchant){
+    do{
     choice = prompts.merchantPrompt(player);
-
+    price = prompts.purchasePrice(choice, merchant);
+    player.setGold(player.getGold() + price);
 }

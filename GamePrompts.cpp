@@ -49,7 +49,12 @@ int Prompts::purchaseCost(int choice, Merchant &merchant){
     string item="";
     int costPerUnit = 0;
     string suffix = "";
+    string prefix ="";
     int quantity = 0;
+    bool selling = false;
+    bool finished = false;
+    char confirm = '';
+    int price = 0;
     switch (choice)
     {
     case 1:
@@ -172,8 +177,11 @@ int Prompts::purchaseCost(int choice, Merchant &merchant){
         "not increase your chances further."<<endl<<
         "How many suits of "<<item<<" can I get you? ["<<costPerUnit<<" gold](Enter a positive integer, or 0 to cancel)"<<endl;
         cin>>quantity;
+        prefix=" suit";
     break;
     case 5:
+        selling = true;
+        do{
         cout<<"During your journey, you may encounter pieces of treasure in each room. When you The price of each treasure"<<endl<<
         "depends upon the number of rooms cleared when it was found. Once you sell a piece of treasure, I cannot sell"<<endl<<
         "it back to you"<<endl<<
@@ -182,19 +190,86 @@ int Prompts::purchaseCost(int choice, Merchant &merchant){
         "3.) Diamond circlet ["<<merchant.getSilverRingValue()<<" gold]"<<endl<<
         "4.) Gem-encrusted goblet ["<<merchant.getSilverRingValue()<<" gold]"<<endl<<
         "What do you have for me?"<<endl;
-        cin>>choice
-        switch (expression)
-        {
-        case /* constant-expression */:
-            /* code */
-            break;
-        
-        default:
+        cin>>choice;
+        }while(choice<0||choice>4);
+        if(choice=0){
             break;
         }
-
-
+        switch (choice)
+        {
+        case 1:
+            item = "silver ring";
+            cout<<"How many "<<item<<"s would you like to sell me?"<<endl;
+            cin>>quantity;
+            costPerUnit = merchant.getSilverRingValue();
+        break;
+        case 2:
+            item = "emerald bracelet";
+            cout<<"How many "<<item<<"s would you like to sell me?"<<endl;
+            cin>>quantity;
+            costPerUnit = merchant.getEmeraldBraceletValue();
+        break;
+        case 3:
+            item = "diamond circlet";
+            cout<<"How many "<<item<<"s would you like to sell me?"<<endl;
+            cin>>quantity;
+            costPerUnit = merchant.getDiamondCircletValue();
+        break;
+        case 4:
+            item = "gem-encrusted goblet";
+            cout<<"How many "<<item<<"s would you like to sell me?"<<endl;
+            cin>>quantity;
+            costPerUnit = merchant.getGemGobletValue();
+        break;
+        }
     break;
+    }
+    if(quantity>0&&!selling){
+        price = costPerUnit*quantity;
+        if(quantity>1&&suffix!="kg"&&item!="Armor"){
+            suffix += "s";
+        }
+        if(item=="Armor"||item=="Ingredients"){
+            if(quantity>1){
+                prefix += "s";
+            }
+            prefix +=" of ";
+        }
+        do{
+        cout<<"You want to buy "<<quantity<<prefix<<item<<suffix<<" for "<<price<<" gold?(y/n)"<<endl;
+        cin>>confirm;
+        }while(confirm!='y'&&confirm!='n');
+        switch(confirm)
+        {
+            case 'y':
+                cout<<"You have good taste my friend."<<endl;
+                return -price;
+            break;
+            case 'n':
+                cout<<"You're smart, only a fool would have made that purchase."<<endl;
+                return 0;
+            break;
+        }
+    }else if(quantity>0&&selling){
+        price = costPerUnit*quantity;
+        cout<<"You wish to sell to me "<<quantity<<" "<<item<<suffix<<"?"<<endl;
+        cin>>confirm;
+        switch(confirm)
+        {
+            case 'y':
+                cout<<"Thank you dearly for your buisness"<<endl;
+                return price;
+            break;
+            case 'n':
+                cout<<"I didnt want your "<<item<<suffix<<" anyway!"<<endl;
+                return 0;
+            break;
+        }
+    }else if(quantity<0){
+        cout<<"please enter a valid quantity next time"<<endl;
+        return 0;
+    }else{
+        return 0;
     }
 
 }
