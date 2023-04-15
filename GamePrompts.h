@@ -2,6 +2,8 @@
 #define GAMEPROMPTS_H
 
 #include <iostream>
+#include "Player.h"
+#include "Merchant.h"
 
 using std::string;
 
