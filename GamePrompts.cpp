@@ -167,11 +167,14 @@ int Prompts::purchaseCost(int choice, Merchant &merchant){
     case 4:
         item = "Armor";
         costPerUnit = merchant.getArmorSuitPrice();
-        cout<<"How many suits of "<<item<<" can I get you? ["<<costPerUnit<<" gold](Enter a positive integer, or 0 to cancel)"<<endl;
+        cout<<"Armor protects you from monsters. Equipping your team with the maximum amount of armor (1 armor per person)"<<endl<<
+        "will maximize your chances of survival during an attack. Adding more armor on top of the maximum amount will"<<endl<<
+        "not increase your chances further."<<endl<<
+        "How many suits of "<<item<<" can I get you? ["<<costPerUnit<<" gold](Enter a positive integer, or 0 to cancel)"<<endl;
         cin>>quantity;
     break;
     case 5:
-        
+        cout<<"During your journey, you may encounter pieces of treasure in each room. When you The price of each treasure depends upon the number of rooms cleared when it was found. Once you sell a piece of treasure, I cannot sell it back to you"
     break;
     }
 

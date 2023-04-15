@@ -1,9 +1,8 @@
 #ifndef GAMEPROMPTS_H
 #define GAMEPROMPTS_H
-
-#include <iostream>
 #include "Player.h"
 #include "Merchant.h"
+#include <iostream>
 
 using std::string;
 
@@ -11,9 +10,10 @@ class Prompts
 {
 
     public:
-        //Player and team member names prompt
+        //Prompts player to enter their name
         string playerNamePrompt();
-        string teamMemberNamePrompt();
+        int merchantPrompt(Player &player);
+        int purchaseCost(int choice, Merchant &merchant);
 };
 
 #endif
