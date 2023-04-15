@@ -2,6 +2,7 @@
 #include <map>
 #include "game.h"
 
+//start the game with user prompts for names
 void Game::start()
 {
     //Player name prompt

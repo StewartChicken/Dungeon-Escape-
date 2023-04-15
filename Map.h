@@ -2,6 +2,9 @@
 #define MAP_H
 
 #include <iostream>
+#include <cstdlib>
+#include <vector>
+#include "time.h"
 
 using namespace std;
 
@@ -15,23 +18,29 @@ private:
     const char PARTY = 'X';      // marker for party position
     const char EXIT = 'E';       // marker for dungeon exit
 
-    static const int num_rows_ = 12; // number of rows in map
-    static const int num_cols_ = 12; // number of columns in map
-    static const int max_npcs_ = 5;  // max non-player characters
-    static const int max_rooms_ = 5; // max number of rooms
+    static const int numRows = 12; // number of rows in map
+    static const int numCols = 12; // number of columns in map
+    static const int numNPCs = 5;  // max non-player characters
+    static const int numRooms = 5; // max number of rooms
 
-    int player_position_[2];              // player position (row,col)
-    int dungeon_exit_[2];                 // exit location of the dungeon
-    int npc_positions_[max_npcs_][3];     // stores the (row,col) positions of NPCs present on map and if they have been found
-    int room_positions_[max_rooms_][2];   // stores the (row,col) positions of rooms present on map
-    char map_data_[num_rows_][num_cols_]; // stores the character that will be shown at a given (row,col)
+    //Contains all the position data for the map as well as
+    //the isFound status for each NPC
+    //player row, player col, exit row, exit col, 
+    //(room row, room col) * 5,
+    //(NPC row, NPC col) * 5
+    //(NPC isFound status) * 5
+    vector<int> positionData;
+    
+    char mapData[numRows][numCols]; // stores the character that will be shown at a given (row,col)
 
-    int npc_count_;  // stores number of misfortunes currently on map
-    int room_count_; // stores number of sites currently on map
 public:
+    //Constructor
     Map();
 
+    //Fills map with empty spaces
     void resetMap();
+    //Fill map with the position data
+    void fillInitialMapPositionData();
 
     // getters
     int getPlayerRow();
@@ -61,6 +70,16 @@ public:
     bool removeNPC(int row, int col);
     bool removeRoom(int row, int col);
     void exploreSpace(int row, int col);
+
+    //Fill map with room, NPC, and player position data
+    void fillPositionData();
+
+    //Check for overlap in position data
+    void checkOverlap();
+
+    //Prints position data (for debugging)
+    void printPositionData();
+
 };
 
 #endif
