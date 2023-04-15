@@ -3,6 +3,10 @@
 
 #include <iostream>
 #include <string>
+#include <map>
+
+using std::string;
+using std::map;
 
 class Player
 {
@@ -47,8 +51,8 @@ class Player
         //Team combat score depending on the weapons carried by team
         int combatScore;
 
-        int memberHungerLevels[4];
-        string memberNames[4];
+        //Hashtable which includes all the team members and their hunger levels
+        map<string, int> teamMembers;
 
     public:
         //Constructors
@@ -76,7 +80,10 @@ class Player
         void setNumKeys(int);
         void setNumWeapons(int);
         void setName(std::string);
-  
+
+        //Sets hunger level of specific team member
+        void setMemberHungerLevel(string, int);
+        
         //Getters
         int getFullness();
         int getGold();
@@ -98,6 +105,9 @@ class Player
         int getNumKeys();
         int getNumWeapons();
         std::string getName();
+
+        //Returns hunger level of specific team member
+        int getMemberHungerLevel(string);
         
         //Incremental Methods
         void incrementFullness();
@@ -106,12 +116,20 @@ class Player
         void incrementKeys();
         void decrementKeys();
 
+        void incrementMemberHungerLevel(string);
+        void decrementMemberHungerLevel(string);
+
         //Cooks and eats food in increments of 5kgs
         void cookFood(int);
 
         //Calculates combat score - chance of winning a fight against
         // a monster. Takes the current monster challenge rating as an argument. 
         void calculateCombatScore(int);
+
+        //Adds new team member
+        void addNewMember(string);
+
+        map<string, int> getTeamMembersMap();
 
 };
 

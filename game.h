@@ -19,8 +19,7 @@ class Game
         
     public:
         void start();
-        void merchant();
-
+        
 };
 
 #endif
