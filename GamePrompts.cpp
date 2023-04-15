@@ -1,3 +1,6 @@
+//Todo:
+//  teamMemberNamePrompt needs to account for duplicate names - they should not be allowed
+
 #include <iostream>
 #include <string>
 #include "GamePrompts.h"

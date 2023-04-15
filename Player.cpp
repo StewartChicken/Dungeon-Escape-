@@ -34,18 +34,6 @@ Player::Player()
 
     this -> combatScore = 0;
 
-    //Sets each team members' hunger to 50
-    for(int i{}; i < 4; i ++)
-    {
-        this -> memberHungerLevels[i] = 50;
-    }
-
-    for(int i{}; i < 4; i ++)
-    {
-        this -> memberNames[i] = "Member";
-        this -> memberNames[i] + std::to_string(i);
-    }
-
 }
 
 //Parameterized constructor
@@ -131,6 +119,18 @@ void Player::calculateCombatScore(int monsterChallengeRating)
 void Player::cookFood(int servings)
 {
     //Todo
+}
+
+//Adds new team member
+void Player::addNewMember(std::string name)
+{
+    teamMembers[name] = 50;
+}
+
+//Returns hashmap of team members
+std::map<std::string, int> Player::getTeamMembersMap()
+{
+    return teamMembers;
 }
 
 //Getters
@@ -232,6 +232,11 @@ int Player::getNumWeapons()
 std::string Player::getName()
 {
     return name;
+}
+
+int Player::getMemberHungerLevel(std::string member)
+{
+    return teamMembers[member];
 }
 
 //Setters
@@ -336,6 +341,11 @@ void Player::setName(std::string name)
     this -> name = name;
 }
 
+void Player::setMemberHungerLevel(std::string member, int level)
+{
+    teamMembers[member] = level;
+}
+
 //Incremental methods
 
 //Increments the fullness of the player
@@ -358,5 +368,15 @@ void Player::incrementKeys()
 void Player::decrementKeys()
 {
     this -> numKeys --;
+}
+
+void Player::incrementMemberHungerLevel(std::string member)
+{
+    teamMembers[member] ++;
+}
+
+void Player::decrementMemberHungerLevel(std::string member)
+{
+    teamMembers[member] --;
 }
 

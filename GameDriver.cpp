@@ -5,6 +5,6 @@ int main()
     Game game;
 
     game.start();
-    game.merchant();
     
+    return 0;
 }
