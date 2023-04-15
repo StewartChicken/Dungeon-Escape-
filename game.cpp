@@ -5,16 +5,17 @@ void Game::start()
 {
     //Player name prompt
     player.setName(prompts.playerNamePrompt());
-
-    //Team member name prompt
-    for(int i{}; i < 4; i ++)
-    {
-        members[i].setName(prompts.teamMemberNamePrompt());
-    }
 }
-void Merchant::merchant(Player &player, Merchant &merchant){
+void Game::merchantInteraction(Player &player, Merchant &merchant){
+    int choice = 0;
+    int price = 0;
     do{
     choice = prompts.merchantPrompt(player);
-    price = prompts.purchasePrice(choice, merchant);
-    player.setGold(player.getGold() + price);
+    price = prompts.purchaseCost(choice, merchant);
+    if(player.getGold() < price){
+        cout<<"You're too broke to buy that. Dont come around here with your empty pockets tring to play games. I dont got time for that, ain't nobody got time for that!"<<endl;
+    }else{
+        player.setGold(player.getGold() + price);
+    }
+    }while(player.getGold() < 0);
 }

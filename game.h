@@ -14,12 +14,14 @@ class Game
 {
     private:
         Prompts prompts;
+        Merchant merchant;
 
         Player player;
-        
+
     public:
         void start();
-        
+        void merchantInteraction(Player &player, Merchant &merchant);
+
 };
 
 #endif
