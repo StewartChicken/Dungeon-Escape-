@@ -52,7 +52,8 @@ class Player
         int combatScore;
 
         //Hashtable which includes all the team members and their hunger levels
-        map<string, int> teamMembers;
+        map<string, int> teamMemberHunger;
+        string teamMemberNames[4];
 
     public:
         //Constructors
@@ -105,6 +106,10 @@ class Player
         int getNumKeys();
         int getNumWeapons();
         std::string getName();
+        std::string getMember1Name();
+        std::string getMember2Name();
+        std::string getMember3Name();
+        std::string getMember4Name();
 
         //Returns hunger level of specific team member
         int getMemberHungerLevel(string);
@@ -127,10 +132,7 @@ class Player
         void calculateCombatScore(int);
 
         //Adds new team member
-        void addNewMember(string);
-
-        map<string, int> getTeamMembersMap();
-
+        void addNewMember(string, int);
 };
 
 #endif

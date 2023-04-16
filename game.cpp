@@ -5,7 +5,16 @@ void Game::start()
 {
     //Player name prompt
     player.setName(prompts.playerNamePrompt());
+
+    //Add four team members
+    player.addNewMember(prompts.memberNamePrompt(), 0);
+    player.addNewMember(prompts.memberNamePrompt(), 1);
+    player.addNewMember(prompts.memberNamePrompt(), 2);
+    player.addNewMember(prompts.memberNamePrompt(), 3);
+
+    prompts.teamGreetingPrompt(player.getName(), player.getMember1Name(), player.getMember2Name(), player.getMember3Name(), player.getMember4Name());
 }
+
 void Game::merchantInteraction(Player &player, Merchant &merchant){
     int choice = 0;
     int price = 0;
@@ -17,5 +26,13 @@ void Game::merchantInteraction(Player &player, Merchant &merchant){
     }else{
         player.setGold(player.getGold() + price);
     }
-    }while(player.getGold() < 0);
+    }while(choice >= 0);
+}
+
+Player Game::getPlayer(){
+    return player;
+}
+
+Merchant Game::getMerchant(){
+    return merchant;
 }

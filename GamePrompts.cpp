@@ -9,6 +9,7 @@ using std::cout;
 using std::cin;
 using std::string;
 
+//playerName prompt
 string Prompts::playerNamePrompt()
 {
     string playerName;
@@ -18,6 +19,28 @@ string Prompts::playerNamePrompt()
 
     return playerName;
 }
+
+//memberName prompt
+string Prompts::memberNamePrompt()
+{
+    string memberName;
+    
+    cout << "Please enter a team member name: \n";
+    cin >> memberName;
+
+    return memberName;
+}
+
+void Prompts::teamGreetingPrompt(string playerName, string member1, string member2, string member3, string member4)
+{
+    cout << "Welcome " << playerName << "!\n";
+    cout << "Welcome " << member1 << "!\n";
+    cout << "Welcome " << member2 << "!\n";
+    cout << "Welcome " << member3 << "!\n";
+    cout << "Welcome " << member4 << "!\n";
+}
+
+//Merchant prompt
 int Prompts::merchantPrompt(Player &player){
     int choice = 0;
     do{

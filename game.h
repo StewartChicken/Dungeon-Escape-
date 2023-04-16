@@ -22,6 +22,11 @@ class Game
         void start();
         void merchantInteraction(Player &player, Merchant &merchant);
 
+        //Getters
+
+        Player getPlayer();
+        Merchant getMerchant();
+
 };
 
 #endif

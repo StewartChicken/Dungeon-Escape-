@@ -31,6 +31,10 @@ Player::Player()
 
     //Player name
     this -> name = "Player";
+    this -> teamMemberNames[0] = "";
+    this -> teamMemberNames[1] = "";
+    this -> teamMemberNames[2] = "";
+    this -> teamMemberNames[3] = "";
 
     this -> combatScore = 0;
 
@@ -122,15 +126,11 @@ void Player::cookFood(int servings)
 }
 
 //Adds new team member
-void Player::addNewMember(std::string name)
+void Player::addNewMember(std::string name, int index)
 {
-    teamMembers[name] = 50;
-}
 
-//Returns hashmap of team members
-std::map<std::string, int> Player::getTeamMembersMap()
-{
-    return teamMembers;
+    teamMemberHunger[name] = 50;
+    teamMemberNames[index] = name;
 }
 
 //Getters
@@ -234,9 +234,29 @@ std::string Player::getName()
     return name;
 }
 
+std::string Player::getMember1Name()
+{
+    return teamMemberNames[0];
+}
+
+std::string Player::getMember2Name()
+{
+    return teamMemberNames[1];
+}
+
+std::string Player::getMember3Name()
+{
+    return teamMemberNames[2];
+}
+
+std::string Player::getMember4Name()
+{
+    return teamMemberNames[3];
+}
+
 int Player::getMemberHungerLevel(std::string member)
 {
-    return teamMembers[member];
+    return teamMemberHunger[member];
 }
 
 //Setters
@@ -343,7 +363,7 @@ void Player::setName(std::string name)
 
 void Player::setMemberHungerLevel(std::string member, int level)
 {
-    teamMembers[member] = level;
+    teamMemberHunger[member] = level;
 }
 
 //Incremental methods
@@ -372,11 +392,11 @@ void Player::decrementKeys()
 
 void Player::incrementMemberHungerLevel(std::string member)
 {
-    teamMembers[member] ++;
+    teamMemberHunger[member] ++;
 }
 
 void Player::decrementMemberHungerLevel(std::string member)
 {
-    teamMembers[member] --;
+    teamMemberHunger[member] --;
 }
 
