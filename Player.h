@@ -12,14 +12,14 @@ class Player
 {
     private:
         
-        int fullness; //Can be replenished with cooked meals
-        int gold; 
-        int ingredients; //1 gold per kg
+        //Stores party's names and fullness levels
+        map<string, int> fullnessLevels;
+        string partyNames[5];
 
-        //Cookware
-        int ceramicPots; //2 gold - stews and boils - 25% chance of breaking per use
-        int fryingPans;  //10 gold - fries and sizzles -    10% chance of breaking per use
-        int cauldrons;   //20 gold - stews and boils - 2% chance of breaking per use
+
+        //Combat values
+
+        int numWeapons;
 
         //Weapons (5 max)
         int stoneClubs; //2 gold - denoted C
@@ -28,12 +28,23 @@ class Player
         int flamingAxes; //15 gold - +2 attack - denoted B
         int vorpalSwords; //50 gold - +3 attack - denoted L
 
-        //Number of weapons
-        int numWeapons;
-
         //Purchasing 1 per team member maximizes survival chance. Purchasing
         //more than this value does not increase survival chance. 
         int armorSuits; //5 gold
+
+        //Team combat score depending on the weapons carried by team
+        int combatScore;
+
+
+        //Cookware
+        int ceramicPots; //2 gold - stews and boils - 25% chance of breaking per use
+        int fryingPans;  //10 gold - fries and sizzles -    10% chance of breaking per use
+        int cauldrons;   //20 gold - stews and boils - 2% chance of breaking per use
+
+        //Inventory values
+        int gold; 
+        int ingredients; //1 gold per kg
+        int numKeys;
 
         //Treasures - can be sold to merchant
         int silverRings; //10 gold - denoted E
@@ -42,97 +53,104 @@ class Player
         int diamondCirclets; //40 gold - denoted C
         int gemGoblets; //50 gold denoted - G
 
-        //Number of keys the player has found
-        int numKeys;
+        
 
-        //Playername
-        std::string name;
-
-        //Team combat score depending on the weapons carried by team
-        int combatScore;
-
-        //Hashtable which includes all the team members and their hunger levels
-        map<string, int> teamMemberHunger;
-        string teamMemberNames[4];
+        
 
     public:
-        //Constructors
+        //Constructor
         Player();
-        Player(std::string);
+        
 
-        //Setters
-        void setFullness(int);
+        //Player and team member name/hunger management methods
+
+
+        //Adds new team member at a given index
+        void addNewMember(string, int);
+
+        //Sets the fullness level of a given player or team member to the passed fullness level
+        void setFullnessLevel(string, int);
+
+        //Returns the fullness level of a given player or team member
+        int getFullness(string);
+
+        std::string getPlayerName();
+        std::string getMember1Name();
+        std::string getMember2Name();
+        std::string getMember3Name();
+        std::string getMember4Name();
+        
+        //Increment or decrement the fullness of a given player or team member
+        void incrementFullness(string);
+        void decrementFullness(string);
+        
+        //Cooks and eats food in increments of 5kgs
+        void cookFood(int);
+
+
+        //Inventory methods
+
+        int getGold();
+        int getIngredients();
+        int getNumKeys();
+
+        int getSilverRings();
+        int getRubyNecklaces();
+        int getEmeraldBracelets();
+        int getDiamondCirclets();
+        int getGemGoblets();
+
         void setGold(int);
         void setIngredients(int);
-        void setCeramicPots(int);
-        void setFryingPans(int);
-        void setCauldrons(int);
-        void setStoneClubs(int);
-        void setIronSpears(int);
-        void setMythrilRapiers(int);
-        void setFlamingAxes(int);
-        void setVorpalSwords(int);
-        void setArmorSuits(int);
+        void setNumKeys(int);
+        
         void setSilverRings(int);
         void setRubyNecklaces(int);
         void setEmeraldBracelets(int);
         void setDiamondCirclets(int);
         void setGemGoblets(int);
-        void setNumKeys(int);
-        void setNumWeapons(int);
-        void setName(std::string);
 
-        //Sets hunger level of specific team member
-        void setMemberHungerLevel(string, int);
+        void incrementKeys();
+        void decrementKeys();
+
         
-        //Getters
-        int getFullness();
-        int getGold();
-        int getIngredients();
-        int getCeramicPots();
-        int getFryingPans();
-        int getCauldrons();
+
+        //Combat methods
+
+        int getNumWeapons();
+
         int getStoneClubs();
         int getIronSpears();
         int getMythrilRapiers();
         int getFlamingAxes();
         int getVorpalSwords();
         int getArmorSuits();
-        int getSilverRings();
-        int getRubyNecklaces();
-        int getEmeraldBracelets();
-        int getDiamondCirclets();
-        int getGemGoblets();
-        int getNumKeys();
-        int getNumWeapons();
-        std::string getName();
-        std::string getMember1Name();
-        std::string getMember2Name();
-        std::string getMember3Name();
-        std::string getMember4Name();
 
-        //Returns hunger level of specific team member
-        int getMemberHungerLevel(string);
-        
-        //Incremental Methods
-        void incrementFullness();
-        void decrementFullness();
+        void setNumWeapons(int);
 
-        void incrementKeys();
-        void decrementKeys();
-
-        void incrementMemberHungerLevel(string);
-        void decrementMemberHungerLevel(string);
-
-        //Cooks and eats food in increments of 5kgs
-        void cookFood(int);
+        void setStoneClubs(int);
+        void setIronSpears(int);
+        void setMythrilRapiers(int);
+        void setFlamingAxes(int);
+        void setVorpalSwords(int);
+        void setArmorSuits(int);
 
         //Calculates combat score - chance of winning a fight against
         // a monster. Takes the current monster challenge rating as an argument. 
         void calculateCombatScore(int);
 
-        //Adds new team member
-        void addNewMember(string, int);
+
+        //Cookware methods
+
+        int getCeramicPots();
+        int getFryingPans();
+        int getCauldrons();
+        
+        void setCeramicPots(int);
+        void setFryingPans(int);
+        void setCauldrons(int);
+
+
 };
 
 #endif

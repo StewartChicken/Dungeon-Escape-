@@ -4,16 +4,17 @@
 void Game::start()
 {
     //Player name prompt
-    player.setName(prompts.playerNamePrompt());
+    player.addNewMember(prompts.playerNamePrompt(), 0);
 
     //Add four team members
-    player.addNewMember(prompts.memberNamePrompt(), 0);
     player.addNewMember(prompts.memberNamePrompt(), 1);
     player.addNewMember(prompts.memberNamePrompt(), 2);
     player.addNewMember(prompts.memberNamePrompt(), 3);
+    player.addNewMember(prompts.memberNamePrompt(), 4);
 
-    prompts.teamGreetingPrompt(player.getName(), player.getMember1Name(), player.getMember2Name(), player.getMember3Name(), player.getMember4Name());
+    prompts.teamGreetingPrompt(player.getPlayerName(), player.getMember1Name(), player.getMember2Name(), player.getMember3Name(), player.getMember4Name());
 }
+
 
 void Game::merchantInteraction(Player &player, Merchant &merchant){
     int choice = 0;

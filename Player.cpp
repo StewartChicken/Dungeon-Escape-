@@ -3,66 +3,40 @@
 //Default constructor
 Player::Player()
 {
-    this -> fullness = 50;
-    this -> gold = 100;
-    this -> ingredients = 0;
 
-    //cookware
-    this -> ceramicPots = 0;
-    this -> fryingPans = 0;
-    this -> cauldrons = 0;
+    //Party default names
+    this -> partyNames[0] = "Player";
+    this -> partyNames[1] = "Member1";
+    this -> partyNames[2] = "Member2";
+    this -> partyNames[3] = "Member3";
+    this -> partyNames[4] = "Member4";
 
+
+    //Party default combat values
+    
     //weapons
     this -> stoneClubs = 0;
     this -> ironSpears = 0;
     this -> mythrilRapiers = 0;
     this -> flamingAxes = 0;
     this -> vorpalSwords = 0;
-
-    //Number armor suits
+    
     this -> armorSuits = 0; 
-
-    //Treasures found
-    this -> silverRings = 0; 
-    this -> rubyNecklaces = 0; 
-    this -> emeraldBracelets = 0; 
-    this -> diamondCirclets = 0; 
-    this -> gemGoblets = 0; 
-
-    //Player name
-    this -> name = "Player";
-    this -> teamMemberNames[0] = "";
-    this -> teamMemberNames[1] = "";
-    this -> teamMemberNames[2] = "";
-    this -> teamMemberNames[3] = "";
 
     this -> combatScore = 0;
 
-}
-
-//Parameterized constructor
-Player::Player(std::string name)
-{
-    this -> fullness = 50;
-    this -> gold = 100;
-    this -> ingredients = 0;
-
     //cookware
     this -> ceramicPots = 0;
     this -> fryingPans = 0;
     this -> cauldrons = 0;
 
-    //weapons
-    this -> stoneClubs = 0;
-    this -> ironSpears = 0;
-    this -> mythrilRapiers = 0;
-    this -> flamingAxes = 0;
-    this -> vorpalSwords = 0;
 
-    this -> numWeapons = 0;
+    //Party default inventory values
 
-    //Number armor suits
-    this -> armorSuits = 0; 
+    this -> gold = 0;
+    this -> numKeys = 0;
+    this -> ingredients = 0;
+
 
     //Treasures found
     this -> silverRings = 0; 
@@ -71,11 +45,248 @@ Player::Player(std::string name)
     this -> diamondCirclets = 0; 
     this -> gemGoblets = 0; 
 
-    //Player name
-    this -> name = name;
 
-    //Player keys
-    this -> numKeys = 0;
+    
+
+}
+
+
+
+//Player and team member name/hunger management methods
+
+//Adds new party member
+void Player::addNewMember(std::string name, int index)
+{
+    this -> fullnessLevels[name] = 50;
+    partyNames[index] = name;
+}
+
+void Player::setFullnessLevel(string name, int fullness)
+{
+    this -> fullnessLevels[name] = fullness;
+}
+
+int Player::getFullness(string partyMember)
+{
+    return fullnessLevels[partyMember];
+}
+
+std::string Player::getPlayerName()
+{
+    return partyNames[0];
+}
+
+std::string Player::getMember1Name()
+{
+    return partyNames[1];
+}
+
+std::string Player::getMember2Name()
+{
+    return partyNames[2];
+}
+
+std::string Player::getMember3Name()
+{
+    return partyNames[3];
+}
+
+std::string Player::getMember4Name()
+{
+    return partyNames[4];
+}
+
+//Increments the fullness of the player
+void Player::incrementFullness(string partyMember)
+{
+    this -> fullnessLevels[partyMember] ++;
+}
+
+//Decrements the fullness of the player
+void Player::decrementFullness(string partyMember)
+{
+    this -> fullnessLevels[partyMember] --;
+}
+
+//Player::cookFood function definition
+//Cooks food in incrememnts of 5 kg since there are 5 team members
+//The input argument is the number of servings that will be cooked
+// total food cooked will be servings * 5
+//Successful cooks will increase fullness by 1 for each team member
+//If the pot breaks, cook fails and the food is lost
+//Returns void
+void Player::cookFood(int servings)
+{
+    //Todo
+}
+
+
+
+//Inventory methods
+
+int Player::getGold()
+{
+    return gold;
+}
+
+int Player::getIngredients()
+{
+    return ingredients;
+}
+
+int Player::getNumKeys()
+{
+    return numKeys;
+}
+
+int Player::getSilverRings()
+{
+    return silverRings;
+}
+
+int Player::getRubyNecklaces()
+{
+    return rubyNecklaces;
+}
+
+int Player::getEmeraldBracelets()
+{
+    return emeraldBracelets;
+}
+
+int Player::getDiamondCirclets()
+{
+    return diamondCirclets;
+}
+
+int Player::getGemGoblets()
+{
+    return gemGoblets;
+}
+
+void Player::setGold(int gold)
+{
+    this -> gold = gold;
+}
+
+void Player::setIngredients(int ingredients)
+{
+    this -> ingredients = ingredients;
+}
+
+void Player::setNumKeys(int numKeys)
+{
+    this -> numKeys = numKeys;
+}
+
+void Player::setSilverRings(int silverRings)
+{
+    this -> silverRings = silverRings;
+}
+
+void Player::setRubyNecklaces(int rubyNecklaces)
+{
+    this -> rubyNecklaces = rubyNecklaces;
+}
+
+void Player::setEmeraldBracelets(int emeraldBracelets)
+{
+    this -> emeraldBracelets = emeraldBracelets;
+}
+
+void Player::setDiamondCirclets(int diamondCirclets)
+{
+    this -> diamondCirclets = diamondCirclets;
+}
+
+void Player::setGemGoblets(int gemGoblets)
+{
+    this -> gemGoblets = gemGoblets;
+}
+
+void Player::incrementKeys()
+{
+    this -> numKeys ++;
+}
+
+void Player::decrementKeys()
+{
+    this -> numKeys --;
+}
+
+
+//Combat methods
+
+
+int Player::getNumWeapons()
+{
+    return numWeapons;
+}
+
+int Player::getStoneClubs()
+{
+    return stoneClubs;
+}
+
+int Player::getIronSpears()
+{
+    return ironSpears;
+}
+
+int Player::getMythrilRapiers()
+{
+    return mythrilRapiers;
+}
+
+int Player::getFlamingAxes()
+{
+    return flamingAxes;
+}
+
+int Player::getVorpalSwords()
+{
+    return vorpalSwords;
+}
+
+int Player::getArmorSuits()
+{
+    return armorSuits;
+}
+
+void Player::setNumWeapons(int numWeapons)
+{
+    this -> numWeapons = numWeapons;
+}
+
+
+void Player::setStoneClubs(int stoneClubs)
+{
+    this -> stoneClubs = stoneClubs;
+}
+
+void Player::setIronSpears(int ironSpears)
+{
+    this -> ironSpears = ironSpears;
+}
+
+void Player::setMythrilRapiers(int mythrilRapiers)
+{
+    this -> mythrilRapiers = mythrilRapiers;
+}
+
+void Player::setFlamingAxes(int flamingAxes)
+{
+    this -> flamingAxes = flamingAxes;
+}
+
+void Player::setVorpalSwords(int vorpalSwords)
+{
+    this -> vorpalSwords = vorpalSwords;
+}
+
+void Player::setArmorSuits(int armorSuits)
+{
+    this -> armorSuits = armorSuits;
 }
 
 //Calculates the combat score for the team based on the weapons within the inventory
@@ -113,41 +324,8 @@ void Player::calculateCombatScore(int monsterChallengeRating)
 
 }
 
-//Player::cookFood function definition
-//Cooks food in incrememnts of 5 kg since there are 5 team members
-//The input argument is the number of servings that will be cooked
-// total food cooked will be servings * 5
-//Successful cooks will increase fullness by 1 for each team member
-//If the pot breaks, cook fails and the food is lost
-//Returns void
-void Player::cookFood(int servings)
-{
-    //Todo
-}
 
-//Adds new team member
-void Player::addNewMember(std::string name, int index)
-{
-
-    teamMemberHunger[name] = 50;
-    teamMemberNames[index] = name;
-}
-
-//Getters
-int Player::getFullness()
-{
-    return fullness;
-}
-
-int Player::getGold()
-{
-    return gold;
-}
-
-int Player::getIngredients()
-{
-    return ingredients;
-}
+//Cookware methods
 
 int Player::getCeramicPots()
 {
@@ -164,117 +342,6 @@ int Player::getCauldrons()
     return cauldrons;
 }
 
-int Player::getStoneClubs()
-{
-    return stoneClubs;
-}
-
-int Player::getIronSpears()
-{
-    return ironSpears;
-}
-
-int Player::getMythrilRapiers()
-{
-    return mythrilRapiers;
-}
-
-int Player::getFlamingAxes()
-{
-    return flamingAxes;
-}
-
-int Player::getVorpalSwords()
-{
-    return vorpalSwords;
-}
-
-int Player::getArmorSuits()
-{
-    return armorSuits;
-}
-
-int Player::getSilverRings()
-{
-    return silverRings;
-}
-
-int Player::getRubyNecklaces()
-{
-    return rubyNecklaces;
-}
-
-int Player::getEmeraldBracelets()
-{
-    return emeraldBracelets;
-}
-
-int Player::getDiamondCirclets()
-{
-    return diamondCirclets;
-}
-
-int Player::getGemGoblets()
-{
-    return gemGoblets;
-}
-
-int Player::getNumKeys()
-{
-    return numKeys;
-}
-
-int Player::getNumWeapons()
-{
-    return numWeapons;
-}
-
-std::string Player::getName()
-{
-    return name;
-}
-
-std::string Player::getMember1Name()
-{
-    return teamMemberNames[0];
-}
-
-std::string Player::getMember2Name()
-{
-    return teamMemberNames[1];
-}
-
-std::string Player::getMember3Name()
-{
-    return teamMemberNames[2];
-}
-
-std::string Player::getMember4Name()
-{
-    return teamMemberNames[3];
-}
-
-int Player::getMemberHungerLevel(std::string member)
-{
-    return teamMemberHunger[member];
-}
-
-//Setters
-
-void Player::setFullness(int fullness)
-{
-    this -> fullness = fullness;
-}
-
-void Player::setGold(int gold)
-{
-    this -> gold = gold;
-}
-
-void Player::setIngredients(int ingredients)
-{
-    this -> ingredients = ingredients;
-}
 
 void Player::setCeramicPots(int ceramicPots)
 {
@@ -290,113 +357,3 @@ void Player::setCauldrons(int cauldrons)
 {
     this -> cauldrons = cauldrons;
 }
-
-void Player::setStoneClubs(int stoneClubs)
-{
-    this -> stoneClubs = stoneClubs;
-}
-
-void Player::setIronSpears(int ironSpears)
-{
-    this -> ironSpears = ironSpears;
-}
-
-void Player::setMythrilRapiers(int mythrilRapiers)
-{
-    this -> mythrilRapiers = mythrilRapiers;
-}
-
-void Player::setFlamingAxes(int flamingAxes)
-{
-    this -> flamingAxes = flamingAxes;
-}
-
-void Player::setVorpalSwords(int vorpalSwords)
-{
-    this -> vorpalSwords = vorpalSwords;
-}
-
-void Player::setArmorSuits(int armorSuits)
-{
-    this -> armorSuits = armorSuits;
-}
-
-void Player::setSilverRings(int silverRings)
-{
-    this -> silverRings = silverRings;
-}
-
-void Player::setRubyNecklaces(int rubyNecklaces)
-{
-    this -> rubyNecklaces = rubyNecklaces;
-}
-
-void Player::setEmeraldBracelets(int emeraldBracelets)
-{
-    this -> emeraldBracelets = emeraldBracelets;
-}
-
-void Player::setDiamondCirclets(int diamondCirclets)
-{
-    this -> diamondCirclets = diamondCirclets;
-}
-
-void Player::setGemGoblets(int gemGoblets)
-{
-    this -> gemGoblets = gemGoblets;
-}
-
-void Player::setNumKeys(int numKeys)
-{
-    this -> numKeys = numKeys;
-}
-
-void Player::setNumWeapons(int numWeapons)
-{
-    this -> numWeapons = numWeapons;
-}
-
-void Player::setName(std::string name)
-{
-    this -> name = name;
-}
-
-void Player::setMemberHungerLevel(std::string member, int level)
-{
-    teamMemberHunger[member] = level;
-}
-
-//Incremental methods
-
-//Increments the fullness of the player
-void Player::incrementFullness()
-{
-    this -> fullness ++;
-}
-
-//Decrements the fullness of the player
-void Player::decrementFullness()
-{
-    this -> fullness --;
-}
-
-void Player::incrementKeys()
-{
-    this -> numKeys ++;
-}
-
-void Player::decrementKeys()
-{
-    this -> numKeys --;
-}
-
-void Player::incrementMemberHungerLevel(std::string member)
-{
-    teamMemberHunger[member] ++;
-}
-
-void Player::decrementMemberHungerLevel(std::string member)
-{
-    teamMemberHunger[member] --;
-}
-
