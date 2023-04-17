@@ -1,5 +1,5 @@
 #include <iostream>
-#include "game.h"
+#include "Game.h"
 
 void Game::start()
 {
@@ -28,6 +28,11 @@ void Game::merchantInteraction(Player &player, Merchant &merchant){
         player.setGold(player.getGold() + price);
     }
     }while(choice >= 0);
+}
+
+void Game::loadMap()
+{
+    map.displayMap();
 }
 
 Player Game::getPlayer(){

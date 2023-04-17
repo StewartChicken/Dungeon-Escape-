@@ -1,4 +1,4 @@
-#include "game.h"
+#include "Game.h"
 
 int main()
 {
@@ -10,6 +10,6 @@ int main()
     Merchant tempMerchant = game.getMerchant();
 
     game.merchantInteraction(tempPlayer, tempMerchant);
-    
+
     return 0;
 }

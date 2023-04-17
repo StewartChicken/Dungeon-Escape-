@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <map>
-#include "Player.h"
+#include "Party.h"
 #include "Merchant.h"
 
 using std::string;

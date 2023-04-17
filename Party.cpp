@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "Party.h"
 
 //Default constructor
 Player::Player()

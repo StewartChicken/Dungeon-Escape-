@@ -30,17 +30,20 @@ private:
     //(NPC row, NPC col) * 5
     //(NPC isFound status) * 5
     vector<int> positionData;
-    
+
+    bool exploredData[numRows][numCols]; //Is a space explored
+    bool clearedData[numRows][numCols]; //Is a room/NPC cleared (no longer accessible)
     char mapData[numRows][numCols]; // stores the character that will be shown at a given (row,col)
 
 public:
-    //Constructor
-    Map();
+    Map();//Constructor
 
-    //Fills map with empty spaces
-    void resetMap();
-    //Fill map with the position data
-    void fillInitialMapPositionData();
+    //Map rendering functions
+    void resetMap();//Fills map with empty spaces
+    void updateMap(); //Fill map with the position data
+    void calculatePositionData(); //Fill map with position data of entities
+    void checkOverlap(); //Check for overlap in position data
+    void displayMap(); //Render map to terminal
 
     // getters
     int getPlayerRow();
@@ -63,23 +66,11 @@ public:
     void setDungeonExit(int row, int col);
 
     // other
-    void displayMap();
-    bool move(char);
-    bool addNPC(int row, int col);
-    bool addRoom(int row, int col);
-    bool removeNPC(int row, int col);
-    bool removeRoom(int row, int col);
+    void clearSpace(int row, int col);
     void exploreSpace(int row, int col);
 
-    //Fill map with room, NPC, and player position data
-    void fillPositionData();
-
-    //Check for overlap in position data
-    void checkOverlap();
-
-    //Prints position data (for debugging)
-    void printPositionData();
-
+    //debugging functions
+    void printPositionData(); //Prints position data 
 };
 
 #endif

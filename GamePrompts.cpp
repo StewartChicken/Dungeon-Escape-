@@ -65,7 +65,7 @@ int Prompts::merchantPrompt(Player &player){
     "6. Leave: Make sure you get everything you need, I'm leaving after this sale!"<<std::endl;
     cout<<">";
     cin>>choice;
-    }while(choice<1||choice>6);
+    }while(choice>1||choice<6);
     return choice;
 }
 int Prompts::purchaseCost(int choice, Merchant &merchant){

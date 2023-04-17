@@ -7,27 +7,101 @@ using namespace std;
 
 Map::Map()
 {
-    //Calculates position of each map entity - Player, Exit, NPC, Room
-    fillPositionData();
-    checkOverlap();
 
-    resetMap();
-    fillInitialMapPositionData();
+    for(int i{}; i < numRows; i++)
+    {
+        for(int j{}; j < numCols; j++)
+        {
+            exploredData[i][j] = false;
+        }
+    }
+
+    for(int i{}; i < numRows; i++)
+    {
+        for(int j{}; j < numCols; j++)
+        {
+            clearedData[i][j] = false;
+        }
+    }
+    
+    calculatePositionData(); //Calculates position of each map entity - Player, Exit, NPC, Room
+    checkOverlap(); //Checks overlap of map entities
+
+    resetMap(); //Resets map - all regions unexplored
+
+    updateMap(); //Updates map to contain all calculated data
 }
 
-void Map::displayMap()
+//Sets entirety of the ma to unexplored
+void Map::resetMap()
 {
     for(int i{}; i < numRows; i ++)
     {
         for(int j{}; j < numCols; j ++)
         {
-            cout << mapData[i][j] << " ";
+            mapData[i][j] = '-';
         }
-        cout << endl;
+    }
+
+    for(int i{}; i < numRows; i ++)
+    {
+        for(int j{}; j < numCols; j ++)
+        {
+            exploredData[i][j] = false;
+        }
     }
 }
 
-void Map::fillPositionData()
+void Map::updateMap()
+{
+
+    //Default value for every section of the map is explored
+    for(int i{}; i < numRows; i ++)
+    {
+        for(int j{}; j < numCols; j ++)
+        {
+            mapData[i][j] = ' ';
+        }
+    }
+
+    //Set exit position on map
+    mapData[positionData.at(2)][positionData.at(3)] = 'E';
+
+    //Set Room data on map
+    for(int i{}; i < 5; i ++)
+    {
+        if(clearedData[positionData.at(4 + 2*i)][positionData.at(5 + 2*i)] == false)
+        {
+            mapData[positionData.at(4 + 2*i)][positionData.at(5 + 2*i)] = 'R';
+        }
+    }
+
+    //Set NPC data on map
+    for(int i{}; i < 5; i ++)
+    {
+        if(clearedData[positionData.at(14 + 2*i)][positionData.at(15 + 2*i)] == false)
+        {
+            mapData[positionData.at(14 + 2*i)][positionData.at(15 + 2*i)] = 'N';
+        }
+    }
+
+    //If any section is unexplored, change the character to '-'
+    for(int i{}; i < numRows; i ++)
+    {
+        for(int j{}; j < numCols; j ++)
+        {
+            if(exploredData[i][j] == false)
+            {
+                mapData[i][j] = '-';
+            }
+        }
+    }
+
+    //Display player position
+    mapData[positionData.at(0)][positionData[1]] = 'X';
+}
+
+void Map::calculatePositionData()
 {
     //Random number generator seed
     srand(time(0));
@@ -126,66 +200,16 @@ void Map::checkOverlap()
     }
 }
 
-//Prints all the position data for each entity on the map
-// - mostly for debugging
-void Map::printPositionData()
-{
-    cout << "Player row, col: " << positionData.at(0) << ", " << positionData.at(1) << endl;
-    cout << "Exit row, col: " << positionData.at(2) << ", " << positionData.at(3) << endl;
-
-    for(int i{}; i < 5; i ++)
-    {
-        cout << "Room" << i << " row, col: " << positionData.at(4 + 2*i) << ", " << positionData.at(5 + 2*i) << endl;
-    }
-
-    for(int i{}; i < 5; i ++)
-    {
-        cout << "NPC" << i << " row, col: " << positionData.at(14 + 2*i) << ", " << 
-        positionData.at(15 + 2*i) << endl;
-    }
-
-    for(int i{}; i < 5; i ++)
-    {
-        cout << "NPC" << i << " IsFound: " << positionData.at(24 + i) << endl;
-    }
-}
-
-//Sets entirety of the ma to unexplored
-void Map::resetMap()
+void Map::displayMap()
 {
     for(int i{}; i < numRows; i ++)
     {
         for(int j{}; j < numCols; j ++)
         {
-            mapData[i][j] = '-';
+            cout << mapData[i][j] << " ";
         }
+        cout << endl;
     }
-}
-
-void Map::fillInitialMapPositionData()
-{
-    //Set player and exit characters on map
-    mapData[positionData.at(0)][positionData[1]] = 'X';
-    mapData[positionData.at(2)][positionData.at(3)] = 'E';
-
-    //Set Room data on map
-    for(int i{}; i < 5; i ++)
-    {
-        mapData[positionData.at(4 + 2*i)][positionData.at(5 + 2*i)] = 'R';
-    }
-
-    //Set NPC data on map
-    for(int i{}; i < 5; i ++)
-    {
-        mapData[positionData.at(14 + 2*i)][positionData.at(15 + 2*i)] = 'N';
-    }
-}
-
-//Setters
-
-void Map::setPlayerPosition(int row, int col)
-{
-
 }
 
 //Getters 
@@ -263,15 +287,61 @@ bool Map::isRoomLocation(int row, int col)
 
 bool Map::isExplored(int row, int col)
 {
-    return(mapData[row][col] == ' ');
+    return(exploredData[row][col] == 1);
 }
 
 bool Map::isFreeSpace(int row, int col)
 {
-    return(mapData[row][col] == '-');
+    return(exploredData[row][col] == 0);
 }
 
 bool Map::isDungeonExit(int row, int col)
 {
     return(row == positionData.at(2) && col == positionData.at(3));
+}
+
+void Map::setPlayerPosition(int row, int col)
+{
+    positionData.at(0) = row;
+    positionData.at(1) = col;
+}
+
+void Map::setDungeonExit(int row, int col)
+{
+    positionData.at(2) = row;
+    positionData.at(3) = col;
+}
+
+void Map::clearSpace(int row, int col)
+{
+    clearedData[row][col] = true;
+}
+
+void Map::exploreSpace(int row, int col)
+{
+    exploredData[row][col] = true;
+}
+
+//Prints all the position data for each entity on the map
+// - mostly for debugging
+void Map::printPositionData()
+{
+    cout << "Player row, col: " << positionData.at(0) << ", " << positionData.at(1) << endl;
+    cout << "Exit row, col: " << positionData.at(2) << ", " << positionData.at(3) << endl;
+
+    for(int i{}; i < 5; i ++)
+    {
+        cout << "Room" << i << " row, col: " << positionData.at(4 + 2*i) << ", " << positionData.at(5 + 2*i) << endl;
+    }
+
+    for(int i{}; i < 5; i ++)
+    {
+        cout << "NPC" << i << " row, col: " << positionData.at(14 + 2*i) << ", " << 
+        positionData.at(15 + 2*i) << endl;
+    }
+
+    for(int i{}; i < 5; i ++)
+    {
+        cout << "NPC" << i << " IsFound: " << positionData.at(24 + i) << endl;
+    }
 }
