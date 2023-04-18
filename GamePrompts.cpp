@@ -43,31 +43,41 @@ void Prompts::teamGreetingPrompt(string playerName, string member1, string membe
 //Merchant prompt
 int Prompts::merchantPrompt(Player &player){
     int choice = 0;
-    do{
-    cout<<"If you're looking to get supplies, you've come to the right place."<<std::endl<<
-    "I would be happy to part with some of my wares...for the proper price!"<<std::endl;
-    cout<<std::endl<<std::endl<<
-    "+-------------+"<<std::endl<<
-    "|  Inventory  |"<<std::endl<<
-    "+-------------+"<<std::endl<<
-    "| Gold        |"<<player.getGold()<<"|"<<std::endl<<
-    "| Indregients |"<<player.getIngredients()<<"kg |"<<std::endl<<
-    "| Cookware    | P: "<<player.getCeramicPots()<<"| F: "<<player.getFryingPans()<<"| C:"<<player.getCauldrons()<<"|"<<std::endl<<
-    "| Weapons     | C: "<<player.getStoneClubs()<<"| S: "<<player.getIronSpears()<<"| R: "<<player.getMythrilRapiers()<<"| B: "<<player.getFlamingAxes()<<"| L: "<<player.getVorpalSwords()<<"|"<<std::endl<<
-    "| Armor       |"<<player.getArmorSuits()<<"|"<<std::endl<<
-    "| Treasures   | R:"<<player.getSilverRings()<<"| N: "<<player.getRubyNecklaces()<<"| B: "<<player.getEmeraldBracelets()<<"| C: "<<player.getDiamondCirclets()<<"| G: "<<player.getGemGoblets()<<"|"<<std::endl<<
-    "Choose one of the following:"<<std::endl<<
-    "1. Ingredients: To make food, you have to cook raw ingredients."<<std::endl<<
-    "2. Cookware: You will need something to cook those ingredients."<<std::endl<<
-    "3. Weapons: It's dangerous to go alone, take this!"<<std::endl<<
-    "4. Armor: If you want to survive monster attacks, you will need some armor."<<std::endl<<
-    "5. Sell treasures: If you find anything shiny, I would be happy to take it off your hands."<<std::endl<<
-    "6. Leave: Make sure you get everything you need, I'm leaving after this sale!"<<std::endl;
-    cout<<">";
-    cin>>choice;
-    }while(choice>1||choice<6);
+
+    while(choice < 1 || choice > 6)
+    {
+        initialMerchantPrompt(player);
+        cin >> choice;
+    }
+
     return choice;
 }
+
+void Prompts::initialMerchantPrompt(Player &player)
+{
+    cout << "If you're looking to get supplies, you've come to the right place.\n";
+    cout << "I would be happy to part with some of my wares...for the proper price!\n\n\n";
+
+    cout <<
+    "+-------------+\n" <<
+    "|  Inventory  |\n" <<
+    "+-------------+\n" <<
+    "| Gold        |" << player.getGold() << "|\n" <<
+    "| Indregients |" << player.getIngredients() << " kg |\n" <<
+    "| Cookware    | P: " << player.getCeramicPots() << "| F: " << player.getFryingPans() << "| C:" << player.getCauldrons() << "|\n" <<
+    "| Weapons     | C: " << player.getStoneClubs() << "| S: " << player.getIronSpears() << "| R: " << player.getMythrilRapiers() << "| B: " << player.getFlamingAxes() << "| L: " << player.getVorpalSwords() << "|\n" <<
+    "| Armor       |" << player.getArmorSuits() << "|\n" <<
+    "| Treasures   | R:" << player.getSilverRings() << "| N: " << player.getRubyNecklaces() << "| B: " << player.getEmeraldBracelets() << "| C: " << player.getDiamondCirclets() << "| G: " << player.getGemGoblets() << "|\n" <<
+    "Choose one of the following:\n" <<
+    "1. Ingredients: To make food, you have to cook raw ingredients\n" <<
+    "2. Cookware: You will need something to cook those ingredients.\n" <<
+    "3. Weapons: It's dangerous to go alone, take this!\n" <<
+    "4. Armor: If you want to survive monster attacks, you will need some armor.\n" <<
+    "5. Sell treasures: If you find anything shiny, I would be happy to take it off your hands.\n" << 
+    "6. Leave: Make sure you get everything you need, I'm leaving after this sale!\n" <<
+    ">";
+}
+
 int Prompts::purchaseCost(int choice, Merchant &merchant){
     string item="";
     int costPerUnit = 0;

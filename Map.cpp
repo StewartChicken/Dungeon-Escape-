@@ -300,6 +300,26 @@ bool Map::isDungeonExit(int row, int col)
     return(row == positionData.at(2) && col == positionData.at(3));
 }
 
+char Map::getMoveUpKey()
+{
+    return moveUpKey;
+}
+
+char Map::getMoveDownKey()
+{
+    return moveDownKey;
+}
+
+char Map::getMoveRightKey()
+{
+    return moveRightKey;
+}
+
+char Map::getMoveLeftKey()
+{
+    return moveLeftKey;
+}
+
 void Map::setPlayerPosition(int row, int col)
 {
     positionData.at(0) = row;

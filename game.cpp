@@ -30,9 +30,65 @@ void Game::merchantInteraction(Player &player, Merchant &merchant){
     }while(choice >= 0);
 }
 
-void Game::loadMap()
+void Game::movementPhase()
 {
     map.displayMap();
+
+    char input = '-';
+
+    int newRow;
+    int newCol;
+
+    while(true)
+    {
+
+        cout << "Choose a direction to move\n";
+        cin >> input;
+        
+        if(input == map.getMoveUpKey() || input == map.getMoveDownKey() || input == map.getMoveRightKey() || input == map.getMoveLeftKey())
+        {
+            
+            newRow = map.getPlayerRow();
+            newCol = map.getPlayerCol();
+
+            switch(input)
+            {
+                case 'w':
+                    newRow --;
+                    break;
+                case 's':
+                    newRow ++;
+                    break;
+                case 'a':
+                    newCol --;
+                    break;
+                case 'd':
+                    newCol ++;
+                    break;
+                default:
+                    cout << "Something went wrong with player movement\n";
+                    break;
+
+            };
+
+            if(map.isOnMap(newRow, newCol))
+            {
+                map.setPlayerPosition(newRow, newCol);
+                map.updateMap();
+                map.displayMap();
+            }
+            else
+            {
+                cout << "Invalid player position\n";
+                map.displayMap();
+            }
+
+        }
+        else
+        {
+            cout << "Invalid input\n";
+        }
+    }
 }
 
 Player Game::getPlayer(){

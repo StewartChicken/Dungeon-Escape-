@@ -11,6 +11,11 @@ using namespace std;
 class Map
 {
 private:
+    const char moveUpKey = 'w';
+    const char moveDownKey = 's';
+    const char moveRightKey = 'd';
+    const char moveLeftKey = 'a';
+
     const char UNEXPLORED = '-'; // marker for unexplored spaces
     const char EXPLORED = ' ';   // marker for explored spaces
     const char ROOM = 'R';       // marker for room locations
@@ -60,6 +65,10 @@ public:
     bool isExplored(int row, int col);
     bool isFreeSpace(int row, int col);
     bool isDungeonExit(int row, int col);
+    char getMoveUpKey();
+    char getMoveDownKey();
+    char getMoveRightKey();
+    char getMoveLeftKey();
 
     // setters
     void setPlayerPosition(int row, int col);

@@ -6,10 +6,12 @@ int main()
 
     game.start();
 
-    Player tempPlayer = game.getPlayer();
+    /*Player tempPlayer = game.getPlayer();
     Merchant tempMerchant = game.getMerchant();
 
-    game.merchantInteraction(tempPlayer, tempMerchant);
+    game.merchantInteraction(tempPlayer, tempMerchant);*/
 
+    game.movementPhase();
+    
     return 0;
 }

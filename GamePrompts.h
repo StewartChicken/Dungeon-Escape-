@@ -19,7 +19,11 @@ class Prompts
         void teamGreetingPrompt(string, string, string, string, string);
 
         int merchantPrompt(Player &player);
+
+        void initialMerchantPrompt(Player &player);
+
         int purchaseCost(int choice, Merchant &merchant);
+
 };
 
 #endif

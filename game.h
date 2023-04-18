@@ -22,7 +22,9 @@ class Game
     public:
         void start();
         void merchantInteraction(Player &player, Merchant &merchant);
-        void loadMap();
+
+        //Part of the game that allows the player to move around the map
+        void movementPhase();
 
         //Getters
 
