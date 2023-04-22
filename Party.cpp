@@ -43,7 +43,8 @@ Player::Player()
     this -> rubyNecklaces = 0; 
     this -> emeraldBracelets = 0; 
     this -> diamondCirclets = 0; 
-    this -> gemGoblets = 0; 
+    this -> gemGoblets = 0;
+    this -> imaginaryGlasses = 0; 
 
 
     
@@ -164,6 +165,11 @@ int Player::getGemGoblets()
     return gemGoblets;
 }
 
+int Player::getImaginaryGlasses()
+{
+    return imaginaryGlasses;
+}
+
 void Player::setGold(int gold)
 {
     this -> gold = gold;
@@ -213,6 +219,11 @@ void Player::decrementKeys()
 {
     this -> numKeys --;
 }
+
+void Player::incrementImaginaryGlasses()
+{
+    this -> imaginaryGlasses ++;
+} 
 
 
 //Combat methods

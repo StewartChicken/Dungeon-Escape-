@@ -53,6 +53,9 @@ class Player
         int diamondCirclets; //40 gold - denoted C
         int gemGoblets; //50 gold denoted - G
 
+        //Eastereggs - make the game more interesting
+        int imaginaryGlasses;
+
         
 
         
@@ -100,6 +103,8 @@ class Player
         int getDiamondCirclets();
         int getGemGoblets();
 
+        int getImaginaryGlasses();
+
         void setGold(int);
         void setIngredients(int);
         void setNumKeys(int);
@@ -112,6 +117,8 @@ class Player
 
         void incrementKeys();
         void decrementKeys();
+
+        void incrementImaginaryGlasses();
 
         
 

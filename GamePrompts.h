@@ -22,7 +22,7 @@ class Prompts
 
         void initialMerchantPrompt(Player &player);
 
-        int purchaseCost(int choice, Merchant &merchant);
+        int purchaseCost(int choice, Merchant &merchant, Player &player);
 
 };
 
