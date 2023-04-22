@@ -320,6 +320,28 @@ char Map::getMoveLeftKey()
     return moveLeftKey;
 }
 
+char Map::getExploreKey()
+{
+    return exploreSpaceKey;
+}
+
+bool Map::isMovementKey(char key)
+{
+    switch(key)
+    {
+        case 'w':
+            return true;
+        case 'a':
+            return true;
+        case 's':
+            return true;
+        case 'd': 
+            return true;
+        default:
+            return false;
+    };
+}
+
 void Map::setPlayerPosition(int row, int col)
 {
     positionData.at(0) = row;

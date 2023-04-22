@@ -42,10 +42,10 @@ void Game::movementPhase()
     while(true)
     {
 
-        cout << "Choose a direction to move\n";
+        cout << "Press 'w', 'a', 's' or 'd' to move. Press 'e' to clear the explore the space\n";
         cin >> input;
         
-        if(input == map.getMoveUpKey() || input == map.getMoveDownKey() || input == map.getMoveRightKey() || input == map.getMoveLeftKey())
+        if(map.isMovementKey(input))
         {
             
             newRow = map.getPlayerRow();
@@ -84,9 +84,15 @@ void Game::movementPhase()
             }
 
         }
+        else if(input == 'e')
+        {
+            map.exploreSpace(map.getPlayerRow(), map.getPlayerCol());
+            map.displayMap();
+        }
         else
         {
-            cout << "Invalid input\n";
+            cout << "Invalid Input\n";
+            map.displayMap();
         }
     }
 }

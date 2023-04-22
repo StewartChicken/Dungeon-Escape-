@@ -15,6 +15,7 @@ private:
     const char moveDownKey = 's';
     const char moveRightKey = 'd';
     const char moveLeftKey = 'a';
+    const char exploreSpaceKey = 'e';
 
     const char UNEXPLORED = '-'; // marker for unexplored spaces
     const char EXPLORED = ' ';   // marker for explored spaces
@@ -69,6 +70,8 @@ public:
     char getMoveDownKey();
     char getMoveRightKey();
     char getMoveLeftKey();
+    char getExploreKey();
+    bool isMovementKey(char);
 
     // setters
     void setPlayerPosition(int row, int col);
