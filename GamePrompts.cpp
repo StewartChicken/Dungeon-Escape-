@@ -324,7 +324,7 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
         switch (confirm)
         {
         case 'y':
-            cout << "Thank you dearly for your buisness." << std::endl;
+            cout << "Thank you dearly for your buisness.\n\n" << std::endl;
             if(!valid){
                 return 1;
             }
