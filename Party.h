@@ -59,18 +59,10 @@ class Player
         //Eastereggs - make the game more interesting
         int imaginaryGlasses;
 
-        
-
-        
-
     public:
         //Constructor
         Player();
         
-
-        //Player and team member name/hunger management methods
-
-
         //Adds new team member at a given index
         void addNewMember(string, int);
 
