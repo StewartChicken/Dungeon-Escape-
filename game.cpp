@@ -1,6 +1,6 @@
 #include "Game.h"
 
-void Game::start()
+void Game::start(Player &player, Merchant &merchant)
 {
     //Player name prompt
     player.addNewMember(prompts.playerNamePrompt(), 0);
@@ -34,7 +34,7 @@ void Game::merchantInteraction(Player &player, Merchant &merchant){
     }while(choice >= 0 && choice != 6);
 }
 
-void Game::movementPhase()
+void Game::movementPhase(Player& player, Merchant &merchant)
 {
     map.displayMap();
 
@@ -105,10 +105,10 @@ void Game::movementPhase()
     }
 }
 
-Player Game::getPlayer(){
+/*Player Game::getPlayer(){
     return player;
 }
 
 Merchant Game::getMerchant(){
     return merchant;
-}
+}*/

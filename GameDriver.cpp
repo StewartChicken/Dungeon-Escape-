@@ -5,14 +5,15 @@ int main()
 {
     Game game;
 
-    game.start();
+    
+    Player player;
+    Merchant merchant;
 
-    Player tempPlayer = game.getPlayer();
-    Merchant tempMerchant = game.getMerchant();
+    game.start(player, merchant);
 
-    game.merchantInteraction(tempPlayer, tempMerchant);
+    game.merchantInteraction(player, merchant);
 
-    game.movementPhase();
+    game.movementPhase(player, merchant);
 
     return 0;
 }

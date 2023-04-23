@@ -328,7 +328,6 @@ void Prompts::currentStatus(Player &player, Merchant &merchant, Map &map){
          << "| Armor             | " << player.getArmorSuits() << " |\n"
          << "| Treasures         | R:" << player.getSilverRings() << "| N: " << player.getRubyNecklaces() << "| B: " << player.getEmeraldBracelets() << "| C: " << player.getDiamondCirclets() << "| G: " << player.getGemGoblets() << "|\n";
          if(player.getImaginaryGlasses() > 0)cout<<"| Imaginary Glasses | "<<player.getImaginaryGlasses()<<" |\n";
-         if(player.getImaginaryGlasses() > 0)cout<<"| Imaginary Glasses | "<<player.getImaginaryGlasses()<<" |\n";
     cout << "+-------------------+\n"
          << "\n| "<<player.getPlayerName()<<" | Fullness: "<< player.getFullness(player.getPlayerName())
          << "\n| "<<player.getMember1Name()<<" | Fullness: "<< player.getFullness(player.getMember1Name())

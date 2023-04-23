@@ -16,16 +16,12 @@ class Game
 
         Prompts prompts;
 
-        Merchant merchant;
-        
-        Player player;
-
     public:
-        void start();
+        void start(Player &player, Merchant &merchant);
         void merchantInteraction(Player &player, Merchant &merchant);
 
         //Part of the game that allows the player to move around the map
-        void movementPhase();
+        void movementPhase(Player &player, Merchant &merchant);
 
         //Getters
 
