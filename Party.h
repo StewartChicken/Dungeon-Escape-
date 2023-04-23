@@ -154,6 +154,7 @@ class Player
         double calculateCombatScore(int);
         bool winsFight(int combatScore);
         void winFight(double combatScore); // Called in the event the player wins a monster fight
+        void loseFight();
 
 
         //Cookware methods

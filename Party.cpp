@@ -425,18 +425,67 @@ bool Player::winsFight(int combatScore)
     return combatScore > 0 ? true : false;
 }
 
+//If player wins fight against monster
 void Player::winFight(double combatScore)
 {
     srand(time(0));
 
     int keyChance = rand() % 10;
 
-    setGold((combatScore * 10) + getGold());
-    setIngredients((combatScore * 5) + getIngredients());
+    setGold((combatScore * 10) + gold);
+    setIngredients((combatScore * 5) + ingredients);
 
     if(keyChance == 0)
     {
         incrementKeys();
+    }
+}
+
+//If player loses fight against monster
+void Player::loseFight()
+{
+    srand(time(0));
+
+    //Loses 25% of their gold
+    setGold(int(double(gold) * 0.75));
+
+    //Loses up to 30 kg of ingredients
+    if(ingredients < 30)
+    {
+        setIngredients(0);
+    }
+    else
+    {
+        setIngredients(ingredients - 30);
+    }
+
+    //Loops through every NPC that has an armor suit - skips player
+    for(int i = 1; i < armorSuits; i ++)
+    {
+        int deathChance = rand() % 20;
+
+        if(deathChance == 0)
+        {
+            fullnessLevels[partyNames[i]]  = 0;
+        }
+    }
+
+    //Loops through every teammember that doesn't have an armor suit - skips player
+    for(int i = armorSuits; i < 5; i ++)
+    {
+        //If no armor suits were purchased
+        if(i == 0)
+        {
+            continue;
+        }
+
+        int deathChance = rand() % 10;
+
+        //10% chance of teammember dying
+        if(deathChance == 0)
+        {
+            fullnessLevels[partyNames[i]]  = 0;
+        }
     }
 }
 
