@@ -3,6 +3,24 @@
 
 Monster::Monster()
 {
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+    monsterNames[0] = "Minotaur";
+
     Monsters["Minotaur"] = 2;
     Monsters["Owlbear"] = 2;
     Monsters["Banshee"] = 2;
@@ -20,4 +38,20 @@ Monster::Monster()
     Monsters["Vampire"] = 5;
     Monsters["Lich"] = 5;
     Monsters["Sorcerer"] = 6;
+}
+
+void Monster::generateCombatOrder()
+{
+    srand(time(0));
+
+    for(int i = 0; i < 4; i ++)
+    {
+        int randMonster = rand() % 4;
+
+        switch(randMonster)
+        {
+            case 0:
+                combatOrder[i] = 
+        };
+    }
 }
