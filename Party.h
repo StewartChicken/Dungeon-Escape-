@@ -91,6 +91,7 @@ class Player
         void decrementFullness(string);
         
         //Cooks and eats food in increments of 5kgs
+        bool cookedSuccessfully(int);
         void cookFood(int,int);
 
 
