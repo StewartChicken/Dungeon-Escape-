@@ -41,7 +41,7 @@ void Prompts::teamGreetingPrompt(string playerName, string member1, string membe
 }
 
 // Good luck
-void goodLuckPrompt()
+void Prompts::goodLuckPrompt()
 {
     cout << "Good Luck!\n";
 }
