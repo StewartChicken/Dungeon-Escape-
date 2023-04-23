@@ -23,8 +23,6 @@ class Monster
  
         void generateCombatOrder(); //Generates random order for monster apperances
 
-        int getCombatDifficulty(string);
-
 };
 
 #endif

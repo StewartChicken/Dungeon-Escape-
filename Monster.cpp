@@ -52,8 +52,3 @@ void Monster::generateCombatOrder()
 
     combatOrder[4] = monsterNames[16];
 }
-
-int Monster::getCombatDifficulty(string monster)
-{
-    return Monsters[monster];
-}

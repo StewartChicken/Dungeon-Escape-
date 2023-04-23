@@ -425,6 +425,21 @@ bool Player::winsFight(int combatScore)
     return combatScore > 0 ? true : false;
 }
 
+void Player::winFight(double combatScore)
+{
+    srand(time(0));
+
+    int keyChance = rand() % 10;
+
+    setGold((combatScore * 10) + getGold());
+    setIngredients((combatScore * 5) + getIngredients());
+
+    if(keyChance == 0)
+    {
+        incrementKeys();
+    }
+}
+
 //Cookware methods
 
 int Player::getCeramicPots()
