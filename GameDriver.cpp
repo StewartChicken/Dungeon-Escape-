@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Monster.h"
 
 int main()
 {
@@ -12,6 +13,6 @@ int main()
     game.merchantInteraction(tempPlayer, tempMerchant);
 
     game.movementPhase();
-    
+
     return 0;
 }

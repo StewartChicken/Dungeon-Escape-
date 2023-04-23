@@ -4,22 +4,22 @@
 Monster::Monster()
 {
     monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
-    monsterNames[0] = "Minotaur";
+    monsterNames[1] = "Owlbear";
+    monsterNames[2] = "Banshee";
+    monsterNames[3] = "Wereboar";
+    monsterNames[4] = "Giant Crocodile";
+    monsterNames[5] = "Troll";
+    monsterNames[6] = "Hobgoblin Warlord";
+    monsterNames[7] = "Mammoth";
+    monsterNames[8] = "Stone Giant";
+    monsterNames[9] = "Night Hag";
+    monsterNames[10] = "Assassin";
+    monsterNames[11] = "Hyrda";
+    monsterNames[12] = "Cloud Giant";
+    monsterNames[13] = "Silver Dragon";
+    monsterNames[14] = "Vampire";
+    monsterNames[15] = "Lich";
+    monsterNames[16] = "Sorcerer";
 
     Monsters["Minotaur"] = 2;
     Monsters["Owlbear"] = 2;
@@ -47,11 +47,13 @@ void Monster::generateCombatOrder()
     for(int i = 0; i < 4; i ++)
     {
         int randMonster = rand() % 4;
-
-        switch(randMonster)
-        {
-            case 0:
-                combatOrder[i] = 
-        };
+        combatOrder[i] = monsterNames[randMonster + (4 * i)];
     }
+
+    combatOrder[4] = monsterNames[16];
+}
+
+int Monster::getCombatDifficulty(string monster)
+{
+    return Monsters[monster];
 }

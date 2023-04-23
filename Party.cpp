@@ -46,10 +46,7 @@ Player::Player()
     this -> diamondCirclets = 0; 
     this -> gemGoblets = 0;
     this -> imaginaryGlasses = 0; 
-
-
     
-
 }
 
 
