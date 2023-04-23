@@ -1,4 +1,5 @@
 #include "Party.h"
+#include
 
 //Default constructor
 Player::Player()
@@ -109,6 +110,62 @@ void Player::decrementFullness(string partyMember)
     this -> fullnessLevels[partyMember] --;
 }
 
+void Player::hungerMisfortune(int chances){
+    srand(time(0));
+    int chaos[5];
+    for(int i=0;i < 5; i++){
+        chaos[i] = rand() % chances;
+    }
+
+    if(chaos[0]<=20){
+        decrementFullness(getPlayerName());   
+    }
+    if(chaos[1]<=20){
+        decrementFullness(getMember1Name());  
+    }
+    if(chaos[2]<=20){
+        decrementFullness(getMember2Name());  
+    }
+    if(chaos[3]<=20){
+        decrementFullness(getMember3Name());  
+    }
+    if(chaos[4]<=20){
+        decrementFullness(getMember4Name());  
+    }
+
+}
+void Player::incrementTreasure(int roomsCleared){
+    switch(roomsCleared){
+        case 0:
+            this -> silverRings ++;
+        break;
+        case 1:
+            this -> rubyNecklaces ++;
+        break;
+        case 2:
+            this -> emeraldBracelets ++;
+        break;
+        case 3:
+            this -> diamondCirclets ++;
+        break;
+        case 4:
+            this -> gemGoblets ++;
+        break;
+    }
+} 
+void Player::investigate(int roomsCleared){
+    srand(time(0));
+    int chaos = rand() % 1000;
+    cout<<chaos<<endl;
+    if (chaos<100){
+        incrementKeys();
+    }else if (chaos<300){
+        incrementTreasure(roomsCleared);
+    }else if(chaos<500){
+        //monster fight activated
+    }
+    hungerMisfortune(40);
+}
 //Player::cookFood function definition
 //Cooks food in incrememnts of 5 kg since there are 5 team members
 //The input argument is the number of servings that will be cooked

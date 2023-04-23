@@ -306,11 +306,11 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
         switch (confirm)
         {
         case 'y':
-            cout << "You have good taste my friend." << std::endl;
+            cout << "You have good taste my friend.\n\n\n------------------------------------------------------------\n\n\n" << std::endl;
             return -price;
             break;
         case 'n':
-            cout << "You're smart, only a fool would have made that purchase." << std::endl;
+            cout << "You're smart, only a fool would have made that purchase.\n\n\n------------------------------------------------------------\n\n\n" << std::endl;
             return 0;
             break;
         }
@@ -319,27 +319,50 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
     {
         if (quantity>1)suffix += "s";
         price = costPerUnit * quantity;
-        cout << "You wish to sell to me " << quantity << " " << item << suffix << "?" << std::endl;
+        cout << "You wish to sell to me " << quantity << " " << item << suffix << "?(y/n)" << std::endl;
         cin >> confirm;
         switch (confirm)
         {
         case 'y':
-            cout << "Thank you dearly for your buisness.\n\n" << std::endl;
+            cout << "Thank you dearly for your buisness.\n\n\n------------------------------------------------------------\n\n\n" << std::endl;
             if(!valid){
                 return 1;
             }
             return price;
             break;
         case 'n':
-            cout << "I didnt want your " << item << suffix << " anyway!" << std::endl;
+            cout << "I didn't want your " << item << suffix << " anyway!\n\n\n------------------------------------------------------------\n\n\n" << std::endl;
             return 0;
             break;
         }
     }
     else if (quantity < 0)
     {
-        cout << "please enter a valid quantity next time" << std::endl;
+        cout << "please enter a valid quantity next time\n\n\n------------------------------------------------------------\n\n\n" << std::endl;
         return 0;
     } 
     return 0;
 }
+void Prompts::currentStatus(Player &player, Merchant &merchant, Map &map){
+    cout << "+-------------------+\n"
+         << "|  Status           | Rooms Cleared: "<< merchant.getRoomsCleared()<<" | Keys: "<<player.getNumKeys()<<" | Sorcerer's Anger Level: "<<map.getNumSpacesExplored()
+         << "\n+-------------------+\n"
+         << "+-------------------+\n"
+         << "|  Inventory        |\n"
+         << "+-------------------+\n"
+         << "| Gold              | " << player.getGold() << " |\n"
+         << "| Indregients       | " << player.getIngredients() << " kg |\n"
+         << "| Cookware          | P: " << player.getCeramicPots() << "| F: " << player.getFryingPans() << "| C:" << player.getCauldrons() << "|\n"
+         << "| Weapons           | C: " << player.getStoneClubs() << "| S: " << player.getIronSpears() << "| R: " << player.getMythrilRapiers() << "| B: " << player.getFlamingAxes() << "| L: " << player.getVorpalSwords() << "|\n"
+         << "| Armor             | " << player.getArmorSuits() << " |\n"
+         << "| Treasures         | R:" << player.getSilverRings() << "| N: " << player.getRubyNecklaces() << "| B: " << player.getEmeraldBracelets() << "| C: " << player.getDiamondCirclets() << "| G: " << player.getGemGoblets() << "|\n";
+         if(player.getImaginaryGlasses() > 0)cout<<"| Imaginary Glasses | "<<player.getImaginaryGlasses()<<" |\n";
+         if(player.getImaginaryGlasses() > 0)cout<<"| Imaginary Glasses | "<<player.getImaginaryGlasses()<<" |\n";
+    cout << "+-------------------+\n"
+         << "\n| "<<player.getPlayerName()<<" | Fullness: "<< player.getFullness(player.getPlayerName())
+         << "\n| "<<player.getMember1Name()<<" | Fullness: "<< player.getFullness(player.getMember1Name())
+         << "\n| "<<player.getMember2Name()<<" | Fullness: "<< player.getFullness(player.getMember2Name())
+         << "\n| "<<player.getMember3Name()<<" | Fullness: "<< player.getFullness(player.getMember3Name())
+         << "\n| "<<player.getMember4Name()<<" | Fullness: "<< player.getFullness(player.getMember4Name())
+         << "\n\n+---------------------+\n";
+ }

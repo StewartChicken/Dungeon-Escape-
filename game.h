@@ -17,6 +17,7 @@ class Game
         Prompts prompts;
 
         Merchant merchant;
+        
         Player player;
 
     public:

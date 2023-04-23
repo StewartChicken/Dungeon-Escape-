@@ -16,6 +16,7 @@ class Player
         map<string, int> fullnessLevels;
         string partyNames[5];
 
+        /*!!Remember to set up gold too!!(100 initial gold for the pary)*/
 
         //Combat values
 
@@ -120,6 +121,10 @@ class Player
 
         void incrementImaginaryGlasses();
 
+        //Sudorandom events
+        void hungerMisfortune(int chances);
+        void investigate(int roomsCleared);
+        void incrementTreasure(int roomsCleared);
         
 
         //Combat methods

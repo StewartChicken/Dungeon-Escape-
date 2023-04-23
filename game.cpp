@@ -80,7 +80,9 @@ void Game::movementPhase()
             {
                 map.setPlayerPosition(newRow, newCol);
                 map.updateMap();
+                prompts.currentStatus(player, merchant, map);
                 map.displayMap();
+                player.hungerMisfortune(100);
             }
             else
             {
@@ -91,8 +93,10 @@ void Game::movementPhase()
         }
         else if(input == 'e')
         {
+            prompts.currentStatus(player, merchant, map);
             map.exploreSpace(map.getPlayerRow(), map.getPlayerCol());
             map.displayMap();
+            player.investigate(merchant.getRoomsCleared());
         }
         else
         {

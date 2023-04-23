@@ -37,6 +37,7 @@ private:
     //(NPC isFound status) * 5
     vector<int> positionData;
 
+    int numSpacesExplored = 0;
     bool exploredData[numRows][numCols]; //Is a space explored
     bool clearedData[numRows][numCols]; //Is a room/NPC cleared (no longer accessible)
     char mapData[numRows][numCols]; // stores the character that will be shown at a given (row,col)
@@ -60,6 +61,7 @@ public:
     int getNPCCount();
     int getNumRows();
     int getNumCols();
+    int getNumSpacesExplored();
     bool isOnMap(int row, int col);
     bool isNPCLocation(int row, int col);
     bool isRoomLocation(int row, int col);
@@ -78,6 +80,7 @@ public:
     void setDungeonExit(int row, int col);
 
     // other
+    void incrementNumSpacesExplored();
     void clearSpace(int row, int col);
     void exploreSpace(int row, int col);
 

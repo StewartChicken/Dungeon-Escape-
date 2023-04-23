@@ -254,6 +254,10 @@ int Map::getNumCols()
     return numCols;
 }
 
+int Map::getNumSpacesExplored(){
+return numSpacesExplored;
+}
+
 bool Map::isOnMap(int row, int col)
 {
     return (row >= 0 && row < numRows && col >= 0 && col < numCols);
@@ -353,7 +357,9 @@ void Map::setDungeonExit(int row, int col)
     positionData.at(2) = row;
     positionData.at(3) = col;
 }
-
+void Map::incrementNumSpacesExplored(){
+    numSpacesExplored++;
+}
 void Map::clearSpace(int row, int col)
 {
     clearedData[row][col] = true;
@@ -361,7 +367,10 @@ void Map::clearSpace(int row, int col)
 
 void Map::exploreSpace(int row, int col)
 {
-    exploredData[row][col] = true;
+    if(!exploredData[row][col]){
+        exploredData[row][col] = true;
+        incrementNumSpacesExplored();
+    }
 }
 
 //Prints all the position data for each entity on the map
