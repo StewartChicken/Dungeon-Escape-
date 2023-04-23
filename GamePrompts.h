@@ -24,10 +24,17 @@ class Prompts
         int purchaseCost(int choice, Merchant &merchant, Player &player);
         void currentStatus(Player &player, Merchant &merchant, Map &map);
         void initialMerchantPrompt(Player &player);
+
+        //Major buy menu prompts
+        void ingredientBuyMenu(Merchant &merchant, int &costPerUnit, string &item, string &quantitySuffix);
         void cookwareBuyMenu();
         void weaponBuyMenu();
         void sellTreasureMenu(Merchant &merchant);
-        void armorBuyMenu(Merchant &merchant);
+        void armorBuyMenu(Merchant &merchant, string &item);
+
+        //Buy sub-menus
+
+
         void imaginaryGlassesPrompt();
         void brokePrompt();
         

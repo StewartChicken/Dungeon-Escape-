@@ -91,7 +91,7 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
     string item = "";
     int costPerUnit = 0;
     string suffix = "";
-    string quantity_suffix = "";
+    string quantitySuffix = "";
     string prefix = "";
     int quantity = 0;
     bool selling = false;
@@ -104,12 +104,8 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
     case 1:
         do
         {
-            costPerUnit = merchant.getIngredientPrice();
-            cout << "You should by atleast 10kg of ingredients per player. [" << costPerUnit << " gold per kg]" << std::endl;
-            item = "Ingredients";
-            cout << "How many kg of " << item << " can I get you?(Enter a positive integer, or 0 to cancel)" << std::endl;
+            ingredientBuyMenu(merchant, costPerUnit, item, quantitySuffix);
             cin >> quantity;
-            quantity_suffix = "kg";
         } while (quantity < 0);
         break;
     case 2:
@@ -201,7 +197,7 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
         }
         break;
     case 4:
-        armorBuyMenu(merchant);
+        armorBuyMenu(merchant, item);
         cin >> quantity;
         prefix = " suit";
         break;
@@ -260,7 +256,7 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
     if (quantity > 0 && !selling)
     {
         price = costPerUnit * quantity;
-        if (quantity > 1 && quantity_suffix != "kg" && item != "Armor")
+        if (quantity > 1 && quantitySuffix != "kg" && item != "Armor")
         {
             suffix += "s";
         }
@@ -274,7 +270,7 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
         }
         do
         {
-            cout << "You want to buy " << quantity <<quantity_suffix<<" "<< prefix << item << suffix << " for " << price << " gold?(y/n)" << std::endl;
+            cout << "You want to buy " << quantity <<quantitySuffix<<" "<< prefix << item << suffix << " for " << price << " gold?(y/n)" << std::endl;
             cin >> confirm;
         } while (confirm != 'y' && confirm != 'n');
         switch (confirm)
@@ -342,6 +338,16 @@ void Prompts::currentStatus(Player &player, Merchant &merchant, Map &map){
          << "\n\n+---------------------+\n";
  }
 
+// Ingredient buy menu
+void Prompts::ingredientBuyMenu(Merchant &merchant, int &costPerUnit, string &item, string &quantitySuffix)
+{
+    costPerUnit = merchant.getIngredientPrice();
+    cout << "You should by atleast 10kg of ingredients per player. [" << costPerUnit << " gold per kg]" << std::endl;
+    item = "Ingredients";
+    cout << "How many kg of " << item << " can I get you?(Enter a positive integer, or 0 to cancel)" << std::endl;
+    quantitySuffix = "kg";
+}
+
 // Cookware buy menu
 void Prompts::cookwareBuyMenu()
 {
@@ -388,12 +394,14 @@ void Prompts::sellTreasureMenu(Merchant &merchant)
 }
 
 // Armor buy menu
-void Prompts::armorBuyMenu(Merchant &merchant)
+void Prompts::armorBuyMenu(Merchant &merchant, string &item)
 {
     cout << "Armor protects you from monsters. Equipping your team with the maximum amount of armor (1 armor per person)\n"
             "will maximize your chances of survival during an attack. Adding more armor on top of the maximum amount will\n"
             "not increase your chances further.\n"
              "How many suits of Armor can I get you? [" << merchant.getArmorSuitPrice() << " gold](Enter a positive integer, or 0 to cancel)\n";
+
+             item = "Armor";
 }
 
 // Imaginary glasses prompt - user tries to sell treasures they don't have
