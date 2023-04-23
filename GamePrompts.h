@@ -13,19 +13,28 @@ class Prompts
 {
 
     public:
-        //Prompts player to enter their name
-        string playerNamePrompt();
-        string memberNamePrompt();
+        //Introductory prompts
+        string playerNamePrompt(); //Enter player name
+        string memberNamePrompt(); //Enter team member names
+        void teamGreetingPrompt(string, string, string, string, string); //Greet team members
+        void goodLuckPrompt();
 
-        void teamGreetingPrompt(string, string, string, string, string);
-
-        int merchantPrompt(Player &player);
-
-        void currentStatus(Player &player, Merchant &merchant, Map &map);
-
-        void initialMerchantPrompt(Player &player);
-
+        //Merchant Prompts
+        int merchantPrompt(Player &player);\
         int purchaseCost(int choice, Merchant &merchant, Player &player);
+        void currentStatus(Player &player, Merchant &merchant, Map &map);
+        void initialMerchantPrompt(Player &player);
+        void cookwareBuyMenu();
+        void weaponBuyMenu();
+        void sellTreasureMenu(Merchant &merchant);
+        void armorBuyMenu(Merchant &merchant);
+        void imaginaryGlassesPrompt();
+        void brokePrompt();
+        
+        void movementExplorePrompt();
+        void movementErrorPrompt();
+        void invalidPositionPrompt();
+        void invalidInputPrompt();
 
 };
 

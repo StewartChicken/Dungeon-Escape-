@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Game.h"
 
 void Game::start()
@@ -23,12 +22,12 @@ void Game::merchantInteraction(Player &player, Merchant &merchant){
     choice = prompts.merchantPrompt(player);
     price = prompts.purchaseCost(choice, merchant, player);
     if(choice == 6){
-        cout<<"Good Luck!\n";
+        prompts.goodLuckPrompt();
     }else if(price == 1){
-        cout<<"Here's some imaginary glasses so you can look for the non-existant treasure you just tried to sell me since you want to play make believe.\n\n\n";
+        prompts.imaginaryGlassesPrompt();
         player.incrementImaginaryGlasses();
     }else if(player.getGold() < -price){
-        cout<<"You're too broke to buy that. Dont come around here with your empty pockets trying to play games. I dont got time for that, ain't nobody got time for that!\n\n\n";
+        prompts.brokePrompt(); 
     }else{
         player.setGold(player.getGold() + price);
     }
@@ -47,7 +46,7 @@ void Game::movementPhase()
     while(true)
     {
 
-        cout << "Press 'w', 'a', 's' or 'd' to move. Press 'e' to clear the explore the space\n";
+        prompts.movementExplorePrompt();
         cin >> input;
         
         if(map.isMovementKey(input))
@@ -71,7 +70,7 @@ void Game::movementPhase()
                     newCol ++;
                     break;
                 default:
-                    cout << "Something went wrong with player movement\n";
+                    prompts.movementExplorePrompt();
                     break;
 
             };
@@ -86,7 +85,7 @@ void Game::movementPhase()
             }
             else
             {
-                cout << "Invalid player position\n";
+                prompts.invalidPositionPrompt();
                 map.displayMap();
             }
 
@@ -100,7 +99,7 @@ void Game::movementPhase()
         }
         else
         {
-            cout << "Invalid Input\n";
+            prompts.invalidInputPrompt();
             map.displayMap();
         }
     }

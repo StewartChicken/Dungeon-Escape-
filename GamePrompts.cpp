@@ -5,7 +5,7 @@
 #include <string>
 #include "GamePrompts.h"
 
-using std::cin;
+using std::cin;  
 using std::cout;
 using std::string;
 
@@ -38,6 +38,12 @@ void Prompts::teamGreetingPrompt(string playerName, string member1, string membe
     cout << "Welcome " << member2 << "!\n";
     cout << "Welcome " << member3 << "!\n";
     cout << "Welcome " << member4 << "!\n";
+}
+
+// Good luck
+void goodLuckPrompt()
+{
+    cout << "Good Luck!\n";
 }
 
 // Merchant prompt
@@ -109,13 +115,7 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
     case 2:
         do
         {
-            cout << "You need cookware in order to turn your ingredients into food wich, when consumed, will replenish" << std::endl
-                 << "your fullness levels or that of your companions." << std::endl
-                 << "1.) Ceramic pot (25% chance of breaking)" << std::endl
-                 << "2.) Frying pan (10% chance of breaking)" << std::endl
-                 << "3.) Cauldron (2% chance of breaking)" << std::endl
-                 << "The more dependable items will be more expensive, are you a chaepskate?"
-                 << "(Enter a positive integer, or 0 to cancel)" << std::endl;
+            cookwareBuyMenu();
             cin >> choice;
         } while (choice < 0 || choice > 3);
         if (choice == 0)
@@ -159,21 +159,7 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
     case 3:
         do
         {
-            cout << "You need weapons to be able to fend off" << std::endl
-                 << "monsters, otherwise, you can only run!" << std::endl
-                 << "Equipping your team with the maximum" << std::endl
-                 << "number of weapons (1 weapon per person)" << std::endl
-                 << "and buying upgraded weapons that are" << std::endl
-                 << "worth 5 gold pieces will maximize your" << std::endl
-                 << "chances of survival during an attack. You can" << std::endl
-                 << "have a maximum of 5 weapons. These are" << std::endl
-                 << " the different types of weapons: " << std::endl
-                 << "1.) Club" << std::endl
-                 << "2.) Spear" << std::endl
-                 << "3.) +1 Rapier" << std::endl
-                 << "4.) +2 Battle-axe" << std::endl
-                 << "5.) +3 Longsword" << std::endl
-                 << "Which weapon catches your fancy?(Enter a positive integer, or 0 to cancel)" << std::endl;
+            weaponBuyMenu();
             cin >> choice;
         } while (choice < 0 || choice > 5);
         if (choice == 0)
@@ -215,12 +201,7 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
         }
         break;
     case 4:
-        item = "Armor";
-        costPerUnit = merchant.getArmorSuitPrice();
-        cout << "Armor protects you from monsters. Equipping your team with the maximum amount of armor (1 armor per person)" << std::endl
-             << "will maximize your chances of survival during an attack. Adding more armor on top of the maximum amount will" << std::endl
-             << "not increase your chances further." << std::endl
-             << "How many suits of " << item << " can I get you? [" << costPerUnit << " gold](Enter a positive integer, or 0 to cancel)" << std::endl;
+        armorBuyMenu(merchant);
         cin >> quantity;
         prefix = " suit";
         break;
@@ -228,14 +209,7 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
         selling = true;
         do
         {
-            cout << "During your journey, you may encounter pieces of treasure in each room. When you The price of each treasure" << std::endl
-                 << "depends upon the number of rooms cleared when it was found. Once you sell a piece of treasure, I cannot sell" << std::endl
-                 << "it back to you" << std::endl
-                 << "1.) Silver ring [" << merchant.getSilverRingValue() << " gold]" << std::endl
-                 << "2.) Emerald bracelet [" << merchant.getSilverRingValue() << " gold]" << std::endl
-                 << "3.) Diamond circlet [" << merchant.getSilverRingValue() << " gold]" << std::endl
-                 << "4.) Gem-encrusted goblet [" << merchant.getSilverRingValue() << " gold]" << std::endl
-                 << "What do you have for me?" << std::endl;
+            sellTreasureMenu(merchant);
             cin >> choice;
         } while (choice < 0 || choice > 4);
         if (choice == 0)
@@ -343,6 +317,7 @@ int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
     } 
     return 0;
 }
+
 void Prompts::currentStatus(Player &player, Merchant &merchant, Map &map){
     cout << "+-------------------+\n"
          << "|  Status           | Rooms Cleared: "<< merchant.getRoomsCleared()<<" | Keys: "<<player.getNumKeys()<<" | Sorcerer's Anger Level: "<<map.getNumSpacesExplored()
@@ -366,3 +341,93 @@ void Prompts::currentStatus(Player &player, Merchant &merchant, Map &map){
          << "\n| "<<player.getMember4Name()<<" | Fullness: "<< player.getFullness(player.getMember4Name())
          << "\n\n+---------------------+\n";
  }
+
+// Cookware buy menu
+void Prompts::cookwareBuyMenu()
+{
+    cout << "You need cookware in order to turn your ingredients into food wich, when consumed, will replenish\n"
+            "your fullness levels or that of your companions.\n"
+            "1.) Ceramic pot (25% chance of breaking)\n"
+            "2.) Frying pan (10% chance of breaking)\n"
+            "3.) Cauldron (2% chance of breaking)\n"
+            "The more dependable items will be more expensive, are you a chaepskate?"
+            "(Enter a positive integer, or 0 to cancel)\n";
+}
+
+// Weapon buy menu
+void Prompts::weaponBuyMenu()
+{
+    cout << "You need weapons to be able to fend off\n"
+            "monsters, otherwise, you can only run\n!"
+            "Equipping your team with the maximum\n"
+            "number of weapons (1 weapon per person)\n"
+            "and buying upgraded weapons that are\n"
+            "worth 5 gold pieces will maximize you\n"
+            "chances of survival during an attack. You can\n"
+            "have a maximum of 5 weapons. These are\n"
+            " the different types of weapons: \n"
+            "1.) Club\n"
+            "2.) Spear\n"
+            "3.) +1 Rapier\n"
+            "4.) +2 Battle-axe\n"
+            "5.) +3 Longsword\n"
+            "Which weapon catches your fancy?(Enter a positive integer, or 0 to cancel)\n";
+}
+
+// Sell treasure menu
+void Prompts::sellTreasureMenu(Merchant &merchant)
+{
+    cout << "During your journey, you may encounter pieces of treasure in each room. When you The price of each treasure\n"
+            "depends upon the number of rooms cleared when it was found. Once you sell a piece of treasure, I cannot sell\n"
+            "it back to you\n"
+            "1.) Silver ring [" << merchant.getSilverRingValue() << " gold]\n"
+            "2.) Emerald bracelet [" << merchant.getSilverRingValue() << " gold]\n"
+            "3.) Diamond circlet [" << merchant.getSilverRingValue() << " gold]\n"
+            "4.) Gem-encrusted goblet [" << merchant.getSilverRingValue() << " gold]\n"
+            "What do you have for me?\n";
+}
+
+// Armor buy menu
+void Prompts::armorBuyMenu(Merchant &merchant)
+{
+    cout << "Armor protects you from monsters. Equipping your team with the maximum amount of armor (1 armor per person)\n"
+            "will maximize your chances of survival during an attack. Adding more armor on top of the maximum amount will\n"
+            "not increase your chances further.\n"
+             "How many suits of Armor can I get you? [" << merchant.getArmorSuitPrice() << " gold](Enter a positive integer, or 0 to cancel)\n";
+}
+
+// Imaginary glasses prompt - user tries to sell treasures they don't have
+void Prompts::imaginaryGlassesPrompt()
+{
+cout << "Here's some imaginary glasses so you can look for the non-existant treasure you just tried to sell me since you want to play make believe.\n\n\n";
+}
+
+// Player doesn't have enough money
+void Prompts::brokePrompt()
+{
+    cout << "You're too broke to buy that. Dont come around here with your empty pockets trying to play games. I dont got time for that, ain't nobody got time for that!\n\n\n";
+}
+
+// Informs user which actions they can take within the movement menu
+void Prompts::movementExplorePrompt()
+{
+    cout << "Press 'w', 'a', 's' or 'd' to move. Press 'e' to clear the explore the space\n";
+}
+
+// Error with player movement
+void Prompts::movementErrorPrompt()
+{
+    cout << "Something went wrong with player movement\n";
+}
+
+// Invalid position for party
+void Prompts::invalidPositionPrompt()
+{
+    cout << "Invalid player position\n";
+}
+
+// Invalid user input
+void Prompts::invalidInputPrompt()
+{
+    cout << "Invalid Input\n";
+}
