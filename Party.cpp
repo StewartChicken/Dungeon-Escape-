@@ -167,6 +167,52 @@ void Player::investigate(int roomsCleared){
     }
     hungerMisfortune(40);
 }
+//chosses cookware, 1 through 3
+/*
+1.) ceramic pot
+2.) frying pan
+3.) cauldron
+*/
+bool Player::cookedSuccessfully(int cookingWith){
+    bool success = false;
+    srand(time(0));
+    int chaos = rand() % 100;
+    switch(cookingWith){
+        case 1:
+            if(getCeramicPots()<=0){
+                break;
+            }
+            if(chaos<25){
+                setCeramicPots(getCeramicPots()-1);
+
+            }else {
+                success=true;
+            }
+        break;
+        case 2:
+            if(getFryingPans()<=0){
+                break;
+            }
+            if(chaos<10){
+                setFryingPans(getFryingPans()-1);
+            }else {
+                success=true;
+            }
+        break;
+        case 3:
+            if(getCauldrons()<=0){
+                break;
+            }
+            if(chaos<25){
+                setCauldrons(getCauldrons()-1);
+            }else {
+                success = true;
+            }
+        break;
+    }
+    return success;
+}
+//prompt by serving size
 //Player::cookFood function definition
 //Cooks food in incrememnts of 5 kg since there are 5 team members
 //The input argument is the number of servings that will be cooked
@@ -174,9 +220,21 @@ void Player::investigate(int roomsCleared){
 //Successful cooks will increase fullness by 1 for each team member
 //If the pot breaks, cook fails and the food is lost
 //Returns void
-void Player::cookFood(int servings)
+void Player::cookFood(int servings,int cookingWith)
 {
-    //Todo
+    int fullness_earned = 0;
+    for(int i = 0; i<servings; i++){
+        setIngredients(getIngredients()-5);
+        fullness_earned++;
+    }
+    if(cookedSuccessfully(cookingWith)){
+        setFullnessLevel(getPlayerName(), getFullness(getPlayerName())+fullness_earned);
+        setFullnessLevel(getMember1Name(), getFullness(getMember1Name())+fullness_earned);
+        setFullnessLevel(getMember2Name(), getFullness(getMember2Name())+fullness_earned);
+        setFullnessLevel(getMember3Name(), getFullness(getMember3Name())+fullness_earned);
+        setFullnessLevel(getMember4Name(), getFullness(getMember4Name())+fullness_earned);
+    }
+    
 }
 
 

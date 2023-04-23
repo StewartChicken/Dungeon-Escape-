@@ -91,7 +91,7 @@ class Player
         void decrementFullness(string);
         
         //Cooks and eats food in increments of 5kgs
-        void cookFood(int);
+        void cookFood(int,int);
 
 
         //Inventory methods
