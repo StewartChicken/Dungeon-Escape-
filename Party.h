@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <cstdlib>
+#include "time.h"
 
 using std::string;
 using std::map;
@@ -149,7 +151,8 @@ class Player
 
         //Calculates combat score - chance of winning a fight against
         // a monster. Takes the current monster challenge rating as an argument. 
-        void calculateCombatScore(int);
+        double calculateCombatScore(int);
+        bool winsFight(int combatScore);
 
 
         //Cookware methods

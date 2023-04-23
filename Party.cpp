@@ -367,8 +367,14 @@ void Player::setArmorSuits(int armorSuits)
 // c is the challenge rating of the monster
 
 //TODO - random numbers for r1, r2. Return combat score
-void Player::calculateCombatScore(int monsterChallengeRating)
+double Player::calculateCombatScore(int roomsCleared)
 {
+
+    srand(time(0));
+
+    int r1 = rand() % 6 + 1;
+    int r2 = rand() % 6 + 1;
+
     int w = numWeapons + mythrilRapiers + 2 * flamingAxes + 3 * vorpalSwords;
 
     //Calculate d
@@ -386,13 +392,38 @@ void Player::calculateCombatScore(int monsterChallengeRating)
     //number of armor suits
     int a = armorSuits;
 
-    int c = monsterChallengeRating;
+    int c; //Monster challenge rating
 
-    //int r1 = [RANDOM NUMBER]
-    //int r2 = [RANDOM NUMBER]
+    switch(roomsCleared)
+    {
+        case 0:
+            c = 2;
+            break;
+        case 1:
+            c = 3;
+            break;
+        case 2:
+            c = 4;
+            break;
+        case 3:
+            c = 5;
+            break;
+        case 4:
+            c = 6;
+            break;
+        default:
+            break;
+    };
+
+    return (r1 * w + d) - double(r2 * c) / double(a);
 
 }
 
+//Determins if player wins fight against monster based on their combat score
+bool Player::winsFight(int combatScore)
+{
+    return combatScore > 0 ? true : false;
+}
 
 //Cookware methods
 
