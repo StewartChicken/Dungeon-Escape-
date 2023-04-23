@@ -8,7 +8,7 @@ class Merchant
     private:
 
         //Number of rooms cleared by player - impacts multiplier
-        int roomsCleared;
+        int roomsCleared = 0;
 
         //Determines the multiplier for the price of goods
         float multiplier;

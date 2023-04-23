@@ -1,4 +1,5 @@
 #include "Party.h"
+#include <iostream>
 #include "time.h"
 
 //Default constructor
@@ -46,7 +47,10 @@ Player::Player()
     this -> diamondCirclets = 0; 
     this -> gemGoblets = 0;
     this -> imaginaryGlasses = 0; 
+
+
     
+
 }
 
 
@@ -152,13 +156,13 @@ void Player::incrementTreasure(int roomsCleared){
 } 
 void Player::investigate(int roomsCleared){
     srand(time(0));
-    int chaos = rand() % 1000;
-    //cout<<chaos<<endl;
-    if (chaos<100){
-        incrementKeys();
-    }else if (chaos<300){
+    int chaos = rand() % 100;
+    std::cout<<chaos<<std::endl;
+    if (chaos<20){
         incrementTreasure(roomsCleared);
-    }else if(chaos<500){
+    }else if (chaos<30){
+        incrementKeys();
+    }else if(chaos<50){
         //monster fight activated
     }
     hungerMisfortune(40);
