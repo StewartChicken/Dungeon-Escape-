@@ -1,6 +1,6 @@
 #include "Party.h"
-#include "time.h"
 #include <iostream>
+#include "time.h"
 
 //Default constructor
 Player::Player()
@@ -35,7 +35,7 @@ Player::Player()
 
     //Party default inventory values
 
-    this -> gold = 0;
+    this -> gold = 100;
     this -> numKeys = 0;
     this -> ingredients = 0;
 
@@ -118,19 +118,19 @@ void Player::hungerMisfortune(int chances){
         chaos[i] = rand() % chances;
     }
 
-    if(chaos[0]<=20){
+    if(chaos[0]<20){
         decrementFullness(getPlayerName());   
     }
-    if(chaos[1]<=20){
+    if(chaos[1]<20){
         decrementFullness(getMember1Name());  
     }
-    if(chaos[2]<=20){
+    if(chaos[2]<20){
         decrementFullness(getMember2Name());  
     }
-    if(chaos[3]<=20){
+    if(chaos[3]<20){
         decrementFullness(getMember3Name());  
     }
-    if(chaos[4]<=20){
+    if(chaos[4]<20){
         decrementFullness(getMember4Name());  
     }
 
