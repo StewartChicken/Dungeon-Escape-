@@ -47,20 +47,63 @@ void Prompts::goodLuckPrompt()
 }
 
 // Merchant prompt
-int Prompts::merchantPrompt(Player &player)
+void Prompts::merchantPrompt(Player &player, Merchant &merchant)
+{
+    int choice = 0;
+    bool merchantMenuActive = true;
+
+    while(merchantMenuActive)
+    {
+        merchantInteraction(player, merchant, merchantMenuActive);
+    }
+    
+}
+
+void Prompts::merchantInteraction(Player &player, Merchant &merchant, bool &active)
 {
     int choice = 0;
 
-    while (choice < 1 || choice > 6)
+    //While the input is not a valid choice
+    while(choice < 1 || choice > 6)
     {
-        initialMerchantPrompt(player);
+        merchantGreeting(player);
         cin >> choice;
     }
 
-    return choice;
+    int itemCount;
+
+    switch(choice)
+    {
+        case 1:
+            itemCount = itemBuyMenu(player, merchant, merchant.getIngredientPrice(), "kg(s) of Ingredients");
+            player.setIngredients(player.getIngredients() + itemCount);
+            break;
+        case 2:
+            cookwareBuyMenu(player, merchant);
+            break;
+        case 3:
+            weaponBuyMenu(player, merchant);
+            break;
+        case 4:
+            itemCount = itemBuyMenu(player, merchant, merchant.getArmorSuitPrice(), "Armor suit(s)");
+
+            //check if player's suits exceed 5 - create method later
+            player.setArmorSuits(player.getArmorSuits() + itemCount);
+            break;
+        case 5:
+            sellTreasureMenu(player, merchant);
+            break;
+        case 6:
+            active = false;
+            break;
+        default:
+            cout << "Error - merchantInteraction\n";
+            break;
+    };
 }
 
-void Prompts::initialMerchantPrompt(Player &player)
+//Prints the greeting card from the merchant
+void Prompts::merchantGreeting(Player &player)
 {
     cout << "If you're looking to get supplies, you've come to the right place.\n";
     cout << "I would be happy to part with some of my wares...for the proper price!\n\n\n";
@@ -86,237 +129,298 @@ void Prompts::initialMerchantPrompt(Player &player)
          << ">";
 }
 
-int Prompts::purchaseCost(int choice, Merchant &merchant, Player &player)
+
+//Returns number of items bought
+int Prompts::itemBuyMenu(Player &player, Merchant &merchant, int price, string itemLabel)
 {
-    string item = "";
-    int costPerUnit = 0;
-    string suffix = "";
-    string quantitySuffix = "";
-    string prefix = "";
-    int quantity = 0;
-    bool selling = false;
-    bool finished = false;
-    char confirm = 'o';
-    bool valid = false;
-    int price = 0;
-    switch (choice)
+    int amount = -1;
+
+    while(amount < 0)
     {
-    case 1:
-        do
+        cout << "How many " << itemLabel << " would you like to buy? (" << price << " Gold each). Press 0 to cancel.\n";
+        cin >> amount;
+
+        if(amount < 0)
         {
-            ingredientBuyMenu(merchant, costPerUnit, item, quantitySuffix);
-            cin >> quantity;
-        } while (quantity < 0);
-        break;
-    case 2:
-        do
-        {
-            cookwareBuyMenu();
-            cin >> choice;
-        } while (choice < 0 || choice > 3);
-        if (choice == 0)
-        {
-            break;
-        }
-        switch (choice)
-        {
-        case 1:
-            item = "Ceramic pot";
-            costPerUnit = merchant.getCeramicPotPrice();
-            cout << "How many " << item << "s can I get you? [" << costPerUnit << " gold]" << std::endl;
-            cin >> quantity;
-            break;
-        case 2:
-            item = "Frying pan";
-            costPerUnit = merchant.getFryingPanPrice();
-            cout << "How many " << item << "s can I get you? [" << costPerUnit << " gold]" << std::endl;
-            cin >> quantity;
-            break;
-        case 3:
-            item = "Cauldron";
-            costPerUnit = merchant.getCauldronPrice();
-            cout << "How many " << item << "s can I get you? [" << costPerUnit << " gold]" << std::endl;
-            cin >> quantity;
-            break;
-        case 4:
-            item = "Flaming Battle-Axe";
-            costPerUnit = merchant.getFlamingAxePrice();
-            cout << "How many " << item << "s can I get you? [" << costPerUnit << " gold]" << std::endl;
-            cin >> quantity;
-            break;
-        case 5:
-            item = "Vorpal Longswords";
-            costPerUnit = merchant.getStoneClubPrice();
-            cout << "How many " << item << "s can I get you? [" << costPerUnit << " gold]" << std::endl;
-            cin >> quantity;
-            break;
-        }
-        break;
-    case 3:
-        do
-        {
-            weaponBuyMenu();
-            cin >> choice;
-        } while (choice < 0 || choice > 5);
-        if (choice == 0)
-        {
-            break;
-        }
-        switch (choice)
-        {
-        case 1:
-            item = "Stone Club";
-            costPerUnit = merchant.getStoneClubPrice();
-            cout << "How many " << item << "s can I get you? [" << costPerUnit << " gold] (Enter a positive integer, or 0 to cancel)" << std::endl;
-            cin >> quantity;
-            break;
-        case 2:
-            item = "Iron Spear";
-            costPerUnit = merchant.getIronSpearPrice();
-            cout << "How many " << item << "s can I get you? [" << costPerUnit << " gold] (Enter a positive integer, or 0 to cancel)" << std::endl;
-            cin >> quantity;
-            break;
-        case 3:
-            item = "Mythril Rapier";
-            costPerUnit = merchant.getMythrilRapierPrice();
-            cout << "How many " << item << "s can I get you? [" << costPerUnit << " gold] (Enter a positive integer, or 0 to cancel)" << std::endl;
-            cin >> quantity;
-            break;
-        case 4:
-            item = "Flaming Battle-Axe";
-            costPerUnit = merchant.getFlamingAxePrice();
-            cout << "How many " << item << "s can I get you? [" << costPerUnit << " gold] (Enter a positive integer, or 0 to cancel)" << std::endl;
-            cin >> quantity;
-            break;
-        case 5:
-            item = "Vorpal Longswords";
-            costPerUnit = merchant.getStoneClubPrice();
-            cout << "How many " << item << "s can I get you? [" << costPerUnit << " gold] (Enter a positive integer, or 0 to cancel)" << std::endl;
-            cin >> quantity;
-            break;
-        }
-        break;
-    case 4:
-        armorBuyMenu(merchant, item);
-        cin >> quantity;
-        prefix = " suit";
-        break;
-    case 5:
-        selling = true;
-        do
-        {
-            sellTreasureMenu(merchant);
-            cin >> choice;
-        } while (choice < 0 || choice > 4);
-        if (choice == 0)
-        {
-            break;
-        }
-        switch (choice)
-        {
-        case 1:
-            item = "silver ring";
-            cout << "How many " << item << "s would you like to sell me?" << std::endl;
-            cin >> quantity;
-            costPerUnit = merchant.getSilverRingValue();
-            if(player.getSilverRings()>0){
-                valid=true;
-            }
-            break;
-        case 2:
-            item = "emerald bracelet";
-            cout << "How many " << item << "s would you like to sell me?" << std::endl;
-            cin >> quantity;
-            costPerUnit = merchant.getEmeraldBraceletValue();
-            if(player.getEmeraldBracelets()>0){
-                valid=true;
-            }
-            break;
-        case 3:
-            item = "diamond circlet";
-            cout << "How many " << item << "s would you like to sell me?" << std::endl;
-            cin >> quantity;
-            costPerUnit = merchant.getDiamondCircletValue();
-            if(player.getDiamondCirclets()>0){
-                valid=true;
-            }
-            break;
-        case 4:
-            item = "gem-encrusted goblet";
-            cout << "How many " << item << "s would you like to sell me?" << std::endl;
-            cin >> quantity;
-            costPerUnit = merchant.getGemGobletValue();
-            if(player.getGemGoblets()>0){
-                valid = true;
-            }
-            break;
-        }
-        break;
-    }
-    if (quantity > 0 && !selling)
-    {
-        price = costPerUnit * quantity;
-        if (quantity > 1 && quantitySuffix != "kg" && item != "Armor")
-        {
-            suffix += "s";
-        }
-        if (item == "Armor" || item == "Ingredients")
-        {
-            if (quantity > 1)
-            {
-                prefix += "s";
-            }
-            prefix += " of ";
-        }
-        do
-        {
-            cout << "You want to buy " << quantity <<quantitySuffix<<" "<< prefix << item << suffix << " for " << price << " gold?(y/n)" << std::endl;
-            cin >> confirm;
-        } while (confirm != 'y' && confirm != 'n');
-        switch (confirm)
-        {
-        case 'y':
-            cout << "You have good taste my friend.\n\n\n------------------------------------------------------------\n\n\n" << std::endl;
-            return -price;
-            break;
-        case 'n':
-            cout << "You're smart, only a fool would have made that purchase.\n\n\n------------------------------------------------------------\n\n\n" << std::endl;
-            return 0;
-            break;
+            negativeAmountWarning();
+            continue;
         }
     }
-    else if (quantity > 0 && selling)
+
+    if(amount > 0)
     {
-        if (quantity>1)suffix += "s";
-        price = costPerUnit * quantity;
-        cout << "You wish to sell to me " << quantity << " " << item << suffix << "?(y/n)" << std::endl;
-        cin >> confirm;
-        switch (confirm)
+        int itemsBought = confirmPurchase(player, merchant, amount, price, itemLabel);
+
+        if(itemsBought == 0)
         {
-        case 'y':
-            cout << "Thank you dearly for your buisness.\n\n\n------------------------------------------------------------\n\n\n" << std::endl;
-            if(!valid){
-                return 1;
-            }
-            return price;
-            break;
-        case 'n':
-            cout << "I didn't want your " << item << suffix << " anyway!\n\n\n------------------------------------------------------------\n\n\n" << std::endl;
-            return 0;
-            break;
+            itemBuyMenu(player, merchant, price, itemLabel);
+        }
+        else
+        {
+            return itemsBought;
         }
     }
-    else if (quantity < 0)
-    {
-        cout << "please enter a valid quantity next time\n\n\n------------------------------------------------------------\n\n\n" << std::endl;
-        return 0;
-    } 
+
     return 0;
+}
+
+//Returns number of items purchased
+int Prompts::confirmPurchase(Player &player, Merchant &merchant, int numItems, int price, string item)
+{
+    char confirmation;
+
+    bool transaction = true;
+
+    while(transaction)
+    {
+        cout << "Are you sure you want to buy " << numItems << " " << item << "? (y/n)\n";
+        cin >> confirmation;
+        
+        if(confirmation != 'y' && confirmation != 'n')
+        {
+            cout << "Invalid input\n\n";
+            continue;
+        }
+
+        switch(confirmation)
+        {
+        case 'y':
+            
+            if(canPurchaseGoods(player, numItems, price))
+            {
+                player.setGold(player.getGold() - numItems * price);
+                return numItems;
+            }
+            else
+            {
+                brokePrompt();
+                return 0;
+            }
+
+            break;
+        case 'n':
+            transaction = false;
+            break;
+        default:
+            cout << "Error - confirmIngredientPurchase\n";
+            break;
+        };
+    }
+
+    return 0;
+}
+
+// Sell treasure menu
+void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
+{
+
+    int choice = -1;
+
+    while(choice < 0)
+    {
+        cout << "During your journey, you may encounter pieces of treasure in each room. When you The price of each treasure\n"
+            "depends upon the number of rooms cleared when it was found. Once you sell a piece of treasure, I cannot sell\n"
+            "it back to you\n"
+            "1.) Silver ring [" << merchant.getSilverRingValue() << " Gold]\n"
+            "2). Ruby necklace [" << merchant.getRubyNecklaceValue() << "Gold]\n"
+            "3.) Emerald bracelet [" << merchant.getSilverRingValue() << " Gold]\n"
+            "4.) Diamond circlet [" << merchant.getSilverRingValue() << " Gold]\n"
+            "5.) Gem-encrusted goblet [" << merchant.getSilverRingValue() << " Gold]\n"
+            "What do you have for me?\n";
+        cin >> choice;
+    }
+
+    switch(choice)
+    {
+        case 1:
+            if(player.getSilverRings() <= 0)
+            {
+                imaginaryGlassesPrompt();
+                player.incrementImaginaryGlasses();
+                break;
+            }
+            else
+            {
+                player.setGold(player.getGold() + player.getSilverRings() * merchant.getSilverRingValue());
+                player.setSilverRings(0);
+            }
+        case 2:
+            if(player.getRubyNecklaces() <= 0)
+            {
+                imaginaryGlassesPrompt();
+                player.incrementImaginaryGlasses();
+                break;
+            }
+            else
+            {
+                player.setGold(player.getGold() + player.getRubyNecklaces() * merchant.getRubyNecklaceValue());
+                player.setRubyNecklaces(0);
+            }
+        case 3:
+            if(player.getEmeraldBracelets() <= 0)
+            {
+                imaginaryGlassesPrompt();
+                player.incrementImaginaryGlasses();
+                break;
+            }
+            else
+            {
+                player.setGold(player.getGold() + player.getEmeraldBracelets() * merchant.getEmeraldBraceletValue());
+                player.setEmeraldBracelets(0);
+            }
+        case 4:
+            if(player.getDiamondCirclets() <= 0)
+            {
+                imaginaryGlassesPrompt();
+                player.incrementImaginaryGlasses();
+                break;
+            }
+            else
+            {
+                player.setGold(player.getGold() + player.getDiamondCirclets() * merchant.getDiamondCircletValue());
+                player.setDiamondCirclets(0);
+            }
+        case 5:
+            if(player.getGemGoblets() <= 0)
+            {
+                imaginaryGlassesPrompt();
+                player.incrementImaginaryGlasses();
+                break;
+            }
+            else
+            {
+                player.setGold(player.getGold() + player.getGemGoblets() * merchant.getGemGobletValue());
+                player.setGemGoblets(0);
+            }
+        default:
+            cout << "Error - sellTreasureMenu\n";
+            break;
+    };
+
+}
+
+// Cookware buy menu
+void Prompts::cookwareBuyMenu(Player &player, Merchant &merchant)
+{
+
+    int cookwareChoice = -1;
+
+    while(cookwareChoice < 0 || cookwareChoice > 3)
+    {
+        cout << "You need cookware in order to turn your ingredients into food wich, when consumed, will replenish\n"
+            "your fullness levels or that of your companions.\n"
+            "1.) Ceramic pot (25% chance of breaking)\n"
+            "2.) Frying pan (10% chance of breaking)\n"
+            "3.) Cauldron (2% chance of breaking)\n"
+            "The more dependable items will be more expensive, are you a chaepskate?"
+            "(Enter a positive integer, or 0 to cancel)\n";
+
+        cin >> cookwareChoice;
+    }
+
+    if(cookwareChoice == 0)
+    {
+        return;
+    }
+
+    int itemCount;
+    switch(cookwareChoice)
+    {
+        case 1:
+            itemCount = itemBuyMenu(player, merchant, merchant.getCeramicPotPrice(), "Ceramic pots");
+            player.setCeramicPots(player.getCeramicPots() + itemCount);
+            break;
+        case 2:
+            itemCount = itemBuyMenu(player, merchant, merchant.getFryingPanPrice(), "Frying pans");
+            player.setFryingPans(player.getFryingPans() + itemCount);
+            break;
+        case 3:
+            itemCount = itemBuyMenu(player, merchant, merchant.getCauldronPrice(), "Cauldrons");
+            player.setCauldrons(player.getCauldrons() + itemCount);
+            break;
+        default:
+            cout << "Error - cookwareBuyMenu\n";
+            break;
+    }
+   
+}
+
+// Weapon buy menu
+void Prompts::weaponBuyMenu(Player &player, Merchant &merchant)
+{
+    int choice = -1;
+
+    while(choice < 0 || choice > 5)
+    {
+        cout << "You need weapons to be able to fend off\n"
+            "monsters, otherwise, you can only run\n!"
+            "Equipping your team with the maximum\n"
+            "number of weapons (1 weapon per person)\n"
+            "and buying upgraded weapons that are\n"
+            "worth 5 gold pieces will maximize you\n"
+            "chances of survival during an attack. You can\n"
+            "have a maximum of 5 weapons. These are\n"
+            " the different types of weapons: \n"
+            "1.) Club\n"
+            "2.) Spear\n"
+            "3.) +1 Rapier\n"
+            "4.) +2 Battle-axe\n"
+            "5.) +3 Longsword\n"
+            "Which weapon catches your fancy? (Enter a positive integer, or 0 to cancel)\n";
+        
+        cin >> choice;
+    }
+
+    if(choice == 0)
+    {
+        return;
+    }
+
+    int itemCount;
+    switch(choice)
+    {
+        case 1:
+            itemCount = itemBuyMenu(player, merchant, merchant.getStoneClubPrice(), "Stone club(s)");
+            player.setStoneClubs(player.getStoneClubs() + itemCount);
+            break;
+        case 2:
+            itemCount = itemBuyMenu(player, merchant, merchant.getIronSpearPrice(), "Iron spear(s)");
+            player.setIronSpears(player.getIronSpears() + itemCount);
+            break;
+        case 3:
+            itemCount = itemBuyMenu(player, merchant, merchant.getMythrilRapierPrice(), "Mythril Rapier(s)");
+            player.setMythrilRapiers(player.getMythrilRapiers() + itemCount);
+            break;
+        case 4:
+            itemCount = itemBuyMenu(player, merchant, merchant.getFlamingAxePrice(), "Battle Axe(s)");
+            player.setFlamingAxes(player.getFlamingAxes() + itemCount);
+            break;
+        case 5:
+            itemCount = itemBuyMenu(player, merchant, merchant.getVorpalSwordPrice(), "Vorpal Sword(s)");
+            player.setVorpalSwords(player.getVorpalSwords() + itemCount);
+            break;
+        default:
+            "Error - weaponBuyMenu\n";
+            break;
+
+    };
+    
+}
+
+//Checks if the player has enough gold to purchase the goods they requested
+bool Prompts::canPurchaseGoods(Player &player, int amount, int price)
+{
+    if(player.getGold() < amount * price)
+    {
+        return false;
+    }
+
+    return true;
 }
 
 void Prompts::currentStatus(Player &player, Merchant &merchant, Map &map){
     cout << "+-------------------+\n"
-         << "|  Status           | Rooms Cleared: "<< merchant.getRoomsCleared()<<" | Keys: "<<player.getNumKeys()<<" | Sorcerer's Anger Level: "<<map.getNumSpacesExplored()
+         << "|  Status           | Rooms Cleared: "<< merchant.getRoomsCleared()<<" | Keys: "<<player.getNumKeys()<<" | Sorcerer's Anger Level: " << map.getNumSpacesExplored()
          << "\n+-------------------+\n"
          << "+-------------------+\n"
          << "|  Inventory        |\n"
@@ -336,72 +440,6 @@ void Prompts::currentStatus(Player &player, Merchant &merchant, Map &map){
          << "\n| "<<player.getMember4Name()<<" | Fullness: "<< player.getFullness(player.getMember4Name())
          << "\n\n+---------------------+\n";
  }
-
-// Ingredient buy menu
-void Prompts::ingredientBuyMenu(Merchant &merchant, int &costPerUnit, string &item, string &quantitySuffix)
-{
-    costPerUnit = merchant.getIngredientPrice();
-    cout << "You should by atleast 10kg of ingredients per player. [" << costPerUnit << " gold per kg]" << std::endl;
-    item = "Ingredients";
-    cout << "How many kg of " << item << " can I get you?(Enter a positive integer, or 0 to cancel)" << std::endl;
-    quantitySuffix = "kg";
-}
-
-// Cookware buy menu
-void Prompts::cookwareBuyMenu()
-{
-    cout << "You need cookware in order to turn your ingredients into food wich, when consumed, will replenish\n"
-            "your fullness levels or that of your companions.\n"
-            "1.) Ceramic pot (25% chance of breaking)\n"
-            "2.) Frying pan (10% chance of breaking)\n"
-            "3.) Cauldron (2% chance of breaking)\n"
-            "The more dependable items will be more expensive, are you a chaepskate?"
-            "(Enter a positive integer, or 0 to cancel)\n";
-}
-
-// Weapon buy menu
-void Prompts::weaponBuyMenu()
-{
-    cout << "You need weapons to be able to fend off\n"
-            "monsters, otherwise, you can only run\n!"
-            "Equipping your team with the maximum\n"
-            "number of weapons (1 weapon per person)\n"
-            "and buying upgraded weapons that are\n"
-            "worth 5 gold pieces will maximize you\n"
-            "chances of survival during an attack. You can\n"
-            "have a maximum of 5 weapons. These are\n"
-            " the different types of weapons: \n"
-            "1.) Club\n"
-            "2.) Spear\n"
-            "3.) +1 Rapier\n"
-            "4.) +2 Battle-axe\n"
-            "5.) +3 Longsword\n"
-            "Which weapon catches your fancy?(Enter a positive integer, or 0 to cancel)\n";
-}
-
-// Sell treasure menu
-void Prompts::sellTreasureMenu(Merchant &merchant)
-{
-    cout << "During your journey, you may encounter pieces of treasure in each room. When you The price of each treasure\n"
-            "depends upon the number of rooms cleared when it was found. Once you sell a piece of treasure, I cannot sell\n"
-            "it back to you\n"
-            "1.) Silver ring [" << merchant.getSilverRingValue() << " gold]\n"
-            "2.) Emerald bracelet [" << merchant.getSilverRingValue() << " gold]\n"
-            "3.) Diamond circlet [" << merchant.getSilverRingValue() << " gold]\n"
-            "4.) Gem-encrusted goblet [" << merchant.getSilverRingValue() << " gold]\n"
-            "What do you have for me?\n";
-}
-
-// Armor buy menu
-void Prompts::armorBuyMenu(Merchant &merchant, string &item)
-{
-    cout << "Armor protects you from monsters. Equipping your team with the maximum amount of armor (1 armor per person)\n"
-            "will maximize your chances of survival during an attack. Adding more armor on top of the maximum amount will\n"
-            "not increase your chances further.\n"
-             "How many suits of Armor can I get you? [" << merchant.getArmorSuitPrice() << " gold](Enter a positive integer, or 0 to cancel)\n";
-
-             item = "Armor";
-}
 
 // Imaginary glasses prompt - user tries to sell treasures they don't have
 void Prompts::imaginaryGlassesPrompt()
@@ -437,4 +475,9 @@ void Prompts::invalidPositionPrompt()
 void Prompts::invalidInputPrompt()
 {
     cout << "Invalid Input\n";
+}
+
+void Prompts::negativeAmountWarning()
+{
+    cout << "\nInvalid input, cannot buy negative ingredients!\n\n";
 }

@@ -16,22 +16,8 @@ void Game::start(Player &player, Merchant &merchant)
 
 
 void Game::merchantInteraction(Player &player, Merchant &merchant){
-    int choice = 0;
-    int price = 0;
-    do{
-    choice = prompts.merchantPrompt(player);
-    price = prompts.purchaseCost(choice, merchant, player);
-    if(choice == 6){
-        prompts.goodLuckPrompt();
-    }else if(price == 1){
-        prompts.imaginaryGlassesPrompt();
-        player.incrementImaginaryGlasses();
-    }else if(player.getGold() < -price){
-        prompts.brokePrompt(); 
-    }else{
-        player.setGold(player.getGold() + price);
-    }
-    }while(choice >= 0 && choice != 6);
+    prompts.merchantPrompt(player, merchant);
+    prompts.currentStatus(player, merchant, map);
 }
 
 void Game::movementPhase(Player& player, Merchant &merchant)

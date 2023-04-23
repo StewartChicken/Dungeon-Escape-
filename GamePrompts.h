@@ -20,20 +20,27 @@ class Prompts
         void goodLuckPrompt();
 
         //Merchant Prompts
-        int merchantPrompt(Player &player);\
-        int purchaseCost(int choice, Merchant &merchant, Player &player);
-        void currentStatus(Player &player, Merchant &merchant, Map &map);
-        void initialMerchantPrompt(Player &player);
+        void merchantPrompt(Player &player, Merchant &merchant);
+      
+        void merchantInteraction(Player &player, Merchant &merchant, bool &active);
+        void merchantGreeting(Player &player);
 
         //Major buy menu prompts
-        void ingredientBuyMenu(Merchant &merchant, int &costPerUnit, string &item, string &quantitySuffix);
-        void cookwareBuyMenu();
-        void weaponBuyMenu();
-        void sellTreasureMenu(Merchant &merchant);
-        void armorBuyMenu(Merchant &merchant, string &item);
+        int itemBuyMenu(Player &player, Merchant &merchant, int price, string itemLabel);
+        int confirmPurchase(Player &player, Merchant &merchant, int numItems, int price, string item);
+        void sellTreasureMenu(Player &player, Merchant &merchant);
+    
+        //Cookware and Weapon sub menus
+        void cookwareBuyMenu(Player &player, Merchant &merchant);
+        void weaponBuyMenu(Player &player, Merchant &merchant);
+        
+        //Does the party have sufficient gold to make a purchase
+        bool canPurchaseGoods(Player &player, int amount, int price);
 
-        //Buy sub-menus
+        //void currentStatus(Player &player, Merchant &merchant, Map &map);
+        void currentStatus(Player &player, Merchant &merchant, Map &map);
 
+        //Random single prompts
 
         void imaginaryGlassesPrompt();
         void brokePrompt();
@@ -42,6 +49,7 @@ class Prompts
         void movementErrorPrompt();
         void invalidPositionPrompt();
         void invalidInputPrompt();
+        void negativeAmountWarning();
 
 };
 
