@@ -64,23 +64,30 @@ Monster::Monster()
     Monsters["Cloud Giant"] = 5;
     Monsters["Silver Dragon"] = 5;
     Monsters["Vampire"] = 5;
-    Monsters["Rick Sanchez"] = 5;
+    Monsters["Rick Sandwhich"] = 5;
     Monsters["Lich"] = 5;
     Monsters["Electricity Woman"] = 5;
     Monsters["Tom Brady"] = 5;
     Monsters["Darth Vader"] = 5;
     Monsters["Sorcerer"] = 6;
+
+    generateCombatOrder();
 }
 
 void Monster::generateCombatOrder()
 {
     srand(time(0));
 
-    for(int i = 0; i < 8; i ++)
+    for(int i = 0; i < 4; i ++)
     {
-        int randMonster = rand() % 4;
-        combatOrder[i] = monsterNames[randMonster + (4 * i)];
+        int randMonster = rand() % 8;
+        combatOrder[i] = monsterNames[randMonster + (8 * i)];
     }
 
     combatOrder[4] = monsterNames[32];
+}
+
+string Monster::getMonsterFromCombatOrder(int index)
+{
+    return combatOrder[index];
 }

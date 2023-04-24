@@ -441,7 +441,7 @@ void Prompts::currentStatus(Player &player, Merchant &merchant, Map &map){
          << "\n\n+---------------------+\n";
  }
 
-void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map)
+void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster)
 {
     bool enteredRoom;
 
@@ -451,20 +451,38 @@ void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map
     }
     else
     {
-        //You just did this 
         cout << "You do not have enough keys to access this room!\n";
         return;
     }
 
+    int numRoomsCleared = merchant.getRoomsCleared();
+    double combatScore = player.calculateCombatScore(numRoomsCleared);
+    string currentMonster = monster.getMonsterFromCombatOrder(numRoomsCleared);
+
     if(enteredRoom)
     {
-        launchMonsterFight(player.calculateCombatScore(merchant.getRoomsCleared()), merchant.getRoomsCleared());
+        launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster);
     }
 }
 
-void Prompts::launchMonsterFight(int combatScore, int roomsCleared)
+void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName)
 {
+    cout << monsterName << " ahead!! They got beef wit u bro! COMBATSCORE: " << combatScore << "\n";
 
+    if(player.winsFight(combatScore))
+    {
+        cout << "Not to fear, your team is strong enough to overcome the adversary!\n";
+        map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
+        player.winFight(roomsCleared + 2);
+        merchant.incrementRoomsCleared();
+    }
+    else
+    {
+        cout << "You were too weak to defeat the monster, you have endured heavy losses\n";
+        map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
+        merchant.incrementRoomsCleared();
+        player.loseFight();
+    }
 }
 
 bool Prompts::roomKeyPrompt(Player &player)
@@ -473,7 +491,7 @@ bool Prompts::roomKeyPrompt(Player &player)
 
         while(confirm != 'y' && confirm != 'n')
         {
-            cout << "Would you like to use a key to access this room?\n";
+            cout << "Would you like to use a key to access this room? (y/n)\n";
             cin >> confirm;
         }
 

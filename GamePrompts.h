@@ -6,6 +6,7 @@
 #include "Party.h"
 #include "Merchant.h"
 #include "Map.h"
+#include "Monster.h"
 
 using std::string;
 
@@ -40,9 +41,9 @@ class Prompts
         //void currentStatus(Player &player, Merchant &merchant, Map &map);
         void currentStatus(Player &player, Merchant &merchant, Map &map);
         
-        void roomInteractionPrompt(Player &player, Merchant &merchant, Map &map);
+        void roomInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster);
         bool roomKeyPrompt(Player &player);
-        void launchMonsterFight(int combatScore, int roomsCleared);
+        void launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName);
 
         //Random single prompts
 

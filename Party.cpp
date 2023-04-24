@@ -17,6 +17,7 @@ Player::Player()
     //Party default combat values
     
     //weapons
+    this -> numWeapons = 0;
     this -> stoneClubs = 0;
     this -> ironSpears = 0;
     this -> mythrilRapiers = 0;
@@ -36,7 +37,7 @@ Player::Player()
     //Party default inventory values
 
     this -> gold = 100;
-    this -> numKeys = 0;
+    this -> numKeys = 99;
     this -> ingredients = 0;
 
 
@@ -338,7 +339,10 @@ void Player::incrementImaginaryGlasses()
 
 
 //Combat methods
-
+int Player::countNumWeapons()
+{
+    return stoneClubs + ironSpears + mythrilRapiers + flamingAxes + vorpalSwords;
+}
 
 int Player::getNumWeapons()
 {
@@ -428,7 +432,7 @@ double Player::calculateCombatScore(int roomsCleared)
     int r1 = rand() % 6 + 1;
     int r2 = rand() % 6 + 1;
 
-    int w = numWeapons + mythrilRapiers + 2 * flamingAxes + 3 * vorpalSwords;
+    int w = countNumWeapons() + mythrilRapiers + 2 * flamingAxes + 3 * vorpalSwords;
 
     //Calculate d
     int d;
@@ -444,6 +448,11 @@ double Player::calculateCombatScore(int roomsCleared)
 
     //number of armor suits
     int a = armorSuits;
+
+    if(a == 0)
+    {
+        return 0;
+    }
 
     int c; //Monster challenge rating
 
@@ -473,20 +482,20 @@ double Player::calculateCombatScore(int roomsCleared)
 }
 
 //Determins if player wins fight against monster based on their combat score
-bool Player::winsFight(int combatScore)
+bool Player::winsFight(double combatScore)
 {
     return combatScore > 0 ? true : false;
 }
 
 //If player wins fight against monster
-void Player::winFight(double combatScore)
+void Player::winFight(double challengeRating)
 {
     srand(time(0));
 
     int keyChance = rand() % 10;
 
-    setGold((combatScore * 10) + gold);
-    setIngredients((combatScore * 5) + ingredients);
+    setGold((challengeRating * 10) + gold);
+    setIngredients((challengeRating * 5) + ingredients);
 
     if(keyChance == 0)
     {

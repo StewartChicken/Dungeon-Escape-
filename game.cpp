@@ -99,7 +99,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             else if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol()) 
                     && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
             {
-                prompts.roomInteractionPrompt(player, merchant, map);
+                prompts.roomInteractionPrompt(player, merchant, map, monster);
             }
             else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
                     && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))

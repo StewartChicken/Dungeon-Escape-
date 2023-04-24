@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "Merchant.h"
 #include "GamePrompts.h"
+#include "Monster.h"
 
 class Game
 {
@@ -15,6 +16,7 @@ class Game
         Map map;
 
         Prompts prompts;
+        Monster monster;
 
     public:
         void start(Player &player, Merchant &merchant);

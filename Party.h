@@ -123,7 +123,7 @@ class Player
         
 
         //Combat methods
-
+        int countNumWeapons();
         int getNumWeapons();
 
         int getStoneClubs();
@@ -145,8 +145,8 @@ class Player
         //Calculates combat score - chance of winning a fight against
         // a monster. Takes the current monster challenge rating as an argument. 
         double calculateCombatScore(int);
-        bool winsFight(int combatScore);
-        void winFight(double combatScore); // Called in the event the player wins a monster fight
+        bool winsFight(double combatScore);
+        void winFight(double challengeRating); // Called in the event the player wins a monster fight
         void loseFight();
 
 
@@ -159,7 +159,6 @@ class Player
         void setCeramicPots(int);
         void setFryingPans(int);
         void setCauldrons(int);
-
 
 };
 
