@@ -39,6 +39,10 @@ class Prompts
 
         //void currentStatus(Player &player, Merchant &merchant, Map &map);
         void currentStatus(Player &player, Merchant &merchant, Map &map);
+        
+        void roomInteractionPrompt(Player &player, Merchant &merchant, Map &map);
+        bool roomKeyPrompt(Player &player);
+        void launchMonsterFight(int combatScore, int roomsCleared);
 
         //Random single prompts
 

@@ -441,6 +441,50 @@ void Prompts::currentStatus(Player &player, Merchant &merchant, Map &map){
          << "\n\n+---------------------+\n";
  }
 
+void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map)
+{
+    bool enteredRoom;
+
+    if(player.getNumKeys() > 0)
+    {
+        enteredRoom = roomKeyPrompt(player);
+    }
+    else
+    {
+        //You just did this 
+        cout << "You do not have enough keys to access this room!\n";
+        return;
+    }
+
+    if(enteredRoom)
+    {
+        launchMonsterFight(player.calculateCombatScore(merchant.getRoomsCleared()), merchant.getRoomsCleared());
+    }
+}
+
+void Prompts::launchMonsterFight(int combatScore, int roomsCleared)
+{
+
+}
+
+bool Prompts::roomKeyPrompt(Player &player)
+{
+    char confirm = '-';
+
+        while(confirm != 'y' && confirm != 'n')
+        {
+            cout << "Would you like to use a key to access this room?\n";
+            cin >> confirm;
+        }
+
+    if(confirm == 'y')
+    {
+        player.decrementKeys();
+    }
+
+    return confirm == 'y';
+}
+
 // Imaginary glasses prompt - user tries to sell treasures they don't have
 void Prompts::imaginaryGlassesPrompt()
 {
