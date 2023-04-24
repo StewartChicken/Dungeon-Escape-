@@ -294,6 +294,7 @@ bool Map::isExplored(int row, int col)
     return(exploredData[row][col] == 1);
 }
 
+//Is not explored
 bool Map::isFreeSpace(int row, int col)
 {
     return(exploredData[row][col] == 0);
@@ -302,6 +303,11 @@ bool Map::isFreeSpace(int row, int col)
 bool Map::isDungeonExit(int row, int col)
 {
     return(row == positionData.at(2) && col == positionData.at(3));
+}
+
+bool Map::isCleared(int row, int col)
+{
+    return(clearedData[row][col] == 1);
 }
 
 char Map::getMoveUpKey()

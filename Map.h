@@ -68,6 +68,7 @@ public:
     bool isExplored(int row, int col);
     bool isFreeSpace(int row, int col);
     bool isDungeonExit(int row, int col);
+    bool isCleared(int row, int col);
     char getMoveUpKey();
     char getMoveDownKey();
     char getMoveRightKey();

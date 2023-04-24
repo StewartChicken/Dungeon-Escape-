@@ -46,6 +46,7 @@ class Prompts
         void brokePrompt();
         
         void movementExplorePrompt();
+        void movementInteractPrompt();
         void movementErrorPrompt();
         void invalidPositionPrompt();
         void invalidInputPrompt();

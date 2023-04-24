@@ -31,8 +31,18 @@ void Game::movementPhase(Player& player, Merchant &merchant)
 
     while(true)
     {
-
-        prompts.movementExplorePrompt();
+        if((map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
+            || map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
+            || map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol())) 
+            && map.isExplored(map.getPlayerRow(), map.getPlayerCol())
+            && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
+        {
+            prompts.movementInteractPrompt();
+        }
+        else
+        {
+            prompts.movementExplorePrompt();
+        }
         cin >> input;
         
         if(map.isMovementKey(input))
@@ -56,7 +66,8 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                     newCol ++;
                     break;
                 default:
-                    prompts.movementExplorePrompt();
+                    //prompts.movementExplorePrompt();
+                    cout << "Error - Game::movementPhase\n";
                     break;
 
             };
@@ -78,10 +89,31 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         }
         else if(input == 'e')
         {
-            prompts.currentStatus(player, merchant, map);
-            map.exploreSpace(map.getPlayerRow(), map.getPlayerCol());
-            map.displayMap();
-            player.investigate(merchant.getRoomsCleared());
+            if(!map.isExplored(map.getPlayerRow(), map.getPlayerCol()))
+            {
+                prompts.currentStatus(player, merchant, map);
+                map.exploreSpace(map.getPlayerRow(), map.getPlayerCol());
+                map.displayMap();
+                player.investigate(merchant.getRoomsCleared());
+            }
+            else if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol()) 
+                    && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
+            {
+                cout << "ROOM INTERACTION\n";
+            }
+            else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
+                    && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
+            {
+                cout << "NPC INTERACTION\n";
+            }
+            else if(map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol()))
+            {
+                cout << "DUNGEON EXIT INTERACTION\n";
+            }
+            else
+            {
+                cout << "You can't explore an empty space!\n";
+            }
         }
         else
         {

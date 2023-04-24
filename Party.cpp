@@ -234,8 +234,6 @@ void Player::cookFood(int servings,int cookingWith)
     
 }
 
-
-
 //Inventory methods
 
 int Player::getGold()
