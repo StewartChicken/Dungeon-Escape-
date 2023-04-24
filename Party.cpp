@@ -13,6 +13,10 @@ Player::Player()
     this -> partyNames[3] = "Member3";
     this -> partyNames[4] = "Member4";
 
+    this -> isMemberAlive[0] = true;
+    this -> isMemberAlive[0] = true;
+    this -> isMemberAlive[0] = true;
+    this -> isMemberAlive[0] = true;
 
     //Party default combat values
     
@@ -549,6 +553,23 @@ void Player::loseFight()
             fullnessLevels[partyNames[i]]  = 0;
         }
     }
+}
+
+void Player::surrenderTeamMember()
+{
+    for(int i = 3; i >= 0; i --)
+    {
+        if(isMemberAlive[i])
+        {
+            isMemberAlive[i] = false;
+            setFullnessLevel()
+            partyNames[i + 1] = partyNames[i + 1] + " (Dead)";
+            std::cout << partyNames[i + 1] << " Has been sacrificed to the monster. R.I.P.\n";
+            return;
+        }
+    }
+
+    std::cout << "All Team Members are dead.\n";
 }
 
 //Cookware methods

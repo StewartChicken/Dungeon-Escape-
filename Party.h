@@ -17,6 +17,7 @@ class Player
         //Stores party's names and fullness levels
         map<string, int> fullnessLevels;
         string partyNames[5];
+        bool isMemberAlive[4]; // Tracks the death status of each team member
 
         /*!!Remember to set up gold too!!(100 initial gold for the pary)*/
 
@@ -148,6 +149,7 @@ class Player
         bool winsFight(double combatScore);
         void winFight(double challengeRating); // Called in the event the player wins a monster fight
         void loseFight();
+        void surrenderTeamMember();
 
 
         //Cookware methods

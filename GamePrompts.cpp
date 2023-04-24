@@ -460,7 +460,7 @@ void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map
     string currentMonster = monster.getMonsterFromCombatOrder(numRoomsCleared);
 
     if(enteredRoom)
-    {
+    {   
         launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster);
     }
 }
@@ -469,6 +469,13 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
 {
     cout << monsterName << " ahead!! They got beef wit u bro! COMBATSCORE: " << combatScore << "\n";
 
+    if(player.countNumWeapons() < 1)
+    {
+        cout << "You encountered a hostile " << monsterName << " but you did not have any weapons to defend yourself with!\n" <<
+        "You are forced to surrender and one of your team mates was lost to the wrath of the monster. R.I.P.\n";
+        player.surrenderTeamMember();
+        return;
+    }
     if(player.winsFight(combatScore))
     {
         cout << "Not to fear, your team is strong enough to overcome the adversary!\n";
