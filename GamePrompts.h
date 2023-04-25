@@ -57,6 +57,12 @@ class Prompts
         void invalidInputPrompt();
         void negativeAmountWarning();
 
+        void npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster);
+        void Prompts::npcWelcomeMessage();
+        bool Prompts::npcRiddle();
+        void read(string file_name,string arr[], int array_size);
+        void split(string input_string, char seperator, string arr[], int arr_size);
+
 };
 
 #endif

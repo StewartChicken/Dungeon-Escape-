@@ -104,7 +104,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
                     && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
             {
-                cout << "NPC INTERACTION\n";
+                prompts.npcInteractionPrompt(player, merchant, map, monster);
             }
             else if(map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol()))
             {

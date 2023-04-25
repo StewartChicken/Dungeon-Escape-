@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include "GamePrompts.h"
+#include <fstream>
 
 using std::cin;  
 using std::cout;
@@ -555,4 +556,98 @@ void Prompts::invalidInputPrompt()
 void Prompts::negativeAmountWarning()
 {
     cout << "\nInvalid input, cannot buy negative ingredients!\n\n";
+}
+void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster){ 
+    int numRoomsCleared = merchant.getRoomsCleared();
+    double combatScore = player.calculateCombatScore(numRoomsCleared);
+    string currentMonster = monster.getMonsterFromCombatOrder(numRoomsCleared);
+    
+    npcWelcomeMessage();
+    if(npcRiddle()){
+        merchantPrompt(player,merchant);
+    }else{
+        launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster);
+    } 
+}
+void Prompts::npcWelcomeMessage(){
+    srand(time (0));
+    int chaos=rand()%4;
+    if(chaos==4){
+        std::cout<<"You have encountered a lowly peasant\n\n***extremely raspy voice*** Helllo there stranger. I have an offer for you. If you awnser my riddle, I will let you take a look at my wares.\n";
+    }else if(chaos==3){
+        std::cout<<"You have encountered Porcha\n\nLet's see if you have any brain behind all that brawn. I am thinking of something, if you can guess it, I'll let you see what I have to offer\n";       
+    }else if(chaos==2){
+        std::cout<<"You have encountered a friendly goblin\n\n***some goblin gibberish*** riddle for wares???\n proceeds to read you the following scripture:\n";
+    }else if(chaos==1){
+        std::cout<<"You have encountered a scholar\n\n***Smiles in a highly condesending way***A warrior? Im assuming you would like to buy some crude object to bluggon or stab your enemys with. It seems a fool such as yourself would be served better by sharpening your mind. Awnser my riddle, and I'll let you peruse my collection";
+    }
+    
+}
+bool Prompts::npcRiddle(){
+    bool success = false;
+    string awnser;
+    string arr[2];
+    int remaining_attempts = 3;
+    read("riddles.txt", arr, 2);
+    cout<<arr[0];
+    for(int i=0; i<3 && !success;i++){
+        cin>>awnser;
+        if(arr[1]==awnser){
+            success =true;
+        }else{
+            cout<<"you have failed, you have "<<remaining_attempts<<" attempts left\n";
+        }
+        remaining_attempts--;
+    }
+    return success;
+}
+void Prompts::split(string input_string, char seperator, string arr[], int arr_size){
+    //initalizing required variables
+    int j=0;
+    for(int i=0;i<arr_size;i++){
+        arr[i]="";   
+    }
+    
+    //Ensuring we dont go outside the string length
+    for(int i=0;i<input_string.length();i++){
+        //Changing index of new array if current index value is a seperator
+        if(input_string[i]==seperator){
+            j++;
+        }//Ensuring we dont go outide of the new array size
+        else if(j<arr_size){
+            //storing character values in current array index 
+            arr[j]=arr[j]+input_string[i];
+        }
+    }
+}
+void Prompts::read(string file_name,string arr[], int array_size){  
+    string arr2[2];
+    string line;    // variable for storing each line as we read it
+    ifstream fin;   // file input stream
+
+    fin.open(file_name); // Open input file
+    
+    if (fin.fail())
+    {
+        cout << "Unable to open file";
+    }
+    else
+    {
+        // read every line of file, count number of matches on each line
+        for (int j = 0;!fin.eof()&&j<array_size;) // continue looping as long as there is data to be processed in the file
+        {
+            getline(fin,line);
+            if(line!=""){
+                split(line,'|',arr2,2);
+                for(int i=0;i<2;i++){
+                    if(arr2[i]!=""){
+                        arr[i]=arr2[i];   
+                    }
+                
+                }
+        } 
+        // close files
+        fin.close();
+    }
+    }
 }
