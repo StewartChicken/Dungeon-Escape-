@@ -182,10 +182,7 @@ bool Player::cookedSuccessfully(int cookingWith){
     int chaos = rand() % 100;
     switch(cookingWith){
         case 1:
-            if(getCeramicPots()<=0){
-                std::cout<<"Please cook with an item you actually have\n";
-                break;
-            }else if(chaos<25){
+            if(chaos<25){
                 setCeramicPots(getCeramicPots()-1);
 
             }else {
@@ -193,20 +190,14 @@ bool Player::cookedSuccessfully(int cookingWith){
             }
         break;
         case 2:
-            if(getFryingPans()<=0){
-                std::cout<<"Please cook with an item you actually have\n";
-                break;
-            }else if(chaos<10){
+            if(chaos<10){
                 setFryingPans(getFryingPans()-1);
             }else {
                 success=true;
             }
         break;
         case 3:
-            if(getCauldrons()<=0){
-                std::cout<<"Please cook with an item you actually have\n";
-                break;
-            }else if(chaos<2){
+            if(chaos<2){
                 setCauldrons(getCauldrons()-1);
             }else {
                 success = true;

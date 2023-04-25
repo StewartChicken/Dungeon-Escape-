@@ -670,7 +670,7 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     return quantity;
 
  }
- int Prompts::cookWithPrompts(){
+ int Prompts::cookWithPrompts(Player &player){
     int choice = 0;
     do{
     cout<<"What would you like to cook your food with? Enter 0 to cancel.(please select an item you have in your inventory)\n"
@@ -678,6 +678,26 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     <<"2.) Frying pan\n"
     <<"3.) Cauldron\n";
     cin>>choice;
+    switch(choice){
+        case 1:
+            if(1>player.getCeramicPots()){
+                cout<<"Please cook with an item you have in your inventory.\n";
+                return-1;
+            }
+            break;
+        case 2:
+            if(1>player.getFryingPans()){
+                cout<<"Please cook with an item you have in your inventory.\n";
+                return-1;
+            }
+            break;
+        case 3:
+            if(1>player.getCauldrons()){
+                cout<<"Please cook with an item you have in your inventory.\n";
+                return-1;
+            }
+            break;
+    }
     if(choice<0 || choice>3){
         cout<<"Please enter a valid input\n";
     }

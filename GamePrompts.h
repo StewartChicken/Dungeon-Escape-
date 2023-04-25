@@ -64,7 +64,7 @@ class Prompts
         void split(string input_string, char seperator, string arr[], int arr_size);
 
         int foodQuantityPrompt(int available);
-        int cookWithPrompts();
+        int cookWithPrompts(Player &player);
 
 };
 
