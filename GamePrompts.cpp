@@ -785,7 +785,6 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     return quantity;
 
  }
- 
  int Prompts::cookWithPrompts(Player &player){
     int choice = 0;
     do{
