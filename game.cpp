@@ -91,10 +91,16 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         {
             if(!map.isExplored(map.getPlayerRow(), map.getPlayerCol()))
             {
+                int numRoomsCleared = merchant.getRoomsCleared();
+                double combatScore = player.calculateCombatScore(numRoomsCleared);
+                string currentMonster = monster.getMonsterFromCombatOrder(numRoomsCleared);
+
                 prompts.currentStatus(player, merchant, map);
                 map.exploreSpace(map.getPlayerRow(), map.getPlayerCol());
                 map.displayMap();
-                player.investigate(merchant.getRoomsCleared());
+                if(player.investigate(merchant.getRoomsCleared())){
+                    prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster);
+                }
             }
             else if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol()) 
                     && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
@@ -114,6 +120,22 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             {
                 cout << "You can't explore an empty space!\n";
             }
+        }
+        else if(input == 'c')
+        {   
+            int servings = 0;
+            int available = player.getIngredients()/5;
+            do{
+            servings=prompts.foodQuantityPrompt(available);
+            }while(servings<0||servings>available);
+            if(servings!=0){
+                int cookingWith=prompts.cookWithPrompts();
+                if(cookingWith!=0){
+                    player.cookFood(servings,cookingWith);
+                }
+            }
+            
+    
         }
         else
         {

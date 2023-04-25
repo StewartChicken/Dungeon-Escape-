@@ -119,7 +119,7 @@ class Player
 
         //Sudorandom events
         void hungerMisfortune(int chances);
-        void investigate(int roomsCleared);
+        bool investigate(int roomsCleared);
         void incrementTreasure(int roomsCleared);
         
 

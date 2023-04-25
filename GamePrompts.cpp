@@ -572,30 +572,37 @@ void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map,
 void Prompts::npcWelcomeMessage(){
     srand(time (0));
     int chaos=rand()%4;
-    if(chaos==4){
-        std::cout<<"You have encountered a lowly peasant\n\n***extremely raspy voice*** Helllo there stranger. I have an offer for you. If you awnser my riddle, I will let you take a look at my wares.\n";
-    }else if(chaos==3){
-        std::cout<<"You have encountered Porcha\n\nLet's see if you have any brain behind all that brawn. I am thinking of something, if you can guess it, I'll let you see what I have to offer\n";       
+    if(chaos==3){
+        std::cout<<"You have encountered a lowly peasant\n\n***extremely raspy voice*** Helllo there stranger. I have an offer for you. If you awnser my riddle, I will let you take a look at my wares.\n\n";
     }else if(chaos==2){
-        std::cout<<"You have encountered a friendly goblin\n\n***some goblin gibberish*** riddle for wares???\n proceeds to read you the following scripture:\n";
+        std::cout<<"You have encountered Porcha\n\nLet's see if you have any brain behind all that brawn. I am thinking of something, if you can guess it, I'll let you see what I have to offer.\n\n";       
     }else if(chaos==1){
-        std::cout<<"You have encountered a scholar\n\n***Smiles in a highly condesending way***A warrior? Im assuming you would like to buy some crude object to bluggon or stab your enemys with. It seems a fool such as yourself would be served better by sharpening your mind. Awnser my riddle, and I'll let you peruse my collection";
+        std::cout<<"You have encountered a friendly goblin\n\n***some goblin gibberish*** riddle for wares???\n proceeds to read you the following scripture:\n\n";
+    }else if(chaos==0){
+        std::cout<<"You have encountered a scholar\n\n***Smiles in a highly condesending way***A warrior? Im assuming you would like to buy some crude object to bluggon or stab your enemys with. It seems a fool such as yourself would be served better by sharpening your mind. Awnser my riddle, and I'll let you peruse my collection.\n\n";
     }
     
 }
 bool Prompts::npcRiddle(){
     bool success = false;
     string awnser;
-    string arr[2];
-    int remaining_attempts = 3;
-    read("riddles.txt", arr, 2);
-    cout<<arr[0];
+    string arr[6][2];
+    srand(time (0));
+    int chaos=rand()%6;
+    int remaining_attempts = 2;
+    read("riddles.txt", arr, 6);
+    cout<<arr[chaos][0]<<endl;
+    //cout<<"checking awnser:"<<arr[chaos][1];
+    cin.clear ();    // Restore input stream to working state
+    cin.ignore ( 100 , '\n' );
     for(int i=0; i<3 && !success;i++){
-        cin>>awnser;
-        if(arr[1]==awnser){
+        cin.clear ();    // Restore input stream to working state
+        //cin.ignore ( 100 , '\n' );    
+        getline(cin,awnser);
+        if(arr[chaos][1]==awnser){
             success =true;
         }else{
-            cout<<"you have failed, you have "<<remaining_attempts<<" attempts left\n";
+            cout<<"you have failed, you have "<<remaining_attempts<<" attempts left.\n";
         }
         remaining_attempts--;
     }
@@ -620,7 +627,7 @@ void Prompts::split(string input_string, char seperator, string arr[], int arr_s
         }
     }
 }
-void Prompts::read(string file_name,string arr[], int array_size){  
+void Prompts::read(string file_name,string arr[][2], int array_size){  
     string arr2[2];
     string line;    // variable for storing each line as we read it
     ifstream fin;   // file input stream
@@ -641,13 +648,40 @@ void Prompts::read(string file_name,string arr[], int array_size){
                 split(line,'|',arr2,2);
                 for(int i=0;i<2;i++){
                     if(arr2[i]!=""){
-                        arr[i]=arr2[i];   
+                        arr[j][i]=arr2[i];   
                     }
-                
                 }
+                j++;
+            }    
         } 
         // close files
         fin.close();
     }
-    }
 }
+ int Prompts::foodQuantityPrompt(int available){
+    int quantity;
+    do{
+    cout<<"How many servings (5kg each) of ingredients would you like to cook? Enter 0 to cancel.\n";
+    cin>>quantity;
+    if(quantity<0||available<quantity){
+        cout<<"Please enter a valid number of servings\n";
+    }
+    }while(quantity<0);
+    return quantity;
+
+ }
+ int Prompts::cookWithPrompts(){
+    int choice = 0;
+    do{
+    cout<<"What would you like to cook your food with? Enter 0 to cancel.(please select an item you have in your inventory)\n"
+    <<"1.) Ceramic pot\n"
+    <<"2.) Frying pan\n"
+    <<"3.) Cauldron\n";
+    cin>>choice;
+    if(choice<0 || choice>3){
+        cout<<"Please enter a valid input\n";
+    }
+    }while(choice<0 || choice>3);
+    return choice;
+ }
+

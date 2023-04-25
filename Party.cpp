@@ -156,18 +156,19 @@ void Player::incrementTreasure(int roomsCleared){
         break;
     }
 } 
-void Player::investigate(int roomsCleared){
+bool Player::investigate(int roomsCleared){
     srand(time(0));
     int chaos = rand() % 100;
-    std::cout<<chaos<<std::endl;
+    //std::cout<<chaos<<std::endl;
     if (chaos<20){
         incrementTreasure(roomsCleared);
     }else if (chaos<30){
         incrementKeys();
     }else if(chaos<50){
-        //monster fight activated
+        return true;
     }
     hungerMisfortune(40);
+    return false;
 }
 //chosses cookware, 1 through 3
 /*
@@ -182,9 +183,9 @@ bool Player::cookedSuccessfully(int cookingWith){
     switch(cookingWith){
         case 1:
             if(getCeramicPots()<=0){
+                std::cout<<"Please cook with an item you actually have\n";
                 break;
-            }
-            if(chaos<25){
+            }else if(chaos<25){
                 setCeramicPots(getCeramicPots()-1);
 
             }else {
@@ -193,9 +194,9 @@ bool Player::cookedSuccessfully(int cookingWith){
         break;
         case 2:
             if(getFryingPans()<=0){
+                std::cout<<"Please cook with an item you actually have\n";
                 break;
-            }
-            if(chaos<10){
+            }else if(chaos<10){
                 setFryingPans(getFryingPans()-1);
             }else {
                 success=true;
@@ -203,9 +204,9 @@ bool Player::cookedSuccessfully(int cookingWith){
         break;
         case 3:
             if(getCauldrons()<=0){
+                std::cout<<"Please cook with an item you actually have\n";
                 break;
-            }
-            if(chaos<25){
+            }else if(chaos<2){
                 setCauldrons(getCauldrons()-1);
             }else {
                 success = true;
@@ -236,7 +237,6 @@ void Player::cookFood(int servings,int cookingWith)
         setFullnessLevel(getMember3Name(), getFullness(getMember3Name())+fullness_earned);
         setFullnessLevel(getMember4Name(), getFullness(getMember4Name())+fullness_earned);
     }
-    
 }
 
 //Inventory methods
@@ -562,7 +562,7 @@ void Player::surrenderTeamMember()
         if(isMemberAlive[i])
         {
             isMemberAlive[i] = false;
-            setFullnessLevel()
+            //setFullnessLevel();
             partyNames[i + 1] = partyNames[i + 1] + " (Dead)";
             std::cout << partyNames[i + 1] << " Has been sacrificed to the monster. R.I.P.\n";
             return;
