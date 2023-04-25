@@ -125,11 +125,14 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         {   
             int servings = 0;
             int available = player.getIngredients()/5;
+            int cookingWith = 0;
             do{
             servings=prompts.foodQuantityPrompt(available);
             }while(servings<0||servings>available);
             if(servings!=0){
-                int cookingWith=prompts.cookWithPrompts();
+                do{
+                cookingWith=prompts.cookWithPrompts(player);
+                }while(cookingWith==-1);
                 if(cookingWith!=0){
                     player.cookFood(servings,cookingWith);
                 }

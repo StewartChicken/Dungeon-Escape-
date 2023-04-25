@@ -82,6 +82,7 @@ class Player
         //Increment or decrement the fullness of a given player or team member
         void incrementFullness(string);
         void decrementFullness(string);
+        void monsterFightDecrementFullness();
         
         //Cooks and eats food in increments of 5kgs
         bool cookedSuccessfully(int);
@@ -121,7 +122,7 @@ class Player
         void hungerMisfortune(int chances);
         bool investigate(int roomsCleared);
         void incrementTreasure(int roomsCleared);
-        
+        bool winsDoorTrapGame(int playerChoice, int doorChoice); //For 'Boulder, Parchment, Shears' Game
 
         //Combat methods
         int countNumWeapons();
@@ -150,7 +151,7 @@ class Player
         void winFight(double challengeRating); // Called in the event the player wins a monster fight
         void loseFight();
         void surrenderTeamMember();
-
+        void loseTeamMember();
 
         //Cookware methods
 

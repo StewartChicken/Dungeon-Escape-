@@ -42,6 +42,7 @@ class Prompts
         void currentStatus(Player &player, Merchant &merchant, Map &map);
         
         void roomInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster);
+        bool doorGameInteraction(Player &player);
         bool roomKeyPrompt(Player &player);
         void launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName);
 
@@ -64,7 +65,7 @@ class Prompts
         void split(string input_string, char seperator, string arr[], int arr_size);
 
         int foodQuantityPrompt(int available);
-        int cookWithPrompts();
+        int cookWithPrompts(Player &player);
 
 };
 

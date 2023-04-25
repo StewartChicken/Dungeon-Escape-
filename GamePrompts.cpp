@@ -452,46 +452,160 @@ void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map
     }
     else
     {
-        cout << "You do not have enough keys to access this room!\n";
-        return;
-    }
+        cout << "You do not have enough keys to access this room!\n" <<
+            "Consequently, the door challenges you to a ruthless game of Boulder, Parchment, Shears!\n";
 
-    int numRoomsCleared = merchant.getRoomsCleared();
-    double combatScore = player.calculateCombatScore(numRoomsCleared);
-    string currentMonster = monster.getMonsterFromCombatOrder(numRoomsCleared);
+        //If player loses door trap game
+        if(!doorGameInteraction(player))
+        {
+            cout << "The door has bested you!\n";
+            player.loseTeamMember();
+            return;
+        } 
+        else
+        {
+            cout << "You have conquered the door's trap! You may now proceed to the room\n";
+            enteredRoom = true;
+        }
+    }
 
     if(enteredRoom)
     {   
+        int numRoomsCleared = merchant.getRoomsCleared();
+        double combatScore = player.calculateCombatScore(numRoomsCleared);
+        string currentMonster = monster.getMonsterFromCombatOrder(numRoomsCleared);
+        
         launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster);
     }
 }
 
+
+bool Prompts::doorGameInteraction(Player &player)
+{
+    srand(time(0));
+
+    int attemptsRemaining = 3;
+
+    cout << "\nYou have three attempts to beat the door. If you do so, you will be granted access to the room.\n" <<
+    "Should you fail, one of your team members will be executed!\n";
+
+    for(int i = 0; i < 3; i ++)
+    {
+        int playerChoice = 0;
+
+        while(playerChoice != 1 && playerChoice != 2 && playerChoice != 3)
+        {
+            std::cout << "\nAttempts Remaining: " << attemptsRemaining << "\n\nChoose your move!\n" <<
+                    "1). Boulder\n" <<
+                    "2). Parchment\n" <<
+                    "3). Shears\n>";
+
+            std::cin >> playerChoice;
+        }
+
+        int doorChoice = (rand() % 3) + 1;
+
+        string doorChoiceString;
+        string playerChoiceString;
+
+        switch(doorChoice)
+        {
+            case 1: 
+                doorChoiceString = "Boulder";
+                break;
+            case 2:
+                doorChoiceString = "Parchment";
+                break;
+            case 3:
+                doorChoiceString = "Shears";
+                break;
+            default:
+                cout << "Error - doorGameInteraction\n";
+                break;
+        };
+
+        switch(playerChoice)
+        {
+            case 1: 
+                playerChoiceString = "Boulder";
+                break;
+            case 2:
+                playerChoiceString = "Parchment";
+                break;
+            case 3:
+                playerChoiceString = "Shears";
+                break;
+            default:
+                cout << "Error - doorGameInteraction\n";
+                break;
+        };
+        
+        std::cout << "\nYou chose: " << playerChoiceString <<  "\nThe door chose:" << doorChoiceString << "\n";
+
+        if(player.winsDoorTrapGame(playerChoice, doorChoice))
+        {
+            return true;
+        }
+
+        cout << "The door won that round! Try again.\n";
+        attemptsRemaining --;
+    }
+
+    return false;
+}
+
+
+
 void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName)
 {
-    cout << monsterName << " ahead!! They got beef wit u bro! COMBATSCORE: " << combatScore << "\n";
+
+    srand(time(0));
+
+    int combatChoice = 0;
+
+    while(combatChoice != 1 && combatChoice != 2)
+    {
+        cout << monsterName << " ahead!! They got beef wit u bro! Would you like to take the fight or surrender?\n" <<
+        "1). Take the fight!!\n" <<
+        "2). Surrender..\n";    
+
+        cin >> combatChoice;
+    }
+
+    //Player chooses to surrender
+    if(combatChoice == 2)
+    {
+        cout << "You chose to surrender at the expense of a team member.\n";
+        player.surrenderTeamMember();
+        player.monsterFightDecrementFullness(); //Each player has 50% chance of decrementing fullness
+        return;
+    }
 
     if(player.countNumWeapons() < 1)
     {
-        cout << "You encountered a hostile " << monsterName << " but you did not have any weapons to defend yourself with!\n" <<
+        cout << "You encountered a hostile " << monsterName << " but you did not have a single weapon to defend yourself with!\n" <<
         "You are forced to surrender and one of your team mates was lost to the wrath of the monster. R.I.P.\n";
         player.surrenderTeamMember();
+        player.monsterFightDecrementFullness();
         return;
     }
+
     if(player.winsFight(combatScore))
     {
         cout << "Not to fear, your team is strong enough to overcome the adversary!\n";
         map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
         player.winFight(roomsCleared + 2);
         merchant.incrementRoomsCleared();
+        player.monsterFightDecrementFullness();
     }
     else
     {
         cout << "You were too weak to defeat the monster, you have endured heavy losses\n";
-        map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
-        merchant.incrementRoomsCleared();
         player.loseFight();
+        player.monsterFightDecrementFullness();
     }
 }
+
 
 bool Prompts::roomKeyPrompt(Player &player)
 {
@@ -510,6 +624,7 @@ bool Prompts::roomKeyPrompt(Player &player)
 
     return confirm == 'y';
 }
+
 
 // Imaginary glasses prompt - user tries to sell treasures they don't have
 void Prompts::imaginaryGlassesPrompt()
@@ -670,7 +785,8 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     return quantity;
 
  }
- int Prompts::cookWithPrompts(){
+ 
+ int Prompts::cookWithPrompts(Player &player){
     int choice = 0;
     do{
     cout<<"What would you like to cook your food with? Enter 0 to cancel.(please select an item you have in your inventory)\n"
@@ -678,10 +794,29 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     <<"2.) Frying pan\n"
     <<"3.) Cauldron\n";
     cin>>choice;
+    switch(choice){
+        case 1:
+            if(1>player.getCeramicPots()){
+                cout<<"Please cook with an item you have in your inventory.\n";
+                return-1;
+            }
+            break;
+        case 2:
+            if(1>player.getFryingPans()){
+                cout<<"Please cook with an item you have in your inventory.\n";
+                return-1;
+            }
+            break;
+        case 3:
+            if(1>player.getCauldrons()){
+                cout<<"Please cook with an item you have in your inventory.\n";
+                return-1;
+            }
+            break;
+    }
     if(choice<0 || choice>3){
         cout<<"Please enter a valid input\n";
     }
     }while(choice<0 || choice>3);
     return choice;
  }
-

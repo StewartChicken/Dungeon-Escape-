@@ -113,6 +113,21 @@ void Player::decrementFullness(string partyMember)
     this -> fullnessLevels[partyMember] --;
 }
 
+void Player::monsterFightDecrementFullness()
+{
+    srand(time(0));
+
+    for(int i{}; i < 5; i++)
+    {
+        int chance = rand() % 2;
+
+        if(chance == 0)
+        {
+            decrementFullness(partyNames[i]);
+        }
+    }
+}
+
 void Player::hungerMisfortune(int chances){
     srand(time(0));
     int chaos[5];
@@ -156,6 +171,35 @@ void Player::incrementTreasure(int roomsCleared){
         break;
     }
 } 
+
+//1 - Boulder
+//2 - Parchment
+//3 - Shears
+bool Player::winsDoorTrapGame(int playerChoice, int doorChoice)
+{
+    if(playerChoice == doorChoice)
+    {
+        return false;
+    }
+
+    if(doorChoice == 3 && playerChoice == 2)
+    {
+        return false;
+    }
+
+    if(doorChoice == 2 && playerChoice == 1)
+    {
+        return false;
+    }
+
+    if(doorChoice = 1 && playerChoice == 3)
+    {
+        return false;
+    }
+    
+    return true;
+}
+
 bool Player::investigate(int roomsCleared){
     srand(time(0));
     int chaos = rand() % 100;
@@ -176,16 +220,13 @@ bool Player::investigate(int roomsCleared){
 2.) frying pan
 3.) cauldron
 */
-bool Player::cookedSuccessfully(int cookingWith){
+ bool Player::cookedSuccessfully(int cookingWith){
     bool success = false;
     srand(time(0));
     int chaos = rand() % 100;
     switch(cookingWith){
         case 1:
-            if(getCeramicPots()<=0){
-                std::cout<<"Please cook with an item you actually have\n";
-                break;
-            }else if(chaos<25){
+            if(chaos<25){
                 setCeramicPots(getCeramicPots()-1);
 
             }else {
@@ -193,20 +234,14 @@ bool Player::cookedSuccessfully(int cookingWith){
             }
         break;
         case 2:
-            if(getFryingPans()<=0){
-                std::cout<<"Please cook with an item you actually have\n";
-                break;
-            }else if(chaos<10){
+            if(chaos<10){
                 setFryingPans(getFryingPans()-1);
             }else {
                 success=true;
             }
         break;
         case 3:
-            if(getCauldrons()<=0){
-                std::cout<<"Please cook with an item you actually have\n";
-                break;
-            }else if(chaos<2){
+            if(chaos<2){
                 setCauldrons(getCauldrons()-1);
             }else {
                 success = true;
@@ -215,6 +250,7 @@ bool Player::cookedSuccessfully(int cookingWith){
     }
     return success;
 }
+
 //prompt by serving size
 //Player::cookFood function definition
 //Cooks food in incrememnts of 5 kg since there are 5 team members
@@ -570,6 +606,29 @@ void Player::surrenderTeamMember()
     }
 
     std::cout << "All Team Members are dead.\n";
+}
+
+void Player::loseTeamMember()
+{
+
+    srand(time(0));
+    
+    bool successfulRemoval = false;
+    
+    while(!successfulRemoval)
+    {
+        int removeIndex = (rand() % 4) + 1;
+        if(isMemberAlive[removeIndex - 1])
+        {
+            std::cout << partyNames[removeIndex] << " Has been lost to the depths of the dungeon!\n";
+
+            isMemberAlive[removeIndex - 1] = false;
+            setFullnessLevel(partyNames[removeIndex], 0);
+            partyNames[removeIndex] = partyNames[removeIndex] + " (Lost)";
+
+            successfulRemoval = true;
+        }
+    }
 }
 
 //Cookware methods
