@@ -160,15 +160,18 @@ bool Player::investigate(int roomsCleared){
     srand(time(0));
     int chaos = rand() % 100;
     //std::cout<<chaos<<std::endl;
+    bool valid = false;
     if (chaos<20){
         incrementTreasure(roomsCleared);
     }else if (chaos<30){
         incrementKeys();
     }else if(chaos<50){
-        return true;
+        valid = true;
     }
+    if(!valid){
     hungerMisfortune(40);
-    return false;
+    }
+    return valid;
 }
 //chosses cookware, 1 through 3
 /*
@@ -229,6 +232,7 @@ void Player::cookFood(int servings,int cookingWith)
         setFullnessLevel(getMember4Name(), getFullness(getMember4Name())+fullness_earned);
     }
 }
+
 
 //Inventory methods
 
@@ -595,3 +599,127 @@ void Player::setCauldrons(int cauldrons)
 {
     this -> cauldrons = cauldrons;
 }
+void Player::cookwareTheft(){
+    srand(time(0));
+    int chaos = rand() % 3;
+    std::cout<<"You come back to your campsite to find Dirty Hippies actively rummaging through your stuff, you chase them off before they can take much.\n\nYou have lost 1 ";
+    if(chaos==0){
+        setCeramicPots(getCeramicPots()-1);
+        std::cout<<"ceramic pot.\n";
+    }else if (chaos==1){
+        setFryingPans(getFryingPans()-1);
+        std::cout<<"frying pan.\n";
+    }else if (chaos==2){
+        setCauldrons(getCauldrons()-1);
+        std::cout<<"cauldron.\n";
+    }
+}
+void Player::robbed(){
+    srand(time(0));
+    int chaos = rand() % 3;
+    if(chaos==0){
+        std::cout<<"While you were destracted ferril midgets snuck into your reserves and stole some food!\n\n You have lost 10kg of ingredients.\n";
+        setIngredients(getIngredients()-10);
+    }else if (chaos==1){
+        std::cout<<"You are held at sword tip by bandits!\n\nYou have lost 1 suit of armor.\n";
+    }else if (chaos==2){
+        cookwareTheft();
+    }
+}
+
+void Player::broken(){
+    srand(time(0));
+    int chaos = rand() % 6;
+    std::string item;
+    if(chaos==0){
+        setStoneClubs(getStoneClubs()-1);
+        item = "stone club";
+    }else if (chaos==1){
+        setIronSpears(getIronSpears()-1);
+        item = "iron spear";
+    }else if (chaos==2){
+        setMythrilRapiers(getMythrilRapiers()-1);
+        item = " myhtril rapier";
+    }else if(chaos==3){
+        setFlamingAxes(getFlamingAxes()-1);
+        item = "flaming axe";
+    }else if(chaos==4){
+        setVorpalSwords(getVorpalSwords()-1);
+        item = "vorpal sword";
+    }else if(chaos==5){
+        setArmorSuits(getArmorSuits()-1);
+        item = "armor suit";
+    }
+    std::cout<<"You have lost 1 "<<item<<".\n";
+}
+void Player::poisoned(){
+    srand(time(0));
+    int chaos=rand()%5;
+    std::string name;
+    if(chaos==0){
+        name=getPlayerName();
+    }else if(chaos==1){
+        name=getMember1Name();
+    }else if(chaos==2){
+        name=getMember2Name();  
+    }else if(chaos==3){
+        name=getMember3Name();
+    }else if(chaos==4){
+        name=getMember4Name();
+    }
+    if(getFullness(name)>=0){
+    setFullnessLevel(name, getFullness(name)-10);
+    }else{
+        poisoned();
+    }
+    if(getFullness(name)<=0){
+        if(name==getPlayerName()){
+            std::cout<<"You have died from food poisening!\n";
+            //ENDGAME
+        }else{
+        std::cout<<name<<" has died from food poisening!"<<"***number of remaing players**"<<" players remain.\n";
+        }
+    }else{
+        if(name==getPlayerName()){
+            std::cout<<"You have lost 10 fullness to food poisening!\n";
+
+        }else{
+        std::cout<<name<<" has lost 10 fullness to food poisening!\n";
+        }
+    }
+}
+void Player::locked(){
+    srand(time(0));
+    int chaos = rand() % 4;
+    std::string name;
+    if(chaos == 0 ){
+        name=getMember1Name();
+    }else if(chaos == 1){
+        name=getMember2Name();
+    }else if(chaos == 2){
+        name=getMember3Name();
+    }else if(chaos == 3){
+        name=getMember4Name();
+    }
+    if(getFullness(name)>=0){
+        std::cout<<name<<" has been locked in the previous room.\n";
+        setFullnessLevel(name, -1);
+    }else{
+        locked();
+    }
+}
+void Player::misfortunes(bool entering_a_room){
+    srand(time(0));
+    int chaos=rand()%200;
+    if(chaos<30){
+        robbed();
+    }else if (chaos<40){
+        broken();
+    }else if (chaos<70){
+        poisoned();
+    }else if (chaos<100&&entering_a_room){
+        locked();
+    }
+}
+
+

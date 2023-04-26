@@ -28,7 +28,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
 
     int newRow;
     int newCol;
-
+    bool room = false;
     while(true)
     {
         if((map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
@@ -106,6 +106,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                     && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
             {
                 prompts.roomInteractionPrompt(player, merchant, map, monster);
+                room=true;
             }
             else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
                     && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
@@ -120,6 +121,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             {
                 cout << "You can't explore an empty space!\n";
             }
+            player.misfortunes(room);
         }
         else if(input == 'c')
         {   
@@ -137,8 +139,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                     player.cookFood(servings,cookingWith);
                 }
             }
-            
-    
+            player.misfortunes(room);
         }
         else
         {

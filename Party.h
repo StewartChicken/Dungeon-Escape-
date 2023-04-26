@@ -162,6 +162,14 @@ class Player
         void setFryingPans(int);
         void setCauldrons(int);
 
+        //misfortunes
+        void misfortunes(bool entering_a_room);
+        void robbed();
+        void broken();
+        void poisoned();
+        void locked();
+        void cookwareTheft();
+
 };
 
 #endif

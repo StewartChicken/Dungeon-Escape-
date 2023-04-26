@@ -30,7 +30,7 @@ Monster::Monster()
     monsterNames[24] = "Cloud Giant";
     monsterNames[25] = "Silver Dragon";
     monsterNames[26] = "Vampire";
-    monsterNames[27] = "Rick Sanchez";
+    monsterNames[27] = "Rick Sandwhich";
     monsterNames[28] = "Lich";
     monsterNames[29] = "Electricity Woman";
     monsterNames[30] = "Tom Brady";

@@ -433,13 +433,13 @@ void Prompts::currentStatus(Player &player, Merchant &merchant, Map &map){
          << "| Armor             | " << player.getArmorSuits() << " |\n"
          << "| Treasures         | R:" << player.getSilverRings() << "| N: " << player.getRubyNecklaces() << "| B: " << player.getEmeraldBracelets() << "| C: " << player.getDiamondCirclets() << "| G: " << player.getGemGoblets() << "|\n";
          if(player.getImaginaryGlasses() > 0)cout<<"| Imaginary Glasses | "<<player.getImaginaryGlasses()<<" |\n";
-    cout << "+-------------------+\n"
-         << "\n| "<<player.getPlayerName()<<" | Fullness: "<< player.getFullness(player.getPlayerName())
-         << "\n| "<<player.getMember1Name()<<" | Fullness: "<< player.getFullness(player.getMember1Name())
-         << "\n| "<<player.getMember2Name()<<" | Fullness: "<< player.getFullness(player.getMember2Name())
-         << "\n| "<<player.getMember3Name()<<" | Fullness: "<< player.getFullness(player.getMember3Name())
-         << "\n| "<<player.getMember4Name()<<" | Fullness: "<< player.getFullness(player.getMember4Name())
-         << "\n\n+---------------------+\n";
+    cout << "+-------------------+\n";
+         if(player.getFullness(player.getPlayerName())>=0)cout<< "\n| "<<player.getPlayerName()<<" | Fullness: "<< player.getFullness(player.getPlayerName());
+         if(player.getFullness(player.getMember1Name())>=0)cout<< "\n| "<<player.getMember1Name()<<" | Fullness: "<< player.getFullness(player.getMember1Name());
+         if(player.getFullness(player.getMember2Name())>=0)cout<< "\n| "<<player.getMember2Name()<<" | Fullness: "<< player.getFullness(player.getMember2Name());
+         if(player.getFullness(player.getMember3Name())>=0)cout<< "\n| "<<player.getMember3Name()<<" | Fullness: "<< player.getFullness(player.getMember3Name());
+         if(player.getFullness(player.getMember4Name())>=0)cout<< "\n| "<<player.getMember4Name()<<" | Fullness: "<< player.getFullness(player.getMember4Name());
+         cout<< "\n\n+---------------------+\n";
  }
 
 void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster)
@@ -564,10 +564,30 @@ void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map,
     
     npcWelcomeMessage();
     if(npcRiddle()){
-        merchantPrompt(player,merchant);
+        if(barterPrompt()){
+            merchantPrompt(player,merchant);
+        }
     }else{
         launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster);
     } 
+}
+bool Prompts::barterPrompt(){
+    char confirm;
+    do{
+        cout<<"\n\n\nYou have succeeded. Do you wish to barter?(y/n)\n";
+        cin>>confirm;
+        if(confirm!='n'||confirm!='y'){
+            cout<<"\nplease enter a valid input.\n";
+        }
+    }while(confirm!='n'||confirm!='y');
+    switch(confirm){
+        case 'y':
+            return true;
+        case 'n':
+            return false;
+        default:
+            return false;
+    }
 }
 void Prompts::npcWelcomeMessage(){
     srand(time (0));

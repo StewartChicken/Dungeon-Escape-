@@ -60,6 +60,7 @@ class Prompts
         void npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster);
         void npcWelcomeMessage();
         bool npcRiddle();
+        bool barterPrompt();
         void read(string file_name,string arr[][2], int array_size);
         void split(string input_string, char seperator, string arr[], int arr_size);
 
