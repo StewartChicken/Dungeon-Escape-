@@ -672,6 +672,7 @@ void Prompts::negativeAmountWarning()
 {
     cout << "\nInvalid input, cannot buy negative ingredients!\n\n";
 }
+
 void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster){ 
     int numRoomsCleared = merchant.getRoomsCleared();
     double combatScore = player.calculateCombatScore(numRoomsCleared);
@@ -686,6 +687,7 @@ void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map,
         launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster);
     } 
 }
+
 bool Prompts::barterPrompt(){
     char confirm;
     do{
@@ -708,33 +710,34 @@ void Prompts::npcWelcomeMessage(){
     srand(time (0));
     int chaos=rand()%4;
     if(chaos==3){
-        std::cout<<"You have encountered a lowly peasant\n\n***extremely raspy voice*** Helllo there stranger. I have an offer for you. If you awnser my riddle, I will let you take a look at my wares.\n\n";
+        std::cout<<"You have encountered a lowly peasant\n\n***extremely raspy voice*** Helllo there stranger. I have an offer for you. If you answer my riddle, I will let you take a look at my wares.\n\n";
     }else if(chaos==2){
         std::cout<<"You have encountered Porcha\n\nLet's see if you have any brain behind all that brawn. I am thinking of something, if you can guess it, I'll let you see what I have to offer.\n\n";       
     }else if(chaos==1){
         std::cout<<"You have encountered a friendly goblin\n\n***some goblin gibberish*** riddle for wares???\n proceeds to read you the following scripture:\n\n";
     }else if(chaos==0){
-        std::cout<<"You have encountered a scholar\n\n***Smiles in a highly condesending way***A warrior? Im assuming you would like to buy some crude object to bluggon or stab your enemys with. It seems a fool such as yourself would be served better by sharpening your mind. Awnser my riddle, and I'll let you peruse my collection.\n\n";
+        std::cout<<"You have encountered a scholar\n\n***Smiles in a highly condesending way***A warrior? Im assuming you would like to buy some crude object to bluggon or stab your enemys with. It seems a fool such as yourself would be served better by sharpening your mind. answer my riddle, and I'll let you peruse my collection.\n\n";
     }
     
 }
+
 bool Prompts::npcRiddle(){
     bool success = false;
-    string awnser;
+    string answer;
     string arr[6][2];
     srand(time (0));
     int chaos=rand()%6;
     int remaining_attempts = 2;
     read("riddles.txt", arr, 6);
     cout<<arr[chaos][0]<<endl;
-    //cout<<"checking awnser:"<<arr[chaos][1];
+    //cout<<"checking answer:"<<arr[chaos][1];
     cin.clear ();    // Restore input stream to working state
     cin.ignore ( 100 , '\n' );
     for(int i=0; i<3 && !success;i++){
         cin.clear ();    // Restore input stream to working state
         //cin.ignore ( 100 , '\n' );    
-        getline(cin,awnser);
-        if(arr[chaos][1]==awnser){
+        getline(cin,answer);
+        if(arr[chaos][1]==answer){
             success =true;
         }else{
             cout<<"you have failed, you have "<<remaining_attempts<<" attempts left.\n";
@@ -743,6 +746,7 @@ bool Prompts::npcRiddle(){
     }
     return success;
 }
+
 void Prompts::split(string input_string, char seperator, string arr[], int arr_size){
     //initalizing required variables
     int j=0;
@@ -762,6 +766,7 @@ void Prompts::split(string input_string, char seperator, string arr[], int arr_s
         }
     }
 }
+
 void Prompts::read(string file_name,string arr[][2], int array_size){  
     string arr2[2];
     string line;    // variable for storing each line as we read it
@@ -793,6 +798,7 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
         fin.close();
     }
 }
+
  int Prompts::foodQuantityPrompt(int available){
     int quantity;
     do{
@@ -805,6 +811,7 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     return quantity;
 
  }
+
  int Prompts::cookWithPrompts(Player &player){
     int choice = 0;
     do{
@@ -815,26 +822,26 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     cin>>choice;
     switch(choice){
         case 1:
-            if(1>player.getCeramicPots()){
-                cout<<"Please cook with an item you have in your inventory.\n";
+            if(player.getCeramicPots() < 1){
+                cout<<"You do not have any cermaic pots.\n";
                 return-1;
             }
             break;
         case 2:
-            if(1>player.getFryingPans()){
-                cout<<"Please cook with an item you have in your inventory.\n";
+            if(player.getFryingPans() < 1){
+                cout<<"You do not have any frying pans.\n";
                 return-1;
             }
             break;
         case 3:
-            if(1>player.getCauldrons()){
-                cout<<"Please cook with an item you have in your inventory.\n";
+            if(player.getCauldrons() < 1){
+                cout<<"You do not have any cauldrons.\n";
                 return-1;
             }
             break;
-    }
-    if(choice<0 || choice>3){
-        cout<<"Please enter a valid input\n";
+        default:
+            cout<<"Please enter a valid input\n";
+            break;
     }
     }while(choice<0 || choice>3);
     return choice;

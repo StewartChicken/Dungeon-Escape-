@@ -5,7 +5,6 @@ int main()
 {
     Game game;
 
-    
     Player player;
     Merchant merchant;
 

@@ -28,9 +28,12 @@ void Game::movementPhase(Player& player, Merchant &merchant)
 
     int newRow;
     int newCol;
-    bool room = false;
+    bool room;
+
     while(true)
     {
+        room = false;
+
         if((map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
             || map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
             || map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol())) 
@@ -106,7 +109,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                     && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
             {
                 prompts.roomInteractionPrompt(player, merchant, map, monster);
-                room=true;
+                room = true;
             }
             else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
                     && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
@@ -148,11 +151,3 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         }
     }
 }
-
-/*Player Game::getPlayer(){
-    return player;
-}
-
-Merchant Game::getMerchant(){
-    return merchant;
-}*/
