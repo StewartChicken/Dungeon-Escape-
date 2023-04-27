@@ -235,21 +235,24 @@ bool Player::investigate(int roomsCleared){
             }else {
                 success=true;
             }
-        break;
+            break;
         case 2:
             if(chaos<10){
                 setFryingPans(getFryingPans()-1);
             }else {
                 success=true;
             }
-        break;
+            break;
         case 3:
             if(chaos<2){
                 setCauldrons(getCauldrons()-1);
             }else {
                 success = true;
             }
-        break;
+            break;
+        default:
+            cout << "ERROR - cookedSuccessfully\n";
+            break;
     }
     return success;
 }

@@ -62,18 +62,24 @@ void Prompts::merchantPrompt(Player &player, Merchant &merchant)
 
 void Prompts::merchantInteraction(Player &player, Merchant &merchant, bool &active)
 {
-    int choice = 0;
+    string choice = "0";
 
     //While the input is not a valid choice
-    while(choice < 1 || choice > 6)
+    while(stoi(choice) < 1 || stoi(choice) > 6)
     {
         merchantGreeting(player);
         cin >> choice;
+
+        if(!validNumericalInput(choice))
+        {
+            choice = "0";
+            continue;
+        }
     }
 
     int itemCount;
 
-    switch(choice)
+    switch(stoi(choice))
     {
         case 1:
             itemCount = itemBuyMenu(player, merchant, merchant.getIngredientPrice(), "kg(s) of Ingredients");
@@ -134,23 +140,25 @@ void Prompts::merchantGreeting(Player &player)
 //Returns number of items bought
 int Prompts::itemBuyMenu(Player &player, Merchant &merchant, int price, string itemLabel)
 {
-    int amount = -1;
+    string amount = "-1";
 
-    while(amount < 0)
+    while(stoi(amount) < 0)
     {
         cout << "How many " << itemLabel << " would you like to buy? (" << price << " Gold each). Press 0 to cancel.\n";
         cin >> amount;
 
-        if(amount < 0)
+        if(!validNumericalInput(amount))
         {
-            negativeAmountWarning();
+            cout << "Invalid amount.\n";
+            amount = "-1";
             continue;
         }
+
     }
 
-    if(amount > 0)
+    if(stoi(amount) > 0)
     {
-        int itemsBought = confirmPurchase(player, merchant, amount, price, itemLabel);
+        int itemsBought = confirmPurchase(player, merchant, stoi(amount), price, itemLabel);
 
         if(itemsBought == 0)
         {
@@ -215,9 +223,9 @@ int Prompts::confirmPurchase(Player &player, Merchant &merchant, int numItems, i
 void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
 {
 
-    int choice = -1;
+    string choice = "-1";
 
-    while(choice < 0)
+    while(stoi(choice) < 0)
     {
         cout << "During your journey, you may encounter pieces of treasure in each room. When you The price of each treasure\n"
             "depends upon the number of rooms cleared when it was found. Once you sell a piece of treasure, I cannot sell\n"
@@ -229,9 +237,15 @@ void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
             "5.) Gem-encrusted goblet [" << merchant.getSilverRingValue() << " Gold]\n"
             "What do you have for me?\n";
         cin >> choice;
+
+        if(!validNumericalInput(choice))
+        {
+            choice = "-1";
+            continue;
+        }
     }
 
-    switch(choice)
+    switch(stoi(choice))
     {
         case 1:
             if(player.getSilverRings() <= 0)
@@ -304,9 +318,9 @@ void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
 void Prompts::cookwareBuyMenu(Player &player, Merchant &merchant)
 {
 
-    int cookwareChoice = -1;
+    string cookwareChoice = "-1";
 
-    while(cookwareChoice < 0 || cookwareChoice > 3)
+    while(stoi(cookwareChoice) < 0 || stoi(cookwareChoice) > 3)
     {
         cout << "You need cookware in order to turn your ingredients into food wich, when consumed, will replenish\n"
             "your fullness levels or that of your companions.\n"
@@ -317,15 +331,20 @@ void Prompts::cookwareBuyMenu(Player &player, Merchant &merchant)
             "(Enter a positive integer, or 0 to cancel)\n";
 
         cin >> cookwareChoice;
+        if(!validNumericalInput(cookwareChoice))
+        {
+            cookwareChoice = "-1";
+            continue;
+        }
     }
 
-    if(cookwareChoice == 0)
+    if(stoi(cookwareChoice) == 0)
     {
         return;
     }
 
     int itemCount;
-    switch(cookwareChoice)
+    switch(stoi(cookwareChoice))
     {
         case 1:
             itemCount = itemBuyMenu(player, merchant, merchant.getCeramicPotPrice(), "Ceramic pots");
@@ -349,9 +368,9 @@ void Prompts::cookwareBuyMenu(Player &player, Merchant &merchant)
 // Weapon buy menu
 void Prompts::weaponBuyMenu(Player &player, Merchant &merchant)
 {
-    int choice = -1;
+    string choice = "-1";
 
-    while(choice < 0 || choice > 5)
+    while(stoi(choice) < 0 || stoi(choice) > 5)
     {
         cout << "You need weapons to be able to fend off\n"
             "monsters, otherwise, you can only run\n!"
@@ -370,15 +389,20 @@ void Prompts::weaponBuyMenu(Player &player, Merchant &merchant)
             "Which weapon catches your fancy? (Enter a positive integer, or 0 to cancel)\n";
         
         cin >> choice;
+        if(!validNumericalInput(choice))
+        {
+            choice = "-1";
+            continue;
+        }
     }
 
-    if(choice == 0)
+    if(stoi(choice) == 0)
     {
         return;
     }
 
     int itemCount;
-    switch(choice)
+    switch(stoi(choice))
     {
         case 1:
             itemCount = itemBuyMenu(player, merchant, merchant.getStoneClubPrice(), "Stone club(s)");
@@ -492,9 +516,9 @@ bool Prompts::doorGameInteraction(Player &player)
 
     for(int i = 0; i < 3; i ++)
     {
-        int playerChoice = 0;
+        string playerChoice = "0";
 
-        while(playerChoice != 1 && playerChoice != 2 && playerChoice != 3)
+        while(stoi(playerChoice) != 1 && stoi(playerChoice) != 2 && stoi(playerChoice) != 3)
         {
             std::cout << "\nAttempts Remaining: " << attemptsRemaining << "\n\nChoose your move!\n" <<
                     "1). Boulder\n" <<
@@ -502,6 +526,12 @@ bool Prompts::doorGameInteraction(Player &player)
                     "3). Shears\n>";
 
             std::cin >> playerChoice;
+
+            if(!validNumericalInput(playerChoice))
+            {
+                playerChoice = "0";
+                continue;
+            }
         }
 
         int doorChoice = (rand() % 3) + 1;
@@ -525,7 +555,7 @@ bool Prompts::doorGameInteraction(Player &player)
                 break;
         };
 
-        switch(playerChoice)
+        switch(stoi(playerChoice))
         {
             case 1: 
                 playerChoiceString = "Boulder";
@@ -543,7 +573,7 @@ bool Prompts::doorGameInteraction(Player &player)
         
         std::cout << "\nYou chose: " << playerChoiceString <<  "\nThe door chose:" << doorChoiceString << "\n";
 
-        if(player.winsDoorTrapGame(playerChoice, doorChoice))
+        if(player.winsDoorTrapGame(stoi(playerChoice), doorChoice))
         {
             return true;
         }
@@ -673,11 +703,6 @@ void Prompts::invalidInputPrompt()
     cout << "Invalid Input\n";
 }
 
-void Prompts::negativeAmountWarning()
-{
-    cout << "\nInvalid input, cannot buy negative ingredients!\n\n";
-}
-
 void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster){ 
     int numRoomsCleared = merchant.getRoomsCleared();
     double combatScore = player.calculateCombatScore(numRoomsCleared);
@@ -696,12 +721,12 @@ void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map,
 bool Prompts::barterPrompt(){
     char confirm;
     do{
-        cout<<"\n\n\nYou have succeeded. Do you wish to barter?(y/n)\n";
+        cout<<"\n\n\nYou have succeeded. Do you wish to barter? (y/n)\n";
         cin>>confirm;
-        if(confirm!='n'||confirm!='y'){
+        if(confirm!='n'&&confirm!='y'){
             cout<<"\nplease enter a valid input.\n";
         }
-    }while(confirm!='n'||confirm!='y');
+    }while(confirm!='n'&&confirm!='y');
     switch(confirm){
         case 'y':
             return true;
@@ -745,7 +770,7 @@ bool Prompts::npcRiddle(){
         if(arr[chaos][1]==answer){
             success =true;
         }else{
-            cout<<"you have failed, you have "<<remaining_attempts<<" attempts left.\n";
+            cout<<"you have failed, you have " << remaining_attempts << " attempts left.\n";
         }
         remaining_attempts--;
     }
@@ -823,27 +848,46 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
 }
 
  int Prompts::foodQuantityPrompt(int available){
-    int quantity;
-    do{
-    cout<<"How many servings (5kg each) of ingredients would you like to cook? Enter 0 to cancel.\n";
-    cin>>quantity;
-    if(quantity<0||available<quantity){
-        cout<<"Please enter a valid number of servings\n";
+    string quantity = "0";
+
+    while(stoi(quantity) < 0)
+    {
+        cout<<"How many servings (5kg each) of ingredients would you like to cook? Enter 0 to cancel.\n";
+
+        cin >> quantity;
+        if(!validNumericalInput(quantity))
+        {
+            quantity = "0";
+            continue;
+        }
+
+        if(available < stoi(quantity))
+        {
+            cout << "You don't have enough ingredients for this meal. Please enter a valid quantity\n";
+            quantity = "-1";
+            continue;
+        }
+        return stoi(quantity);
+
     }
-    }while(quantity<0);
-    return quantity;
 
  }
 
  int Prompts::cookWithPrompts(Player &player){
-    int choice = 0;
+    string choice = "0";
     do{
     cout<<"What would you like to cook your food with? Enter 0 to cancel.(please select an item you have in your inventory)\n"
     <<"1.) Ceramic pot\n"
     <<"2.) Frying pan\n"
     <<"3.) Cauldron\n";
     cin>>choice;
-    switch(choice){
+
+    if(!validNumericalInput(choice))
+    {
+        choice = "0";
+        continue;
+    }
+    switch(stoi(choice)){
         case 1:
             if(player.getCeramicPots() < 1){
                 cout<<"You do not have any cermaic pots.\n";
@@ -866,8 +910,8 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
             cout<<"Please enter a valid input\n";
             break;
     }
-    }while(choice<0 || choice>3);
-    return choice;
+    }while(stoi(choice) <= 0 || stoi(choice) > 3);
+    return stoi(choice);
  }
 
 bool Prompts::validNumericalInput(string userInput)

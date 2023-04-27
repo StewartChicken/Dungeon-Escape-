@@ -56,7 +56,6 @@ class Prompts
         void movementErrorPrompt();
         void invalidPositionPrompt();
         void invalidInputPrompt();
-        void negativeAmountWarning();
 
         void npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster);
         void npcWelcomeMessage();
