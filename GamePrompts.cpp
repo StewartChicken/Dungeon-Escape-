@@ -867,10 +867,8 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
             quantity = "-1";
             continue;
         }
-        return stoi(quantity);
-
     }
-
+    return stoi(quantity);
  }
 
  int Prompts::cookWithPrompts(Player &player){
