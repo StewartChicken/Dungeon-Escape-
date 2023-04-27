@@ -24,7 +24,7 @@
 using std::map;
 using std::string;
 
-
+// Monster class definition
 class Monster
 {
     private:
@@ -37,6 +37,10 @@ class Monster
         map<string, int> Monsters; // Monsters and their difficulties
 
     public:
+
+        //Function declarations
+
+    
         Monster(); // Default constructor
  
         void generateCombatOrder(); // Generates random order for monster apperances within rooms
