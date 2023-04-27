@@ -497,7 +497,7 @@ void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map
     {   
         int numRoomsCleared = merchant.getRoomsCleared();
         double combatScore = player.calculateCombatScore(numRoomsCleared);
-        string currentMonster = monster.getMonsterFromCombatOrder(numRoomsCleared);
+        string currentMonster = monster.getMonsterFromRoomCombatOrder(numRoomsCleared);
         
         launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster);
         map.displayMap();
@@ -706,7 +706,7 @@ void Prompts::invalidInputPrompt()
 void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster){ 
     int numRoomsCleared = merchant.getRoomsCleared();
     double combatScore = player.calculateCombatScore(numRoomsCleared);
-    string currentMonster = monster.getMonsterFromCombatOrder(numRoomsCleared);
+    string currentMonster = monster.getRandomMonster(numRoomsCleared);
     
     npcWelcomeMessage();
     if(npcRiddle()){

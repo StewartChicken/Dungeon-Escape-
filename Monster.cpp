@@ -1,3 +1,5 @@
+//TODO - 119 Infinite Loop
+
 #include <iostream>
 #include "Monster.h"
 
@@ -81,13 +83,94 @@ void Monster::generateCombatOrder()
     for(int i = 0; i < 4; i ++)
     {
         int randMonster = rand() % 8;
-        combatOrder[i] = monsterNames[randMonster + (8 * i)];
+        roomCombatOrder[i] = monsterNames[randMonster + (8 * i)];
     }
 
-    combatOrder[4] = monsterNames[32];
+    roomCombatOrder[4] = monsterNames[32];
 }
 
-string Monster::getMonsterFromCombatOrder(int index)
+string Monster::getMonsterFromRoomCombatOrder(int index)
 {
-    return combatOrder[index];
+    return roomCombatOrder[index];
 }
+
+string Monster::getRandomMonster(int roomsCleared)
+{
+
+    srand(time(0));
+
+    int monsterMultiplier;
+
+    //Prevents player from fighting sorcerer anywhere but within the final room
+    if(roomsCleared >= 4)
+    {
+        monsterMultiplier = 3;
+    }
+    else
+    {
+        monsterMultiplier = roomsCleared;
+    }
+
+    int chosenMonsterIndex = (rand() % 8) + (8 * monsterMultiplier);
+
+    string chosenMonster = monsterNames[chosenMonsterIndex];
+
+    if(isInRoomCombatOrder(chosenMonster) || isDefeatedMonster(chosenMonster))
+    {
+        //recursive function call to get a new monster should the presently chosen monster be unavailable
+        //Has the potential to enter an infinite loop if all the monsters are defeated
+        chosenMonster = getRandomMonster(roomsCleared);
+    }
+
+    return chosenMonster;
+}
+
+bool Monster::isInRoomCombatOrder(string monsterName)
+{
+    for(string name : roomCombatOrder)
+    {
+        if(compareStrings(name, monsterName))
+        {
+            return true;
+        }   
+    }
+
+    return false;
+}
+
+bool Monster::isDefeatedMonster(string monsterName)
+{
+    for(string defeatedMonster : defeatedMonsters)
+    {
+        if(compareStrings(monsterName, defeatedMonster))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void Monster::killMonster(string monsterName)
+{
+    defeatedMonsters.push_back(monsterName);
+}
+
+bool Monster::compareStrings(string a, string b)
+{
+    if(a.length() != b.length())
+    {
+        return false;
+    }
+
+    for(int i = 0; i < a.length(); i++)
+    {
+        if(a[i] != b[i])
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
