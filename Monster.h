@@ -23,6 +23,7 @@
 
 using std::map;
 using std::string;
+using std::vector;
 
 // Monster class definition
 class Monster

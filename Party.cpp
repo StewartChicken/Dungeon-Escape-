@@ -608,7 +608,6 @@ void Player::surrenderTeamMember()
         {
             isMemberAlive[i] = false;
             setFullnessLevel(partyNames[i + 1], -1);
-            partyNames[i + 1] = partyNames[i + 1] + " (Dead)";
             std::cout << partyNames[i + 1] << " Has been sacrificed to the monster. R.I.P.\n";
             return;
         }
@@ -633,7 +632,6 @@ void Player::loseTeamMember()
 
             isMemberAlive[removeIndex - 1] = false;
             setFullnessLevel(partyNames[removeIndex], -1);
-            partyNames[removeIndex] = partyNames[removeIndex] + " (Lost)";
 
             successfulRemoval = true;
         }

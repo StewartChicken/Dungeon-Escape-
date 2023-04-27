@@ -1,5 +1,6 @@
 // Todo:
 //   teamMemberNamePrompt needs to account for duplicate names - they should not be allowed
+//   Dead players are not updated until the next move - should remove them immediately
 
 #include <iostream>
 #include <string>
@@ -610,35 +611,51 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
     //Player chooses to surrender
     if(stoi(combatChoice) == 2)
     {
-        cout << "You chose to surrender at the expense of a team member.\n";
+        cout << "\n\nYou chose to surrender at the expense of a team member.\n\n";
+
         player.surrenderTeamMember();
         player.monsterFightDecrementFullness(); //Each player has 50% chance of decrementing fullness
+
+        currentStatus(player, merchant, map);
+        map.displayMap();
+
         return;
     }
 
     if(player.countNumWeapons() < 1)
     {
-        cout << "You encountered a hostile " << monsterName << " but you did not have a single weapon to defend yourself with!\n" <<
-        "You are forced to surrender and one of your team mates was lost to the wrath of the monster. R.I.P.\n";
+        cout << "\n\nYou encountered a hostile " << monsterName << " but you did not have a single weapon to defend yourself with!\n" <<
+        "You are forced to surrender and one of your team mates was lost to the wrath of the monster. R.I.P.\n\n";
+
         player.surrenderTeamMember();
         player.monsterFightDecrementFullness();
+
+        currentStatus(player, merchant, map);
+        map.displayMap();
+
         return;
     }
 
     if(player.winsFight(combatScore))
     {
-        cout << "Not to fear, your team is strong enough to overcome the adversary!\n";
+        cout << "\n\nNot to fear, your team is strong enough to overcome the adversary!\n\n";
         map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
         player.winFight(roomsCleared + 2);
         merchant.incrementRoomsCleared();
         player.monsterFightDecrementFullness();
         monster.killMonster(monsterName);
+
+        currentStatus(player, merchant, map);
+        map.displayMap();
     }
     else
     {
-        cout << "You were too weak to defeat the monster, you have endured heavy losses\n";
+        cout << "\n\nYou were too weak to defeat the monster, you have endured heavy losses\n\n";
         player.loseFight();
         player.monsterFightDecrementFullness();
+
+        currentStatus(player, merchant, map);
+        map.displayMap();
     }
 }
 

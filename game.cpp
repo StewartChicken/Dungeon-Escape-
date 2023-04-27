@@ -146,6 +146,14 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             }
             player.misfortunes(room, map);
         }
+        else if(input == 'f')
+        {
+            int numRoomsCleared = merchant.getRoomsCleared();
+            double combatScore = player.calculateCombatScore(numRoomsCleared);
+            string currentMonster = monster.getRandomMonster(numRoomsCleared);
+
+            prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster);
+        }
         else
         {
             prompts.invalidInputPrompt();
