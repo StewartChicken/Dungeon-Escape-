@@ -476,6 +476,7 @@ void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map
         string currentMonster = monster.getMonsterFromCombatOrder(numRoomsCleared);
         
         launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster);
+        map.displayMap();
     }
 }
 
@@ -554,26 +555,30 @@ bool Prompts::doorGameInteraction(Player &player)
     return false;
 }
 
-
-
 void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName)
 {
 
     srand(time(0));
 
-    int combatChoice = 0;
+    string combatChoice = "0";
 
-    while(combatChoice != 1 && combatChoice != 2)
+    while(stoi(combatChoice) != 1 && stoi(combatChoice) != 2)
     {
         cout << monsterName << " ahead!! They got beef wit u bro! Would you like to take the fight or surrender?\n" <<
         "1). Take the fight!!\n" <<
         "2). Surrender..\n";    
 
         cin >> combatChoice;
+
+        if(!validNumericalInput(combatChoice))
+        {
+            combatChoice = "0";
+            continue;
+        }
     }
 
     //Player chooses to surrender
-    if(combatChoice == 2)
+    if(stoi(combatChoice) == 2)
     {
         cout << "You chose to surrender at the expense of a team member.\n";
         player.surrenderTeamMember();
@@ -767,6 +772,24 @@ void Prompts::split(string input_string, char seperator, string arr[], int arr_s
     }
 }
 
+void Prompts::exitInteractionPrompt(Merchant &merchant)
+{
+    if(merchant.getRoomsCleared() < 5)
+    {
+        cout << "You have not cleared all rooms! The dungeon exit is locked.\n";
+    }
+    else if(merchant.getRoomsCleared() > 5)
+    {
+        cout << "Error - exitInteractionPrompt\n";
+    }
+    else
+    {
+        cout << "You have successfully cleared all rooms and defeated the sorcerer!\n" << 
+        "Congratulations, you have won.\n\n\n\n" << 
+        "THE END\n";
+    }
+}
+
 void Prompts::read(string file_name,string arr[][2], int array_size){  
     string arr2[2];
     string line;    // variable for storing each line as we read it
@@ -846,3 +869,16 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     }while(choice<0 || choice>3);
     return choice;
  }
+
+bool Prompts::validNumericalInput(string userInput)
+{
+    for(int i = 0; i < userInput.length(); i ++)
+    {
+        if(!isdigit(userInput[i]))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}

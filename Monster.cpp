@@ -22,7 +22,7 @@ Monster::Monster()
     monsterNames[16] = "Stone Giant";
     monsterNames[17] = "Night Hag";
     monsterNames[18] = "Assassin";
-    monsterNames[19] = "Hydra";
+    monsterNames[19] = "Batman";
     monsterNames[20] = "Dirty Diaper";
     monsterNames[21] = "Jack Sparrow";
     monsterNames[22] = "Aghast Ghast";
@@ -56,7 +56,7 @@ Monster::Monster()
     Monsters["Stone Giant"] = 4;
     Monsters["Night Hag"] = 4;
     Monsters["Assassin"] = 4;
-    Monsters["Hydra"] = 4;
+    Monsters["Batman"] = 4;
     Monsters["Dirty Diaper"] = 4;
     Monsters["Jack Sparrow"] = 4;
     Monsters["Aghast ghast"] = 4;

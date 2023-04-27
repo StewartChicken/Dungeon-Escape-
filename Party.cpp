@@ -21,19 +21,19 @@ Player::Player()
     //Party default combat values
     
     //weapons
-    this -> numWeapons = 0;
-    this -> stoneClubs = 0;
-    this -> ironSpears = 0;
-    this -> mythrilRapiers = 0;
-    this -> flamingAxes = 0;
-    this -> vorpalSwords = 0;
+    this -> numWeapons = 5;
+    this -> stoneClubs = 1;
+    this -> ironSpears = 1;
+    this -> mythrilRapiers = 1;
+    this -> flamingAxes = 1;
+    this -> vorpalSwords = 1;
     
-    this -> armorSuits = 0; 
+    this -> armorSuits = 5; 
 
     this -> combatScore = 0;
 
     //cookware
-    this -> ceramicPots = 0;
+    this -> ceramicPots = 10;
     this -> fryingPans = 0;
     this -> cauldrons = 0;
 
@@ -41,8 +41,8 @@ Player::Player()
     //Party default inventory values
 
     this -> gold = 100;
-    this -> numKeys = 99;
-    this -> ingredients = 0;
+    this -> numKeys = 0;
+    this -> ingredients = 100;
 
 
     //Treasures found
@@ -278,7 +278,6 @@ void Player::cookFood(int servings,int cookingWith)
     }
 }
 
-
 //Inventory methods
 
 int Player::getGold()
@@ -459,6 +458,11 @@ void Player::setArmorSuits(int armorSuits)
     this -> armorSuits = armorSuits;
 }
 
+void Player::decrementArmorSuits()
+{
+    this -> armorSuits --;
+}
+
 //Calculates the combat score for the team based on the weapons within the inventory
 //Formula : (r1 * w + d) - (r2 * c)/a
 // w is the number of weapons the party possesses + bonus points for upgraded weapons
@@ -602,7 +606,7 @@ void Player::surrenderTeamMember()
         if(isMemberAlive[i])
         {
             isMemberAlive[i] = false;
-            //setFullnessLevel();
+            setFullnessLevel(partyNames[i + 1], -1);
             partyNames[i + 1] = partyNames[i + 1] + " (Dead)";
             std::cout << partyNames[i + 1] << " Has been sacrificed to the monster. R.I.P.\n";
             return;
@@ -627,7 +631,7 @@ void Player::loseTeamMember()
             std::cout << partyNames[removeIndex] << " Has been lost to the depths of the dungeon!\n";
 
             isMemberAlive[removeIndex - 1] = false;
-            setFullnessLevel(partyNames[removeIndex], 0);
+            setFullnessLevel(partyNames[removeIndex], -1);
             partyNames[removeIndex] = partyNames[removeIndex] + " (Lost)";
 
             successfulRemoval = true;
@@ -670,26 +674,78 @@ void Player::setCauldrons(int cauldrons)
 void Player::cookwareTheft(){
     srand(time(0));
     int chaos = rand() % 3;
-    std::cout<<"You come back to your campsite to find Dirty Hippies actively rummaging through your stuff, you chase them off before they can take much.\n\nYou have lost 1 ";
+    std::cout<<"You come back to your campsite to find Dirty Hippies actively rummaging through your stuff.";
     if(chaos==0){
-        setCeramicPots(getCeramicPots()-1);
-        std::cout<<"ceramic pot.\n";
+        if(getCeramicPots() > 0)
+        {
+            setCeramicPots(getCeramicPots() - 1);
+            cout << " You chase them off before they can take much.\n\nYou have lost one ceramic pot\n";
+        }else if(getFryingPans() > 0)
+        {
+            setFryingPans(getFryingPans() - 1);
+            std::cout << " You chase them off before they can take much.\n\nYou have lost one frying pan\n";
+        }else if(getCauldrons() > 0)
+        {
+            setCauldrons(getCauldrons() - 1);
+            std::cout << " You chase them off before they can take much.\n\nYou have lost one cauldron\n";
+        }else{
+            cout << " They took nothing because there was nothing to take...\n\n";
+        }
     }else if (chaos==1){
-        setFryingPans(getFryingPans()-1);
-        std::cout<<"frying pan.\n";
+        if(getFryingPans() > 0)
+        {
+            setFryingPans(getFryingPans() - 1);
+            cout << " You chase them off before they can take much.\n\nYou have lost one frying pan\n";
+        }else if(getCeramicPots() > 0)
+        {
+            setCeramicPots(getCeramicPots() - 1);
+            std::cout << " You chase them off before they can take much.\n\nYou have lost one frying pan\n";
+        }else if(getCauldrons() > 0)
+        {
+            setCauldrons(getCauldrons() - 1);
+            std::cout << " You chase them off before they can take much.\n\nYou have lost one cauldron\n";
+        }else{
+            cout << " They took nothing because there was nothing to take...\n\n";
+        }
     }else if (chaos==2){
-        setCauldrons(getCauldrons()-1);
-        std::cout<<"cauldron.\n";
+        if(getCauldrons() > 0)
+        {
+            setCauldrons(getCauldrons() - 1);
+            cout << " You chase them off before they can take much.\n\nYou have lost one cauldron\n";
+        }else if(getFryingPans() > 0)
+        {
+            setFryingPans(getFryingPans() - 1);
+            std::cout << " You chase them off before they can take much.\n\nYou have lost one frying pan\n";
+        }else if(getCeramicPots() > 0)
+        {
+            setCeramicPots(getCeramicPots() - 1);
+            std::cout << " You chase them off before they can take much.\n\nYou have lost one ceramic pot\n";
+        }else{
+            cout << " They took nothing because there was nothing to take...\n\n";
+        }
     }
 }
+
 void Player::robbed(){
     srand(time(0));
     int chaos = rand() % 3;
     if(chaos==0){
-        std::cout<<"While you were destracted ferril midgets snuck into your reserves and stole some food!\n\n You have lost 10kg of ingredients.\n";
-        setIngredients(getIngredients()-10);
+        std::cout<<"While you were destracted, feral hobbits snuck into your reserves and stole some food!\n\n You have lost 10kg of ingredients.\n";
+        if(getIngredients() > 0 && getIngredients() < 10)
+        {
+            setIngredients(0);
+        }else if(getIngredients() == 0)
+        {
+            std::cout << "The hobbots were shocked by your lack of food and called you a peasant before waddling into the distance\n";
+        }else{
+            setIngredients(getIngredients()-10);
+        }
     }else if (chaos==1){
         std::cout<<"You are held at sword tip by bandits!\n\nYou have lost 1 suit of armor.\n";
+        if(getArmorSuits() > 0)
+        {
+            decrementArmorSuits();
+        }
     }else if (chaos==2){
         cookwareTheft();
     }
@@ -720,6 +776,7 @@ void Player::broken(){
     }
     std::cout<<"You have lost 1 "<<item<<".\n";
 }
+
 void Player::poisoned(){
     srand(time(0));
     int chaos=rand()%5;
@@ -776,17 +833,21 @@ void Player::locked(){
         locked();
     }
 }
-void Player::misfortunes(bool entering_a_room){
+void Player::misfortunes(bool entering_a_room, Map &map){
     srand(time(0));
     int chaos=rand()%200;
     if(chaos<30){
         robbed();
+        map.displayMap();
     }else if (chaos<40){
         broken();
+        map.displayMap();
     }else if (chaos<70){
         poisoned();
+        map.displayMap();
     }else if (chaos<100&&entering_a_room){
         locked();
+        map.displayMap();
     }
 }
 

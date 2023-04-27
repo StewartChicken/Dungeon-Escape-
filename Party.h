@@ -6,6 +6,7 @@
 #include <map>
 #include <cstdlib>
 #include "time.h"
+#include "Map.h"
 
 using std::string;
 using std::map;
@@ -144,6 +145,8 @@ class Player
         void setVorpalSwords(int);
         void setArmorSuits(int);
 
+        void decrementArmorSuits();
+
         //Calculates combat score - chance of winning a fight against
         // a monster. Takes the current monster challenge rating as an argument. 
         double calculateCombatScore(int);
@@ -164,7 +167,7 @@ class Player
         void setCauldrons(int);
 
         //misfortunes
-        void misfortunes(bool entering_a_room);
+        void misfortunes(bool entering_a_room, Map &map);
         void robbed();
         void broken();
         void poisoned();

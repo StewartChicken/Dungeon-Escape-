@@ -118,13 +118,13 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             }
             else if(map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol()))
             {
-                cout << "DUNGEON EXIT INTERACTION\n";
+                prompts.exitInteractionPrompt(merchant);
             }
             else
             {
                 cout << "You can't explore an empty space!\n";
             }
-            player.misfortunes(room);
+            player.misfortunes(room, map);
         }
         else if(input == 'c')
         {   
@@ -142,7 +142,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                     player.cookFood(servings,cookingWith);
                 }
             }
-            player.misfortunes(room);
+            player.misfortunes(room, map);
         }
         else
         {
