@@ -499,7 +499,7 @@ void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map
         double combatScore = player.calculateCombatScore(numRoomsCleared);
         string currentMonster = monster.getMonsterFromRoomCombatOrder(numRoomsCleared);
         
-        launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster);
+        launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster);
         map.displayMap();
     }
 }
@@ -585,7 +585,7 @@ bool Prompts::doorGameInteraction(Player &player)
     return false;
 }
 
-void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName)
+void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName, Monster &monster)
 {
 
     srand(time(0));
@@ -632,6 +632,7 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         player.winFight(roomsCleared + 2);
         merchant.incrementRoomsCleared();
         player.monsterFightDecrementFullness();
+        monster.killMonster(monsterName);
     }
     else
     {
@@ -714,7 +715,7 @@ void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map,
             merchantPrompt(player,merchant);
         }
     }else{
-        launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster);
+        launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster);
     } 
 }
 

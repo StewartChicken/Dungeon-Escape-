@@ -44,7 +44,7 @@ class Prompts
         void roomInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster);
         bool doorGameInteraction(Player &player);
         bool roomKeyPrompt(Player &player);
-        void launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName);
+        void launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName, Monster &monster);
 
         //Random single prompts
 
