@@ -5,7 +5,7 @@
 #include <string>
 #include <map>
 #include <cstdlib>
-#include "time.h"
+#include <time.h>
 #include "Map.h"
 
 using std::string;

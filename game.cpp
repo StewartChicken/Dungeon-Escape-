@@ -94,15 +94,17 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         {
             if(!map.isExplored(map.getPlayerRow(), map.getPlayerCol()))
             {
-                int numRoomsCleared = merchant.getRoomsCleared();
-                double combatScore = player.calculateCombatScore(numRoomsCleared);
-                string currentMonster = monster.getMonsterFromCombatOrder(numRoomsCleared);
-
                 prompts.currentStatus(player, merchant, map);
                 map.exploreSpace(map.getPlayerRow(), map.getPlayerCol());
                 map.displayMap();
+
                 if(player.investigate(merchant.getRoomsCleared())){
-                    prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster);
+
+                    int numRoomsCleared = merchant.getRoomsCleared();
+                    double combatScore = player.calculateCombatScore(numRoomsCleared);
+                    string currentMonster = monster.getRandomMonster(numRoomsCleared);
+
+                    prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster);
                 }
             }
             else if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol()) 

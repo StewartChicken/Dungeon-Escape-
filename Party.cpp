@@ -1,6 +1,4 @@
 #include "Party.h"
-#include <iostream>
-#include "time.h"
 
 //Default constructor
 Player::Player()
