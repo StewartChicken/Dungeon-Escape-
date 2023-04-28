@@ -1010,7 +1010,7 @@ void Prompts::vectorRead(std::string file_name, std::vector<std::pair<string, in
 void Prompts::printBoard(std::vector<pair<std::string, int>> &vect){
     cout<<"|++++++++++  High Scores  +++++++++++|";
     for(int i=0; i<vect.size(); i++){
-        cout<<i<<">"<<vect[i].first<<" -> "<<vect[i].second<<endl; 
+        cout<<i<<"> "<<vect[i].first<<" -> "<<vect[i].second<<endl; 
     }
 
 }
