@@ -76,6 +76,8 @@ class Prompts
 
         bool validNumericalInput(string userInput);
 
+        void endgameStats(Player &player, Map &map);
+
 };
 
 #endif
