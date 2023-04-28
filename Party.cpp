@@ -57,10 +57,9 @@ Player::Player()
     this -> endCode = 0;
 
     this -> endgameArray[0]="You have died from hunger.\n\n GAME OVER!";
-    this -> endgameArray[1]="You have died in battle.\n\n GAME OVER!";
-    this -> endgameArray[2]="You have upset the sorcer.\n\n GAME OVER!";
-    this -> endgameArray[3]="You have no remaining companions.\n\n GAME OVER!";
-    this -> endgameArray[4]="You have Escaped the Dungeon.\n\n YOU WIN!";
+    this -> endgameArray[1]="You have upset the sorcer.\n\n GAME OVER!";
+    this -> endgameArray[2]="You have no remaining companions.\n\n GAME OVER!";
+    this -> endgameArray[3]="You have Escaped the Dungeon.\n\n YOU WIN!";
 }
 
 int Player::getEndCode(){
