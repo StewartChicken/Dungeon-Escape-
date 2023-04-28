@@ -54,6 +54,9 @@ class Player
         int sorcererAngerLevel;
         bool sorcererDefeated;
 
+        int monstersDefeated;
+        int gameScore;
+
         //Treasures - can be sold to merchant
         int silverRings; //10 gold - denoted E
         int rubyNecklaces; //20 gold - denoted N
@@ -169,6 +172,13 @@ class Player
 
         void defeatSorcerer();
         bool isSorcererDefeated();
+
+        int getMonstersDefeated();
+        void setMonstersDefeated(int number);
+        void incrementMonstersDefeated();
+
+        int getGameScore();
+        void setGameScore(int number);
 
         //Cookware methods
 

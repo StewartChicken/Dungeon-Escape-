@@ -642,7 +642,10 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         {
             player.defeatSorcerer();
         }
-        
+
+        player.incrementMonstersDefeated();
+        player.setGameScore(player.getGameScore() + monster.getMonsterDifficulty(monsterName));
+
         cout << "\n\nNot to fear, your team is strong enough to overcome the adversary!\n\n";
         map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
         player.winFight(roomsCleared + 2);

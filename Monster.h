@@ -58,6 +58,8 @@ class Monster
 
         bool compareStrings(string a, string b); // Compares two strings
 
+        int getMonsterDifficulty(string monsterName);
+
 };
 
 #endif

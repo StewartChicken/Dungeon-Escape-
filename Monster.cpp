@@ -218,3 +218,7 @@ bool Monster::compareStrings(string a, string b)
     return true;
 }
 
+int Monster::getMonsterDifficulty(string monsterName)
+{
+    return Monsters[monsterName];
+}

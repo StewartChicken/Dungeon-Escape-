@@ -33,6 +33,9 @@ Player::Player()
     this -> sorcererAngerLevel = 0;
     this -> sorcererDefeated = false;
 
+    this -> monstersDefeated = 0;
+    this -> gameScore = 0;
+
     //cookware
     this -> ceramicPots = 10;
     this -> fryingPans = 0;
@@ -703,6 +706,31 @@ void Player::defeatSorcerer()
 bool Player::isSorcererDefeated()
 {
     return sorcererDefeated;
+}
+
+int Player::getMonstersDefeated()
+{
+    return monstersDefeated;
+}
+
+void Player::setMonstersDefeated(int number)
+{
+    monstersDefeated = number;
+}
+
+void Player::incrementMonstersDefeated()
+{
+    monstersDefeated ++;
+}
+
+int Player::getGameScore()
+{
+    return gameScore;
+}
+
+void Player::setGameScore(int score)
+{
+    gameScore = score;
 }
 
 //Cookware methods
