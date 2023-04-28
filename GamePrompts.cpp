@@ -642,10 +642,7 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         {
             player.defeatSorcerer();
         }
-
-        player.incrementMonstersDefeated();
-        player.setGameScore(player.getGameScore() + monster.getMonsterDifficulty(monsterName));
-
+        
         cout << "\n\nNot to fear, your team is strong enough to overcome the adversary!\n\n";
         map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
         player.winFight(roomsCleared + 2);
@@ -958,6 +955,9 @@ bool Prompts::validNumericalInput(string userInput)
     return true;
 }
 void Prompts::endgameStats(Player &player, Map &map){
+    ofstream scores;
+    scores.open("stats.txt");
+
     if(player.getFullness(player.getPlayerName())>=0&&(0<=player.getFullness(player.getMember1Name())||0<=player.getFullness(player.getMember2Name())||0<=player.getFullness(player.getMember3Name())||0<=player.getFullness(player.getMember4Name())))std::cout << "Congradulations "<<player.getPlayerName()<<"!\nYou made it through the dungeon with";
     else std::cout<<player.getPlayerName()<<"'s final stats";
     if(player.getFullness(player.getMember1Name())>=0)std::cout<<" "<<player.getMember1Name();
@@ -972,7 +972,8 @@ void Prompts::endgameStats(Player &player, Map &map){
         <<"| Gold: "<<player.getGold()
         <<"| Treasures R:"<<player.getSilverRings()<<" | N: "<<player.getRubyNecklaces()<<" | B:"<<player.getEmeraldBracelets()<<" | C:"<<player.getDiamondCirclets()<<" | G:"<<player.getGemGoblets()
         <<"| Explored Spaces: "<<map.getNumSpacesExplored()
-        <<"| Number of monsters defeated: "<<"**# of monsters defeated"
+        <<"| Number of monsters defeated: "<<player.getMonstersDefeated()
         <<"| Number of turns elapsed: "<<"**# of turns elapsed"
         <<"+------------------+\n\n";
+    scores<<player.getPlayerName()<<player.getGameScore()<<"|"<<player.getMember1Name()<<"|"<<player.getMember2Name()<<"|"<<player.getMember3Name()<<"|"<<player.getMember4Name()<<"|"<<player.getGold()<<"|"<<player.getSilverRings()<<"|"<<player.getRubyNecklaces()<<"|"<<player.getEmeraldBracelets()<<"|"<<player.getDiamondCirclets()<<"|"<<player.getGemGoblets();
 }
