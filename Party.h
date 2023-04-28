@@ -65,7 +65,7 @@ class Player
         int imaginaryGlasses;
 
         int endCode;
-        std::string endgameArray[];
+        std::string endgameArray[5];
     public:
         //Constructor
         Player();
