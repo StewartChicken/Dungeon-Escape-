@@ -62,15 +62,7 @@ Player::Player()
     this -> endgameArray[3]="You have Escaped the Dungeon.\n\n YOU WIN!";
 }
 
-int Player::getEndCode(){
-    return endCode;
-}
-void Player::setEndCode(int code){
-    this -> endCode = code;
-}
-void  Player::endgamePrompt(int index){
-    std::cout<<endgameArray[index];
-}
+
 //Player and team member name/hunger management methods
 
 //Adds new party member
@@ -924,4 +916,13 @@ void Player::misfortunes(bool entering_a_room, Map &map){
     }
 }
 
+int Player::getEndCode(){
+    return endCode;
+}
+void Player::setEndCode(int code){
+    this -> endCode = code;
+}
 
+void  Player::endgamePrompt(int index){
+    std::cout<<endgameArray[index];
+}

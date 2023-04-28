@@ -954,3 +954,22 @@ bool Prompts::validNumericalInput(string userInput)
 
     return true;
 }
+void Prompts::endgameStats(Player &player, Map &map){
+    if(player.getFullness(player.getPlayerName())>=0&&(0<=player.getFullness(player.getMember1Name())||0<=player.getFullness(player.getMember2Name())||0<=player.getFullness(player.getMember3Name())||0<=player.getFullness(player.getMember4Name())))std::cout << "Congradulations "<<player.getPlayerName()<<"!\nYou made it through the dungeon with";
+    else std::cout<<player.getPlayerName()<<"'s final stats";
+    if(player.getFullness(player.getMember1Name())>=0)std::cout<<" "<<player.getMember1Name();
+    if(player.getFullness(player.getMember1Name())>=0&&player.getFullness(player.getMember2Name())>=0)std::cout<<",";
+    if(player.getFullness(player.getMember2Name())>=0)std::cout<<" "<<player.getMember2Name();
+    if(player.getFullness(player.getMember2Name())>=0&&player.getFullness(player.getMember3Name())>=0)std::cout<<",";
+    if(player.getFullness(player.getMember3Name())>=0)std::cout<<" "<<player.getMember3Name();
+    if(player.getFullness(player.getMember3Name())>=0&&player.getFullness(player.getMember4Name())>=0)std::cout<<",";
+    if(player.getFullness(player.getMember4Name())>=0)std::cout<<" "<<player.getMember4Name();
+    cout<<".\n"
+        <<"+------------------+"
+        <<"| Gold: "<<player.getGold()
+        <<"| Treasures R:"<<player.getSilverRings()<<" | N: "<<player.getRubyNecklaces()<<" | B:"<<player.getEmeraldBracelets()<<" | C:"<<player.getDiamondCirclets()<<" | G:"<<player.getGemGoblets()
+        <<"| Explored Spaces: "<<map.getNumSpacesExplored()
+        <<"| Number of monsters defeated: "<<"**# of monsters defeated"
+        <<"| Number of turns elapsed: "<<"**# of turns elapsed"
+        <<"+------------------+\n\n";
+}
