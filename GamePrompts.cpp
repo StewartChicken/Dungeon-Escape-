@@ -839,3 +839,6 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     }while(choice<0 || choice>3);
     return choice;
  }
+ void endgamePrompt(int cause){
+    
+ }

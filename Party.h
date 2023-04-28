@@ -60,6 +60,8 @@ class Player
         //Eastereggs - make the game more interesting
         int imaginaryGlasses;
 
+        int endCode;
+        std::string endgameArray[];
     public:
         //Constructor
         Player();
@@ -170,6 +172,10 @@ class Player
         void poisoned();
         void locked();
         void cookwareTheft();
+
+        int getEndCode();
+        void setEndCode(int code);
+        void endgamePrompt(int index);
 
 };
 
