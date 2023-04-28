@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <utility>
 #include "Party.h"
 /**
  * This class contains all the high level functional methods for the game
@@ -37,6 +39,8 @@ class Game
         void movementPhase(Player &player, Merchant &merchant); // Player interaction with the actual map - primary game functionality
         
         void endGame(Player &player, Map &map);
+
+        void bubbleSort(vector<pair<string, int>> scores);
 };
 
 #endif

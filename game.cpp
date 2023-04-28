@@ -283,3 +283,25 @@ void Game::endGame(Player &player, Map &map)
 {
     prompts.endgameStats(player, map);
 }
+
+void Game::bubbleSort(std::vector<pair<string, int>> vec)
+{
+    bool sorted = false;
+
+    while(!sorted){
+        bool alteration = false;
+        for(int i = 0; i < vec.size() - 1; i ++){
+            if(vec.at(i).second > vec.at(i + 1).second){
+                alteration = true;
+                pair<string, int> temp(vec.at(i).first, vec.at(i).second);
+                vec.at(i) = vec.at(i + 1);
+                vec.at(i + 1) = temp;
+            }
+        }
+
+        if(!alteration){
+            sorted = true;
+            break;
+        }
+    }
+}
