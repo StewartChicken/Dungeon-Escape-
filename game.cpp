@@ -110,6 +110,12 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                 map.setPlayerPosition(newRow, newCol); //Update position
                 map.updateMap(); //Update map data
                 prompts.currentStatus(player, merchant, map); //Prints status of player
+
+                if(map.isNPCLocation(newRow, newCol))
+                {
+                    map.exploreSpace(newRow, newCol);
+                }
+                
                 map.displayMap(); // Displays new map
                 player.hungerMisfortune(100); //Random hunger misfortune
             }
