@@ -51,6 +51,9 @@ class Player
         int ingredients; //1 gold per kg
         int numKeys;
 
+        int sorcererAngerLevel;
+        bool sorcererDefeated;
+
         //Treasures - can be sold to merchant
         int silverRings; //10 gold - denoted E
         int rubyNecklaces; //20 gold - denoted N
@@ -155,6 +158,15 @@ class Player
         void loseFight();
         void surrenderTeamMember();
         void loseTeamMember();
+
+        bool wholeTeamDead();
+
+        int getSorcererAngerLevel();
+        void setSorcererAngerLevel(int level);
+        void incrementSorcererAnger();
+
+        void defeatSorcerer();
+        bool isSorcererDefeated();
 
         //Cookware methods
 

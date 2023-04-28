@@ -43,6 +43,7 @@ void Game::merchantInteraction(Player &player, Merchant &merchant){
 //Return type : void
 void Game::movementPhase(Player& player, Merchant &merchant)
 {
+
     map.displayMap(); //Display map following merchant interaction
 
     char input = '-'; //Initial input value (set to invalid input)
@@ -56,6 +57,36 @@ void Game::movementPhase(Player& player, Merchant &merchant)
     //Loops until win or loss condition is met
     while(true)
     {
+
+        //Player dead
+        //All team members dead
+        //Sorcer level = 100
+
+        //Lose game conditions
+        if(player.getFullness(player.getPlayerName()) < 0)
+        {
+            prompts.endGamePrompt(player.getEndCode());
+            return;
+        }
+
+        if(player.wholeTeamDead())
+        {
+            prompts.endGamePrompt(player.getEndCode());
+            return;
+        }
+
+        if(player.getSorcererAngerLevel() == 100)
+        {
+            prompts.endGamePrompt(player.getEndCode());
+            return;
+        }
+
+        if(player.isSorcererDefeated())
+        {
+            prompts.endGamePrompt(player.getEndCode());
+            return;
+        }
+
         room = false; //Initial status of player - not within a room
 
         //If player is over a room, an NPC, or the exit, prompts player to interact with the space
@@ -76,6 +107,11 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                 && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
         {
            prompts.onExitSpacePrompt();
+        }
+        else if(!map.isExplored(map.getPlayerRow(), map.getPlayerCol()))
+        {
+            prompts.movementExplorePrompt();
+            player.incrementSorcererAnger();
         }
         else
         {

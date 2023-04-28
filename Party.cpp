@@ -30,6 +30,9 @@ Player::Player()
 
     this -> combatScore = 0;
 
+    this -> sorcererAngerLevel = 0;
+    this -> sorcererDefeated = false;
+
     //cookware
     this -> ceramicPots = 10;
     this -> fryingPans = 0;
@@ -648,6 +651,49 @@ void Player::loseTeamMember()
             successfulRemoval = true;
         }
     }
+}
+
+//Checks if entire team is dead
+bool Player::wholeTeamDead()
+{
+    for(int i = 0; i < 4; i++)
+    {
+        if(isMemberAlive[i])
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+//Sorcerer anger level methods
+
+int Player::getSorcererAngerLevel()
+{
+    return sorcererAngerLevel;
+}
+
+void Player::setSorcererAngerLevel(int level)
+{
+    sorcererAngerLevel = level;
+}
+
+void Player::incrementSorcererAnger()
+{
+    sorcererAngerLevel ++;
+}
+
+//Changes sorcerer defeat status to true
+void Player::defeatSorcerer()
+{
+    sorcererDefeated = true;
+}
+
+//Checks if the sorcerer is defeated
+bool Player::isSorcererDefeated()
+{
+    return sorcererDefeated;
 }
 
 //Cookware methods
