@@ -198,22 +198,34 @@ bool Player::winsDoorTrapGame(int playerChoice, int doorChoice)
     return true;
 }
 
-bool Player::investigate(int roomsCleared){
+bool Player::investigate(int roomsCleared)
+{
+
     srand(time(0));
     int chaos = rand() % 100;
-    //std::cout<<chaos<<std::endl;
-    bool valid = false;
-    if (chaos<20){
+
+    bool monsterFight = false;
+
+    if (chaos < 20)
+    {
         incrementTreasure(roomsCleared);
-    }else if (chaos<30){
+    }
+    else if (chaos < 30)
+    {
         incrementKeys();
-    }else if(chaos<50){
-        valid = true;
     }
-    if(!valid){
-    hungerMisfortune(40);
+    else if(chaos < 50) //20 percent of a monster fight
+    {
+        monsterFight = true;
     }
-    return valid;
+
+    //If there is no monster fight - hunger misfortune
+    if(!monsterFight)
+    {
+        hungerMisfortune(40);
+    }
+
+    return monsterFight;
 }
 //chosses cookware, 1 through 3
 /*
