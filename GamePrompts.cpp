@@ -941,9 +941,6 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     }while(stoi(choice) <= 0 || stoi(choice) > 3);
     return stoi(choice);
  }
- void endgamePrompt(int cause){
-    
- }
 
 bool Prompts::validNumericalInput(string userInput)
 {
