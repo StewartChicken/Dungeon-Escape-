@@ -868,7 +868,7 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
  int Prompts::foodQuantityPrompt(int available){
     string quantity = "0";
 
-    while(stoi(quantity) < 0)
+    while(stoi(quantity) <= 0)
     {
         cout<<"How many servings (5kg each) of ingredients would you like to cook? Enter 0 to cancel.\n";
 

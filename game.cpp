@@ -174,6 +174,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             int cookingWith = 0;
             do{
             servings=prompts.foodQuantityPrompt(available);
+
             }while(servings<0||servings>available);
             if(servings!=0){
                 do{
@@ -183,6 +184,10 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                     player.cookFood(servings,cookingWith);
                 }
             }
+
+            prompts.currentStatus(player, merchant, map);
+            map.displayMap();
+
             player.misfortunes(room, map);
         }
         else if(input == 'f')
