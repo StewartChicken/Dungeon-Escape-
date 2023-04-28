@@ -841,7 +841,7 @@ void Prompts::exitInteractionPrompt(Merchant &merchant)
     {
         cout << "You have successfully cleared all rooms and defeated the sorcerer!\n" << 
         "Congratulations, you have won.\n\n\n\n" << 
-        "THE END\n";
+        "THE END\n";/////call endgame
     }
 }
 
