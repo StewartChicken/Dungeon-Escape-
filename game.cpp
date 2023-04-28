@@ -279,9 +279,17 @@ void Game::movementPhase(Player& player, Merchant &merchant)
     }
 }   
 
+void Game::scoreBoard(){
+    std::vector<pair<std::string, int>> vect;
+    prompts.vectorRead("stats.txt", vect);
+    bubbleSort(vect);
+    prompts.printBoard(vect);
+}
+
 void Game::endGame(Player &player, Map &map)
 {
     prompts.endgameStats(player, map);
+    scoreBoard();
 }
 
 void Game::bubbleSort(std::vector<pair<string, int>> vec)
@@ -304,4 +312,10 @@ void Game::bubbleSort(std::vector<pair<string, int>> vec)
             break;
         }
     }
+}
+void Game::scoreBoard(){
+    std::vector<pair<std::string, int>> vect;
+    prompts.vectorRead("stats.txt", vect);
+    bubbleSort(vect);
+    prompts.printBoard(vect);
 }

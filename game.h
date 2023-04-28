@@ -41,6 +41,8 @@ class Game
         void endGame(Player &player, Map &map);
 
         void bubbleSort(vector<pair<string, int>> scores);
+
+        void scoreBoard();
 };
 
 #endif

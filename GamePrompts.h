@@ -77,6 +77,9 @@ class Prompts
         bool validNumericalInput(string userInput);
 
         void endgameStats(Player &player, Map &map);
+        void vectorSplit(std::string line, std::vector<std::pair<string, int>> &vect);
+        void vectorRead(std::string file_name, std::vector<std::pair<string, int>> &vect);
+        void printBoard(std::vector<pair<std::string, int>> &vect);
 
 };
 

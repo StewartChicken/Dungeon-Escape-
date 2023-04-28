@@ -977,3 +977,41 @@ void Prompts::endgameStats(Player &player, Map &map){
         <<"+------------------+\n\n";
     scores<<player.getPlayerName()<<"|"<<player.getGameScore()<<"|"<<player.getMember1Name()<<"|"<<player.getMember2Name()<<"|"<<player.getMember3Name()<<"|"<<player.getMember4Name()<<"|"<<player.getGold()<<"|"<<player.getSilverRings()<<"|"<<player.getRubyNecklaces()<<"|"<<player.getEmeraldBracelets()<<"|"<<player.getDiamondCirclets()<<"|"<<player.getGemGoblets();
 }
+void Prompts::vectorSplit(std::string line, std::vector<std::pair<string, int>> &vect){
+    string c_data;
+    pair<string, int> c_pair;
+
+    if(line!=""){
+        for(int i=0; i<2;i++){
+            if(line[i]!='|'){
+                c_data+=line[i];
+            }else{
+                if(i==0){
+                    c_pair.first=c_data;
+                }else{
+                    c_pair.second=stoi(c_data);
+                }
+                c_data=""; 
+            }
+        }
+        vect.push_back(c_pair);
+    }
+
+}
+void Prompts::vectorRead(std::string file_name, std::vector<std::pair<string, int>> &vect){
+    ifstream info;
+    string line;
+    info.open(file_name);
+    while(getline(info,line)){
+        vectorSplit(line,vect);
+    }
+
+}
+void Prompts::printBoard(std::vector<pair<std::string, int>> &vect){
+    cout<<"|++++++++++  High Scores  +++++++++++|";
+    for(int i=0; i<vect.size(); i++){
+        cout<<i<<">"<<vect[i].first<<" -> "<<vect[i].second<<endl; 
+    }
+
+}
+
