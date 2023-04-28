@@ -694,7 +694,10 @@ void Player::setSorcererAngerLevel(int level)
 
 void Player::incrementSorcererAnger()
 {
-    sorcererAngerLevel ++;
+    if(!sorcererDefeated)
+    {
+        sorcererAngerLevel ++;
+    }
 }
 
 //Changes sorcerer defeat status to true

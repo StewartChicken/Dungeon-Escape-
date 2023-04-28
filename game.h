@@ -35,6 +35,7 @@ class Game
         void merchantInteraction(Player &player, Merchant &merchant); // Initial player interaction with merchant
 
         void movementPhase(Player &player, Merchant &merchant); // Player interaction with the actual map - primary game functionality
+        
 };
 
 #endif

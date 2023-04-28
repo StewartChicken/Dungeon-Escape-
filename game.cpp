@@ -65,7 +65,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         //Lose game conditions
         if(player.getFullness(player.getPlayerName()) < 0)
         {
-            player.setEndCode(0); //Player dies from starvation
+            //player.setEndCode(0); //Player dies from starvation
             player.endgamePrompt(player.getEndCode());
             return;
         }
