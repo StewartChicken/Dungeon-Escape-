@@ -59,17 +59,26 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         room = false; //Initial status of player - not within a room
 
         //If player is over a room, an NPC, or the exit, prompts player to interact with the space
-        if((map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
-            || map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
-            || map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol())) 
+        if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol()) 
             && map.isExplored(map.getPlayerRow(), map.getPlayerCol())
             && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
         {
-            prompts.movementInteractPrompt();
+            prompts.onRoomSpacePrompt();
+        }
+        else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
+                && map.isExplored(map.getPlayerRow(), map.getPlayerCol())
+                && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
+        {
+            prompts.onNPCSpacePrompt();
+        }
+        else if(map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol())
+                && map.isExplored(map.getPlayerRow(), map.getPlayerCol())
+                && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
+        {
+           prompts.onExitSpacePrompt();
         }
         else
         {
-            //If player is over unexplored or empty location, prompt to explore
             prompts.movementExplorePrompt();
         }
 
@@ -115,7 +124,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                 {
                     map.exploreSpace(newRow, newCol);
                 }
-                
+
                 map.displayMap(); // Displays new map
                 player.hungerMisfortune(100); //Random hunger misfortune
             }
@@ -175,6 +184,13 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         }
         else if(input == 'c')
         {   
+            if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
+                || map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
+                || map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol()))
+            {
+                continue;
+            }
+
             int servings = 0;
             int available = player.getIngredients()/5;
             int cookingWith = 0;
@@ -198,6 +214,13 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         }
         else if(input == 'f')
         {
+            if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
+                || map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
+                || map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol()))
+            {
+                continue;
+            }
+
             int numRoomsCleared = merchant.getRoomsCleared();
             double combatScore = player.calculateCombatScore(numRoomsCleared);
             string currentMonster = monster.getRandomMonster(numRoomsCleared);

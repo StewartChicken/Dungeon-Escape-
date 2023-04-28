@@ -694,13 +694,25 @@ void Prompts::brokePrompt()
 // Informs user which actions they can take within the movement menu
 void Prompts::movementExplorePrompt()
 {
-    cout << "Press 'w', 'a', 's' or 'd' to move. Press 'e' to explore the space.\nPress 'c' to cook ingrediants. Press 'f' to pick a fight. \n";
+    cout << "Press 'w', 'a', 's' or 'd' to move. Press 'e' to explore the space.\nPress 'c' to cook ingrediants. Press 'f' to pick a fight. Press 'g' to give up.\n";
 }
 
-// Informs user which actions they can take within the movement menu
-void Prompts::movementInteractPrompt()
+// Informs user which actions they can take when on a room space
+void Prompts::onRoomSpacePrompt()
 {
-    cout << "Press 'w', 'a', 's' or 'd' to move. Press 'e' to interact with the space\n";
+    cout << "Press 'w', 'a', 's', or 'd' to move. Press 'e' to open the door. Press 'g' to give up.\n";
+}
+
+// Informs user which actions they can take when on an NPC space
+void Prompts::onNPCSpacePrompt()
+{
+    cout << "Press 'w', 'a', 's', or 'd' to move. Press 'e' to interact with the NPC. Press 'g' to give up.\n";
+}
+
+// Informs player which actions they can take on the exit space
+void Prompts::onExitSpacePrompt()
+{
+    cout << "Press 'w', 'a', 's', or 'd' to move. Press to try the exit. Press 'g' to give up.\n";
 }
 
 // Error with player movement
