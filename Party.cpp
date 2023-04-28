@@ -52,7 +52,16 @@ Player::Player()
     this -> emeraldBracelets = 0; 
     this -> diamondCirclets = 0; 
     this -> gemGoblets = 0;
-    this -> imaginaryGlasses = 0; 
+    this -> imaginaryGlasses = 0;
+
+    this -> endCode = 0;
+    this -> endgameArray[5]={
+        "You have died from hunger.\n\n GAME OVER!",
+        "You have died in battle.\n\n GAME OVER!",
+        "You have upset the sorcer.\n\n GAME OVER!",
+        "You have no remaining companions.\n\n GAME OVER!",
+        "You have Escaped the Dungeon.\n\n YOU WIN!"
+    };
 
 }
 
@@ -61,6 +70,15 @@ Player::Player()
 //Player and team member name/hunger management methods
 
 //Adds new party member
+int Player::getEndCode(){
+    return endCode;
+}
+void Player::setEndCode(int code){
+    this -> endCode = code;
+}
+void  Player::endgamePrompt(int index){
+    std::cout<<endgameArray[index];
+}
 void Player::addNewMember(std::string name, int index)
 {
     this -> fullnessLevels[name] = 50;
