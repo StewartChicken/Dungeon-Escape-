@@ -72,7 +72,7 @@ class Prompts
         int foodQuantityPrompt(int available);
         int cookWithPrompts(Player &player);
 
-        //randon
+        //random
 
         bool validNumericalInput(string userInput);
 
