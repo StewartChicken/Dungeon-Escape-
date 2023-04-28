@@ -65,25 +65,25 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         //Lose game conditions
         if(player.getFullness(player.getPlayerName()) < 0)
         {
-            prompts.endGamePrompt(player.getEndCode());
+            player.endgamePrompt(player.getEndCode());
             return;
         }
 
         if(player.wholeTeamDead())
         {
-            prompts.endGamePrompt(player.getEndCode());
+            player.endgamePrompt(player.getEndCode());
             return;
         }
 
         if(player.getSorcererAngerLevel() == 100)
         {
-            prompts.endGamePrompt(player.getEndCode());
+            player.endgamePrompt(player.getEndCode());
             return;
         }
 
         if(player.isSorcererDefeated())
         {
-            prompts.endGamePrompt(player.getEndCode());
+            player.endgamePrompt(player.getEndCode());
             return;
         }
 

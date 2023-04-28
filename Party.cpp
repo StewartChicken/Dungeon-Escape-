@@ -61,11 +61,7 @@ Player::Player()
     this -> endgameArray[2]="You have upset the sorcer.\n\n GAME OVER!";
     this -> endgameArray[3]="You have no remaining companions.\n\n GAME OVER!";
     this -> endgameArray[4]="You have Escaped the Dungeon.\n\n YOU WIN!";
-    };
-
 }
-
-
 
 int Player::getEndCode(){
     return endCode;
