@@ -638,6 +638,11 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
 
     if(player.winsFight(combatScore))
     {
+        if(merchant.getRoomsCleared() == 4)
+        {
+            player.defeatSorcerer();
+        }
+        
         cout << "\n\nNot to fear, your team is strong enough to overcome the adversary!\n\n";
         map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
         player.winFight(roomsCleared + 2);
@@ -827,21 +832,16 @@ void Prompts::split(string input_string, char seperator, string arr[], int arr_s
     }
 }
 
-void Prompts::exitInteractionPrompt(Merchant &merchant)
+void Prompts::exitInteractionPrompt(Player &player, Merchant &merchant)
 {
-    if(merchant.getRoomsCleared() < 5)
+    if(!player.isSorcererDefeated())
     {
         cout << "You have not cleared all rooms! The dungeon exit is locked.\n";
     }
-    else if(merchant.getRoomsCleared() > 5)
-    {
-        cout << "Error - exitInteractionPrompt\n";
-    }
     else
     {
-        cout << "You have successfully cleared all rooms and defeated the sorcerer!\n" << 
-        "Congratulations, you have won.\n\n\n\n" << 
-        "THE END\n";/////call endgame
+        player.setEndCode(4);
+        player.endgamePrompt(player.getEndCode());
     }
 }
 

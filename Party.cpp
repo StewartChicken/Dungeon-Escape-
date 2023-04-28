@@ -57,9 +57,10 @@ Player::Player()
     this -> endCode = 0;
 
     this -> endgameArray[0]="You have died from hunger.\n\n GAME OVER!";
-    this -> endgameArray[1]="You have upset the sorcer.\n\n GAME OVER!";
-    this -> endgameArray[2]="You have no remaining companions.\n\n GAME OVER!";
-    this -> endgameArray[3]="You have Escaped the Dungeon.\n\n YOU WIN!";
+    this -> endgameArray[1]="You have died from food poisoning.\n\n GAME OVER!";
+    this -> endgameArray[2]="You have upset the sorcer.\n\n GAME OVER!";
+    this -> endgameArray[3]="You have no remaining companions.\n\n GAME OVER!";
+    this -> endgameArray[4]="You have Escaped the Dungeon.\n\n YOU WIN!";
 }
 
 
@@ -865,7 +866,7 @@ void Player::poisoned(){
     if(getFullness(name)<=0){
         if(name==getPlayerName()){
             std::cout<<"You have died from food poisening!\n";
-            //ENDGAME
+            setEndCode(1);
         }else{
         std::cout<<name<<" has died from food poisening!"<<"***number of remaing players**"<<" players remain.\n";
         }

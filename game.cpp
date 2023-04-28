@@ -65,7 +65,13 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         //Lose game conditions
         if(player.getFullness(player.getPlayerName()) < 0)
         {
-            //player.setEndCode(0); //Player dies from starvation
+            //Player gets food poisoned
+            if(player.getEndCode() == 1)
+            {
+                player.endgamePrompt(player.getEndCode());
+                return;
+            }
+            player.setEndCode(0); //Player dies from starvation
             player.endgamePrompt(player.getEndCode());
             return;
         }
@@ -87,8 +93,6 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         if(player.isSorcererDefeated())
         {
             player.setEndCode(3); //Player win
-            player.endgamePrompt(player.getEndCode());
-            return;
         }
 
         room = false; //Initial status of player - not within a room
@@ -214,7 +218,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             //Interact with dungeon exit 
             else if(map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol()))
             {
-                prompts.exitInteractionPrompt(merchant);
+                prompts.exitInteractionPrompt(player, merchant);
             }
             else
             {
@@ -273,4 +277,9 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             map.displayMap();
         }
     }
+}   
+
+void Game::endGame(Player &player, Map &map)
+{
+    prompts.endgameStats(player, map);
 }

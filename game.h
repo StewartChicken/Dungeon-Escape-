@@ -36,6 +36,7 @@ class Game
 
         void movementPhase(Player &player, Merchant &merchant); // Player interaction with the actual map - primary game functionality
         
+        void endGame(Player &player, Map &map);
 };
 
 #endif
