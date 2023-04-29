@@ -19,14 +19,14 @@ Player::Player()
     //Party default combat values
     
     //weapons
-    this -> numWeapons = 5;
-    this -> stoneClubs = 1;
-    this -> ironSpears = 1;
-    this -> mythrilRapiers = 1;
-    this -> flamingAxes = 1;
-    this -> vorpalSwords = 1;
+    this -> numWeapons = 0;
+    this -> stoneClubs = 0;
+    this -> ironSpears = 0;
+    this -> mythrilRapiers = 0;
+    this -> flamingAxes = 0;
+    this -> vorpalSwords = 0;
     
-    this -> armorSuits = 5; 
+    this -> armorSuits = 0; 
 
     this -> combatScore = 0;
 
@@ -37,7 +37,7 @@ Player::Player()
     this -> gameScore = 0;
 
     //cookware
-    this -> ceramicPots = 10;
+    this -> ceramicPots = 0;
     this -> fryingPans = 0;
     this -> cauldrons = 0;
 
@@ -46,7 +46,7 @@ Player::Player()
 
     this -> gold = 100;
     this -> numKeys = 0;
-    this -> ingredients = 100;
+    this -> ingredients = 0;
 
 
     //Treasures found

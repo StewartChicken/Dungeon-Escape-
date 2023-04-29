@@ -69,10 +69,14 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             if(player.getEndCode() == 1)
             {
                 player.endgamePrompt(player.getEndCode());
-                return;
+
+                //Exit function
+                return; 
             }
             player.setEndCode(0); //Player dies from starvation
             player.endgamePrompt(player.getEndCode());
+
+            //Exit function
             return;
         }
 
@@ -80,49 +84,61 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         {
             player.setEndCode(2); //Player has no team members left
             player.endgamePrompt(player.getEndCode());
+
+            //Exit function
             return;
         }
 
         if(player.getSorcererAngerLevel() >= 100)
         {
-            player.setEndCode(1); //Anger leve == 100
+            player.setEndCode(1); //Anger lever == 100
             player.endgamePrompt(player.getEndCode());
+
+            //Exit function
             return;
         }
 
         if(player.isSorcererDefeated())
         {
             player.setEndCode(3); //Player win
+
+            //Exit function
             return;
         }
 
+        //Player gives up
         if(player.hasQuit())
         {
             player.endgamePrompt(player.getEndCode());
+
+            //Exit function
             return;
         }
 
         room = false; //Initial status of player - not within a room
 
-        //If player is over a room, an NPC, or the exit, prompts player to interact with the space
+        //If player is over a room
         if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol()) 
             && map.isExplored(map.getPlayerRow(), map.getPlayerCol())
             && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
         {
             prompts.onRoomSpacePrompt();
         }
+        //If player is over an NPC
         else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
                 && map.isExplored(map.getPlayerRow(), map.getPlayerCol())
                 && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
         {
             prompts.onNPCSpacePrompt();
         }
+        //If player is over dungeon exit
         else if(map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol())
                 && map.isExplored(map.getPlayerRow(), map.getPlayerCol())
                 && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
         {
            prompts.onExitSpacePrompt();
         }
+        //Invrement sorcerer level when player moves over unexplored area
         else if(!map.isExplored(map.getPlayerRow(), map.getPlayerCol()))
         {
             prompts.movementExplorePrompt();
@@ -130,6 +146,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         }
         else
         {
+            //Default prompt
             prompts.movementExplorePrompt();
         }
 
@@ -143,6 +160,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             newRow = map.getPlayerRow();
             newCol = map.getPlayerCol();
 
+            //Movement keys
             switch(input)
             {
                 case 'w':
@@ -229,60 +247,72 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             }
             else
             {
+                //Explore empty space warning
                 cout << "You can't explore an empty space!\n";
             }
+            //Create misfortune
             player.misfortunes(room, map);
         }
+        //Player chooses to cook food
         else if(input == 'c')
         {   
+            //Can't cook food over room, NPC, or dungeon location
             if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
                 || map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
                 || map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol()))
             {
+                //Continue loop
                 continue;
             }
 
+            //Player cook process
             int servings = 0;
             int available = player.getIngredients()/5;
             int cookingWith = 0;
             do{
-            servings=prompts.foodQuantityPrompt(available);
+            //How many servings can the player get
+            servings = prompts.foodQuantityPrompt(available);
 
-            }while(servings<0||servings>available);
+            }while(servings < 0 || servings > available);
             if(servings!=0){
                 do{
+                //Asks use which cooking item they wish to use
                 cookingWith=prompts.cookWithPrompts(player);
                 }while(cookingWith==-1);
                 if(cookingWith!=0){
-                    player.cookFood(servings,cookingWith);
+                    player.cookFood(servings,cookingWith); //Cook food
                 }
             }
 
+            //Prints the player's current status
             prompts.currentStatus(player, merchant, map);
-            map.displayMap();
+            map.displayMap(); 
 
+            //Calls misfortune
             player.misfortunes(room, map);
         }
-        else if(input == 'f')
+        else if(input == 'f') //If player wishes to pick a fight
         {
+            //Can't pick a fight on a room, npc, or dungeon exit
             if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
                 || map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
                 || map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol()))
             {
-                continue;
+                continue; //Continue loop
             }
 
             int numRoomsCleared = merchant.getRoomsCleared();
             double combatScore = player.calculateCombatScore(numRoomsCleared);
             string currentMonster = monster.getRandomMonster(numRoomsCleared);
 
+            //Launch monster fight
             prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster);
         }
-        else if(input == 'q')
+        else if(input == 'q') //Quit input
         {
-            player.quit();
+            player.quit(); //Call quit function
         }
-        else
+        else //Any other input is invalid
         {
             prompts.invalidInputPrompt();
             map.displayMap();
@@ -290,6 +320,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
     }
 }   
 
+//Prints final score baord
 void Game::scoreBoard(){
     std::vector<pair<std::string, int>> vect;
     prompts.vectorRead("stats.txt", vect);
@@ -297,28 +328,32 @@ void Game::scoreBoard(){
     prompts.printBoard(vect);
 }
 
+//End game function
 void Game::endGame(Player &player)
 {
     prompts.endgameStats(player, map);
     scoreBoard();
 }
 
+//Sorts a vector of pairs using a bubble sort
 void Game::bubbleSort(std::vector<pair<string, int>> &vec)
 {
     bool sorted = false;
 
     while(!sorted){
-        bool alteration = false;
+        bool alteration = false; //Checks if a swap has been made
         for(int i = 0; i < vec.size() - 1; i ++){
             if(vec.at(i).second < vec.at(i + 1).second){
                 alteration = true;
+
+                //Swap elements
                 pair<string, int> temp(vec.at(i).first, vec.at(i).second);
                 vec.at(i) = vec.at(i + 1);
                 vec.at(i + 1) = temp;
             }
         }
 
-        if(!alteration){
+        if(!alteration){ // IF no swap, vector is sorted
             sorted = true;
             break;
         }
