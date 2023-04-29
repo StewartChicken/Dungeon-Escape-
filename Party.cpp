@@ -58,12 +58,14 @@ Player::Player()
     this -> imaginaryGlasses = 0;
 
     this -> endCode = 0;
+    this -> playerQuit = false;
 
-    this -> endgameArray[0]="You have died from hunger.\n\n GAME OVER!";
-    this -> endgameArray[1]="You have died from food poisoning.\n\n GAME OVER!";
-    this -> endgameArray[2]="You have upset the sorcer.\n\n GAME OVER!";
-    this -> endgameArray[3]="You have no remaining companions.\n\n GAME OVER!";
-    this -> endgameArray[4]="You have Escaped the Dungeon.\n\n YOU WIN!";
+    this -> endgameArray[0]="You have died from hunger.\n\n GAME OVER!\n\n\n";
+    this -> endgameArray[1]="You have died from food poisoning.\n\n GAME OVER!\n\n\n";
+    this -> endgameArray[2]="You have upset the sorcer.\n\n GAME OVER!\n\n\n";
+    this -> endgameArray[3]="You have no remaining companions.\n\n GAME OVER!\n\n\n";
+    this -> endgameArray[4]="You have Escaped the Dungeon.\n\n YOU WIN!\n\n\n";
+    this -> endgameArray[5]="You gave up. *Loser* (don't get butthurt pls)\n\n GAME OVER!\n\n\n";
 }
 
 
@@ -954,4 +956,15 @@ void Player::setEndCode(int code){
 
 void  Player::endgamePrompt(int index){
     std::cout<<endgameArray[index];
+}
+
+void Player::quit()
+{
+    endCode = 5;
+    playerQuit = true;
+}
+
+bool Player::hasQuit()
+{
+    return playerQuit;
 }

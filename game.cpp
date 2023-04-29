@@ -93,6 +93,13 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         if(player.isSorcererDefeated())
         {
             player.setEndCode(3); //Player win
+            return;
+        }
+
+        if(player.hasQuit())
+        {
+            player.endgamePrompt(player.getEndCode());
+            return;
         }
 
         room = false; //Initial status of player - not within a room
@@ -271,6 +278,10 @@ void Game::movementPhase(Player& player, Merchant &merchant)
 
             prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster);
         }
+        else if(input == 'q')
+        {
+            player.quit();
+        }
         else
         {
             prompts.invalidInputPrompt();
@@ -286,20 +297,20 @@ void Game::scoreBoard(){
     prompts.printBoard(vect);
 }
 
-void Game::endGame(Player &player, Map &map)
+void Game::endGame(Player &player)
 {
     prompts.endgameStats(player, map);
     scoreBoard();
 }
 
-void Game::bubbleSort(std::vector<pair<string, int>> vec)
+void Game::bubbleSort(std::vector<pair<string, int>> &vec)
 {
     bool sorted = false;
 
     while(!sorted){
         bool alteration = false;
         for(int i = 0; i < vec.size() - 1; i ++){
-            if(vec.at(i).second > vec.at(i + 1).second){
+            if(vec.at(i).second < vec.at(i + 1).second){
                 alteration = true;
                 pair<string, int> temp(vec.at(i).first, vec.at(i).second);
                 vec.at(i) = vec.at(i + 1);
@@ -312,10 +323,4 @@ void Game::bubbleSort(std::vector<pair<string, int>> vec)
             break;
         }
     }
-}
-void Game::scoreBoard(){
-    std::vector<pair<std::string, int>> vect;
-    prompts.vectorRead("stats.txt", vect);
-    bubbleSort(vect);
-    prompts.printBoard(vect);
 }

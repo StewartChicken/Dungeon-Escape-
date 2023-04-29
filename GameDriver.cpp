@@ -19,7 +19,9 @@ int main()
 
     game.merchantInteraction(player, merchant); // First interaction between the player and the merchant
 
-    game.movementPhase(player, merchant); // Progress to map interaction and the actual gae
+    game.movementPhase(player, merchant); // Progress to map interaction and the actual game
+
+    game.endGame(player);
 
     return 0;
 }

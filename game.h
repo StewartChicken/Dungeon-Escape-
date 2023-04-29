@@ -38,9 +38,9 @@ class Game
 
         void movementPhase(Player &player, Merchant &merchant); // Player interaction with the actual map - primary game functionality
         
-        void endGame(Player &player, Map &map);
+        void endGame(Player &player);
 
-        void bubbleSort(vector<pair<string, int>> scores);
+        void bubbleSort(vector<pair<string, int>> &scores);
 
         void scoreBoard();
 };

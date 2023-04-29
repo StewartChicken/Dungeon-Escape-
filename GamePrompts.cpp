@@ -501,7 +501,7 @@ void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map
         string currentMonster = monster.getMonsterFromRoomCombatOrder(numRoomsCleared);
         
         launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster);
-        map.displayMap();
+        //map.displayMap();
     }
 }
 
@@ -650,6 +650,8 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         player.monsterFightDecrementFullness();
         monster.killMonster(monsterName);
 
+        player.setGameScore(player.getGameScore() + monster.getMonsterDifficulty(monsterName));
+
         currentStatus(player, merchant, map);
         map.displayMap();
     }
@@ -699,25 +701,25 @@ void Prompts::brokePrompt()
 // Informs user which actions they can take within the movement menu
 void Prompts::movementExplorePrompt()
 {
-    cout << "Press 'w', 'a', 's' or 'd' to move. Press 'e' to explore the space.\nPress 'c' to cook ingrediants. Press 'f' to pick a fight. Press 'g' to give up.\n";
+    cout << "Press 'w', 'a', 's' or 'd' to move. Press 'e' to explore the space.\nPress 'c' to cook ingrediants. Press 'f' to pick a fight. Press 'q' to give up.\n";
 }
 
 // Informs user which actions they can take when on a room space
 void Prompts::onRoomSpacePrompt()
 {
-    cout << "Press 'w', 'a', 's', or 'd' to move. Press 'e' to open the door. Press 'g' to give up.\n";
+    cout << "Press 'w', 'a', 's', or 'd' to move. Press 'e' to open the door. Press 'q' to give up.\n";
 }
 
 // Informs user which actions they can take when on an NPC space
 void Prompts::onNPCSpacePrompt()
 {
-    cout << "Press 'w', 'a', 's', or 'd' to move. Press 'e' to interact with the NPC. Press 'g' to give up.\n";
+    cout << "Press 'w', 'a', 's', or 'd' to move. Press 'e' to interact with the NPC. Press 'q' to give up.\n";
 }
 
 // Informs player which actions they can take on the exit space
 void Prompts::onExitSpacePrompt()
 {
-    cout << "Press 'w', 'a', 's', or 'd' to move. Press to try the exit. Press 'g' to give up.\n";
+    cout << "Press 'w', 'a', 's', or 'd' to move. Press to try the exit. Press 'q' to give up.\n";
 }
 
 // Error with player movement
@@ -956,42 +958,45 @@ bool Prompts::validNumericalInput(string userInput)
 }
 void Prompts::endgameStats(Player &player, Map &map){
     ofstream scores;
-    scores.open("stats.txt");
+    scores.open("stats.txt",std::ios_base::app);
 
     if(player.getFullness(player.getPlayerName())>=0&&(0<=player.getFullness(player.getMember1Name())||0<=player.getFullness(player.getMember2Name())||0<=player.getFullness(player.getMember3Name())||0<=player.getFullness(player.getMember4Name())))std::cout << "Congradulations "<<player.getPlayerName()<<"!\nYou made it through the dungeon with";
-    else std::cout<<player.getPlayerName()<<"'s final stats";
+    else std::cout<<player.getPlayerName()<<"'s final stats\n";
     if(player.getFullness(player.getMember1Name())>=0)std::cout<<" "<<player.getMember1Name();
     if(player.getFullness(player.getMember1Name())>=0&&player.getFullness(player.getMember2Name())>=0)std::cout<<",";
     if(player.getFullness(player.getMember2Name())>=0)std::cout<<" "<<player.getMember2Name();
     if(player.getFullness(player.getMember2Name())>=0&&player.getFullness(player.getMember3Name())>=0)std::cout<<",";
     if(player.getFullness(player.getMember3Name())>=0)std::cout<<" "<<player.getMember3Name();
     if(player.getFullness(player.getMember3Name())>=0&&player.getFullness(player.getMember4Name())>=0)std::cout<<",";
-    if(player.getFullness(player.getMember4Name())>=0)std::cout<<" "<<player.getMember4Name();
+    if(player.getFullness(player.getMember4Name())>=0)std::cout<<" "<<player.getMember4Name()<<"\n";
     cout<<".\n"
-        <<"+------------------+"
-        <<"| Gold: "<<player.getGold()
-        <<"| Treasures R:"<<player.getSilverRings()<<" | N: "<<player.getRubyNecklaces()<<" | B:"<<player.getEmeraldBracelets()<<" | C:"<<player.getDiamondCirclets()<<" | G:"<<player.getGemGoblets()
-        <<"| Explored Spaces: "<<map.getNumSpacesExplored()
-        <<"| Number of monsters defeated: "<<player.getMonstersDefeated()
-        <<"| Number of turns elapsed: "<<"**# of turns elapsed"
+        <<"+------------------+\n"
+        <<"| Gold: "<<player.getGold()<<"\n"
+        <<"| Treasures R:"<<player.getSilverRings()<<" | N: "<<player.getRubyNecklaces()<<" | B:"<<player.getEmeraldBracelets()<<" | C:"<<player.getDiamondCirclets()<<" | G:"<<player.getGemGoblets()<<"\n"
+        <<"| Explored Spaces: "<<map.getNumSpacesExplored()<<"\n"
+        <<"| Number of monsters defeated: "<<player.getMonstersDefeated()<<"\n"
+        <<"| Number of turns elapsed: "<<"**# of turns elapsed"<<"\n"
         <<"+------------------+\n\n";
-    scores<<player.getPlayerName()<<"|"<<player.getGameScore()<<"|"<<player.getMember1Name()<<"|"<<player.getMember2Name()<<"|"<<player.getMember3Name()<<"|"<<player.getMember4Name()<<"|"<<player.getGold()<<"|"<<player.getSilverRings()<<"|"<<player.getRubyNecklaces()<<"|"<<player.getEmeraldBracelets()<<"|"<<player.getDiamondCirclets()<<"|"<<player.getGemGoblets();
+    scores<<player.getPlayerName()<<"|"<<player.getGameScore()<<"|"<<player.getMember1Name()<<"|"<<player.getMember2Name()<<"|"<<player.getMember3Name()<<"|"<<player.getMember4Name()<<"|"<<player.getGold()<<"|"<<player.getSilverRings()<<"|"<<player.getRubyNecklaces()<<"|"<<player.getEmeraldBracelets()<<"|"<<player.getDiamondCirclets()<<"|"<<player.getGemGoblets()<<"\n";
 }
 void Prompts::vectorSplit(std::string line, std::vector<std::pair<string, int>> &vect){
     string c_data;
     pair<string, int> c_pair;
-
+    int j = 0;
+    //cout<<line<<endl;
     if(line!=""){
-        for(int i=0; i<2;i++){
+        for(int i=0; j<2; i++){
             if(line[i]!='|'){
                 c_data+=line[i];
             }else{
-                if(i==0){
+                if(j==0){
                     c_pair.first=c_data;
                 }else{
+                    //cout<<c_data<<endl;
                     c_pair.second=stoi(c_data);
                 }
-                c_data=""; 
+                c_data="";
+                j++; 
             }
         }
         vect.push_back(c_pair);
@@ -1008,9 +1013,9 @@ void Prompts::vectorRead(std::string file_name, std::vector<std::pair<string, in
 
 }
 void Prompts::printBoard(std::vector<pair<std::string, int>> &vect){
-    cout<<"|++++++++++  High Scores  +++++++++++|";
+    cout<<"|++++++++++  High Scores  +++++++++++|\n";
     for(int i=0; i<vect.size(); i++){
-        cout<<i<<"> "<<vect[i].first<<" -> "<<vect[i].second<<endl; 
+        cout<<"             "<<i+1<<" > "<<vect[i].first<<" -> "<<vect[i].second<<endl; 
     }
 
 }

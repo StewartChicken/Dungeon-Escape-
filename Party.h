@@ -68,7 +68,9 @@ class Player
         int imaginaryGlasses;
 
         int endCode;
-        std::string endgameArray[5];
+        std::string endgameArray[6];
+
+        bool playerQuit;
     public:
         //Constructor
         Player();
@@ -202,6 +204,8 @@ class Player
         void setEndCode(int code);
         void endgamePrompt(int index);
 
+        void quit();
+        bool hasQuit();
 
 };
 
