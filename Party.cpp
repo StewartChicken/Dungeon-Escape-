@@ -11,6 +11,7 @@ Player::Player()
     this -> partyNames[3] = "Member3";
     this -> partyNames[4] = "Member4";
 
+    //Are the members alive?
     this -> isMemberAlive[0] = true;
     this -> isMemberAlive[0] = true;
     this -> isMemberAlive[0] = true;
@@ -58,8 +59,9 @@ Player::Player()
     this -> imaginaryGlasses = 0;
 
     this -> endCode = 0;
-    this -> playerQuit = false;
+    this -> playerQuit = false; //Has the player quit?
 
+    //End game statements
     this -> endgameArray[0]="You have died from hunger.\n\n GAME OVER!\n\n\n";
     this -> endgameArray[1]="You have died from food poisoning.\n\n GAME OVER!\n\n\n";
     this -> endgameArray[2]="You have upset the sorcer.\n\n GAME OVER!\n\n\n";
@@ -78,6 +80,7 @@ void Player::addNewMember(std::string name, int index)
     partyNames[index] = name;
 }
 
+//Adjust fullness level for specific party member
 void Player::setFullnessLevel(string name, int fullness)
 {
     this -> fullnessLevels[name] = fullness;
@@ -88,6 +91,7 @@ int Player::getFullness(string partyMember)
     return fullnessLevels[partyMember];
 }
 
+//Get specific party members' names - returns as strings
 std::string Player::getPlayerName()
 {
     return partyNames[0];
@@ -125,6 +129,7 @@ void Player::decrementFullness(string partyMember)
     this -> fullnessLevels[partyMember] --;
 }
 
+//After every monster fight, each team member has a 50 percent chance of losing a fullness level
 void Player::monsterFightDecrementFullness()
 {
     srand(time(0));
@@ -140,6 +145,7 @@ void Player::monsterFightDecrementFullness()
     }
 }
 
+//Random hunber misfortune - each player has a 20 percent chance of losing a fullness level
 void Player::hungerMisfortune(int chances){
     srand(time(0));
     int chaos[5];
@@ -164,6 +170,8 @@ void Player::hungerMisfortune(int chances){
     }
 
 }
+
+//Increment treasure depending on how many rooms were cleared
 void Player::incrementTreasure(int roomsCleared){
     switch(roomsCleared){
         case 0:
@@ -184,6 +192,7 @@ void Player::incrementTreasure(int roomsCleared){
     }
 } 
 
+//Game with the door that the player plays if they don't have keys
 //1 - Boulder
 //2 - Parchment
 //3 - Shears
@@ -212,19 +221,20 @@ bool Player::winsDoorTrapGame(int playerChoice, int doorChoice)
     return true;
 }
 
+//Investigate an unexplored space
 bool Player::investigate(int roomsCleared)
 {
 
     srand(time(0));
     int chaos = rand() % 100;
 
-    bool monsterFight = false;
+    bool monsterFight = false; // Monster fight is not active at the start
 
-    if (chaos < 20)
+    if (chaos < 20) //20 percent chance of a treasure
     {
         incrementTreasure(roomsCleared);
     }
-    else if (chaos < 30)
+    else if (chaos < 30) //20 percent chance of a key
     {
         incrementKeys();
     }
@@ -239,21 +249,26 @@ bool Player::investigate(int roomsCleared)
         hungerMisfortune(40);
     }
 
-    return monsterFight;
+    return monsterFight; //Returns whether or not there was a monster fight
 }
-//chosses cookware, 1 through 3
+
+//chooses cookware, 1 through 3
 /*
 1.) ceramic pot
 2.) frying pan
 3.) cauldron
 */
+
+//Was the food cooked successfully? (Depends on which cookware is used)
  bool Player::cookedSuccessfully(int cookingWith){
+
     bool success = false;
     srand(time(0));
     int chaos = rand() % 100;
+
     switch(cookingWith){
         case 1:
-            if(chaos<25){
+            if(chaos<25){ //Breaks pot with 25 percent chance
                 setCeramicPots(getCeramicPots()-1);
 
             }else {
@@ -261,21 +276,21 @@ bool Player::investigate(int roomsCleared)
             }
             break;
         case 2:
-            if(chaos<10){
+            if(chaos<10){ //Breaks pan with 10 percent chance
                 setFryingPans(getFryingPans()-1);
             }else {
                 success=true;
             }
             break;
         case 3:
-            if(chaos<2){
+            if(chaos<2){ //Breaks cauldron with 2 percent chance
                 setCauldrons(getCauldrons()-1);
             }else {
                 success = true;
             }
             break;
         default:
-            cout << "ERROR - cookedSuccessfully\n";
+            cout << "ERROR - cookedSuccessfully\n"; //Error code
             break;
     }
     return success;
@@ -296,6 +311,7 @@ void Player::cookFood(int servings,int cookingWith)
         setIngredients(getIngredients()-5);
         fullness_earned++;
     }
+    //Increase fullness for each serving
     if(cookedSuccessfully(cookingWith)){
         setFullnessLevel(getPlayerName(), getFullness(getPlayerName())+fullness_earned);
         setFullnessLevel(getMember1Name(), getFullness(getMember1Name())+fullness_earned);
@@ -504,9 +520,10 @@ double Player::calculateCombatScore(int roomsCleared)
 
     srand(time(0));
 
-    int r1 = rand() % 6 + 1;
+    int r1 = rand() % 6 + 1; //Random variation
     int r2 = rand() % 6 + 1;
 
+    //weapon weighting
     int w = countNumWeapons() + mythrilRapiers + 2 * flamingAxes + 3 * vorpalSwords;
 
     //Calculate d
@@ -626,6 +643,7 @@ void Player::loseFight()
     }
 }
 
+//Surrender team member to monster
 void Player::surrenderTeamMember()
 {
     for(int i = 3; i >= 0; i --)
@@ -642,6 +660,7 @@ void Player::surrenderTeamMember()
     std::cout << "All Team Members are dead.\n";
 }
 
+//Lose a party member if the party member loses the game to the door
 void Player::loseTeamMember()
 {
 

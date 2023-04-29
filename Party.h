@@ -51,11 +51,11 @@ class Player
         int ingredients; //1 gold per kg
         int numKeys;
 
-        int sorcererAngerLevel;
-        bool sorcererDefeated;
+        int sorcererAngerLevel; //Anger level of the sorcerer
+        bool sorcererDefeated; //Sorcerer defeated?
 
-        int monstersDefeated;
-        int gameScore;
+        int monstersDefeated; //Number of monsters defeated
+        int gameScore; //Final score
 
         //Treasures - can be sold to merchant
         int silverRings; //10 gold - denoted E
@@ -67,10 +67,11 @@ class Player
         //Eastereggs - make the game more interesting
         int imaginaryGlasses;
 
-        int endCode;
-        std::string endgameArray[6];
+        int endCode; //Endcode which tracks which endgame prompt to print
+        std::string endgameArray[6]; //Endgame prompts
 
-        bool playerQuit;
+        bool playerQuit; //Has the player given up
+
     public:
         //Constructor
         Player();
@@ -102,7 +103,7 @@ class Player
 
         //Inventory methods
 
-        int getGold();
+        int getGold();  //Getters
         int getIngredients();
         int getNumKeys();
 
@@ -114,7 +115,7 @@ class Player
 
         int getImaginaryGlasses();
 
-        void setGold(int);
+        void setGold(int); //Setters
         void setIngredients(int);
         void setNumKeys(int);
         
@@ -124,6 +125,7 @@ class Player
         void setDiamondCirclets(int);
         void setGemGoblets(int);
 
+        //Increments and decrements
         void incrementKeys();
         void decrementKeys();
 
@@ -169,11 +171,11 @@ class Player
         bool wholeTeamDead();
 
         int getSorcererAngerLevel();
-        void setSorcererAngerLevel(int level);
+        void setSorcererAngerLevel(int level); 
         void incrementSorcererAnger();
 
-        void defeatSorcerer();
-        bool isSorcererDefeated();
+        void defeatSorcerer(); //Sets sorcererDefeated to true
+        bool isSorcererDefeated(); //Checks if sorcerer is defeated
 
         int getMonstersDefeated();
         void setMonstersDefeated(int number);
@@ -200,10 +202,12 @@ class Player
         void locked();
         void cookwareTheft();
 
+        //End codes
         int getEndCode();
         void setEndCode(int code);
         void endgamePrompt(int index);
 
+        //Player gives up
         void quit();
         bool hasQuit();
 
