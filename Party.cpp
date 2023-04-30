@@ -198,20 +198,6 @@ void Player::monsterFightDecrementFullness()
     }
 }
 
-void Player::killStarvedTeammembers()
-{
-    for(int i = 0; i < 4; i ++)
-    {
-        if(fullnessLevels[partyNames[i + 1]] == 0)
-        {
-            fullnessLevels[partyNames[i + 1] = -1];
-            isMemberAlive[i + 1] = false;
-
-            cout << partyNames[i + 1] << " has died from hunger.\n";
-        }
-    }
-}
-
 //Random hunber misfortune - each player has a 50 percent chance of losing a fullness level (assuming the input is 40)
 void Player::hungerMisfortune(int chances){
     srand(time(0));

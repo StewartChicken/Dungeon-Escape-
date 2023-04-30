@@ -97,8 +97,6 @@ class Player
         void decrementFullness(string);
         void monsterFightDecrementFullness();
 
-        void killStarvedTeammembers();
-        
         //Cooks and eats food in increments of 5kgs
         bool cookedSuccessfully(int);
         void cookFood(int,int);
@@ -168,12 +166,13 @@ class Player
         bool winsFight(double combatScore);
         void winFight(double challengeRating); // Called in the event the player wins a monster fight
         void loseFight();
-        void surrenderTeamMember();
-        void loseTeamMember();
+        void surrenderTeamMember(); //Surrender team member to monster
+        void loseTeamMember(); //Lose team member to the door when losing a game of Boulder, Parchment, Shears
 
-        bool wholeTeamDead();
-        int getNumSurvivingTeamMembers();
+        bool wholeTeamDead(); //Checks if entire team is dead
+        int getNumSurvivingTeamMembers(); //Counts how many team members are presently alive
 
+        //Sorcerer anger level modifiers
         int getSorcererAngerLevel();
         void setSorcererAngerLevel(int level); 
         void incrementSorcererAnger();
@@ -181,6 +180,7 @@ class Player
         void defeatSorcerer(); //Sets sorcererDefeated to true
         bool isSorcererDefeated(); //Checks if sorcerer is defeated
 
+        //Num monsters defeated
         int getMonstersDefeated();
         void setMonstersDefeated(int number);
         void incrementMonstersDefeated();

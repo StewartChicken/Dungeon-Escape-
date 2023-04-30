@@ -90,9 +90,6 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             return;
         }
 
-        //Kills off any team members whose fullness level is 0
-        //player.killStarvedTeammembers();
-
         if(player.wholeTeamDead())
         {
             player.setEndCode(3); //Player has no team members left
