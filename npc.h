@@ -5,6 +5,7 @@ class npc{
     std::string name;
 
     public:
+    npc();
     std::string getIntro();
     void setIntro(std::string inputIntro);
     std::string getName();

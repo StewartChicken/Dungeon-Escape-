@@ -1,4 +1,8 @@
 #include "npc.h"
+    npc::npc(){
+        intro="";
+        name="";
+    }
     std::string npc::getIntro(){
         return intro;
     }
