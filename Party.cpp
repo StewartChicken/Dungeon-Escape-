@@ -82,7 +82,7 @@ bool Player::addNewMember(std::string name, int index)
     //Checks if user input name is a duplicate
     if(!isTakenName(name))
     {
-        this -> fullnessLevels[name] = 50;
+        this -> fullnessLevels[name] = 2;
         partyNames[index] = name;
         return true;
     }
@@ -206,43 +206,6 @@ void Player::incrementFullness(string partyMember)
 //Decrements the fullness of the player
 void Player::decrementFullness(string partyMember)
 {
-    //Player dies from hunger if fullness level is presently at 0
-    if(fullnessLevels[partyMember] == 1) 
-    {
-
-        if(compareStrings(partyMember, getPlayerName()))
-        {
-            cout << "You are about to die! Eat food to continue living.\n";
-            this -> fullnessLevels[partyMember] = -1;
-            return;
-        }
-
-        this -> fullnessLevels[partyMember] = -1;
-        cout << partyMember << " is about to die from hunger!\n";
-    }
-
-    else if(fullnessLevels[partyMember] == 0)
-    {
-        if(compareStrings(partyMember, getPlayerName()))
-        {
-            this -> fullnessLevels[partyMember] = -1;
-            return;
-        }
-
-        this -> fullnessLevels[partyMember] = -1;
-        cout << partyMember << " has died from hunger.\n";
-
-        //Iterates through each party name (skipping player) and finds the index within partyNames that matches
-        // uses this index to kill player that died of starvation
-        for(int i = 0; i < 4; i ++)
-        {
-            if(compareStrings(partyMember, partyNames[i + 1]))
-            {
-                isMemberAlive[i] = false;
-                return;
-            }
-        }
-    }
     this -> fullnessLevels[partyMember] --;
 }
 
@@ -947,6 +910,50 @@ int Player::getNumSurvivingTeamMembers()
 
     return count;
 }
+
+void Player::updateHungerStatus()
+{
+
+    for(int i = 0; i < 5; i++)
+    {
+        string partyMember = partyNames[i];
+
+        //Player dies from hunger if fullness level is presently at 0
+        if(fullnessLevels[partyMember] == 1) 
+        {
+            if(compareStrings(partyMember, getPlayerName()))
+            {
+                cout << "You are about to die! Eat food to continue living.\n";
+                this -> fullnessLevels[partyMember] = -1;
+                return;
+            }
+
+            this -> fullnessLevels[partyMember] = -1;
+            cout << partyMember << " is about to die from hunger!\n";
+            return;
+        }
+
+        else if(fullnessLevels[partyMember] == 0)
+        {
+            if(compareStrings(partyMember, getPlayerName()))
+            {
+                this -> fullnessLevels[partyMember] = -1;
+                return;
+            }
+
+            if(isMemberAlive[i - 1])
+            {
+                cout << partyMember << " has died from hunger.\n";
+                isMemberAlive[i - 1] = false;
+                return;
+            }
+
+            this -> fullnessLevels[partyMember] = -1;
+
+        }
+    }
+}
+
 //Sorcerer anger level methods
 
 int Player::getSorcererAngerLevel()

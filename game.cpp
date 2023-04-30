@@ -90,6 +90,8 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             return;
         }
 
+        player.updateHungerStatus();
+
         if(player.wholeTeamDead())
         {
             player.setEndCode(3); //Player has no team members left

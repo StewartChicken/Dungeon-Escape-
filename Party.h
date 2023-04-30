@@ -173,6 +173,7 @@ class Player
 
         bool wholeTeamDead(); //Checks if entire team is dead
         int getNumSurvivingTeamMembers(); //Counts how many team members are presently alive
+        void updateHungerStatus();
 
         //Sorcerer anger level modifiers
         int getSorcererAngerLevel();
