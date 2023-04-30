@@ -169,6 +169,7 @@ class Player
         void loseTeamMember();
 
         bool wholeTeamDead();
+        int getNumSurvivingTeamMembers();
 
         int getSorcererAngerLevel();
         void setSorcererAngerLevel(int level); 

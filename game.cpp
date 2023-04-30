@@ -262,6 +262,9 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             }
             //Create misfortune
             player.misfortunes(room, map);
+
+            prompts.currentStatus(player, merchant);
+            map.displayMap();
         }
         //Player chooses to cook food
         else if(input == 'c')
@@ -300,6 +303,9 @@ void Game::movementPhase(Player& player, Merchant &merchant)
 
             //Calls misfortune
             player.misfortunes(room, map);
+
+            prompts.currentStatus(player, merchant);
+            map.displayMap();
         }
         else if(input == 'f') //If player wishes to pick a fight
         {

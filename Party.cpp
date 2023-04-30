@@ -88,6 +88,11 @@ void Player::setFullnessLevel(string name, int fullness)
         cout << name << " is full.\n";
         this -> fullnessLevels[name] = 50;
     }
+    else if(fullness <= 0)
+    {
+        this -> fullnessLevels[name] = -1;
+        return;
+    }
     else
     {
         this -> fullnessLevels[name] = fullness;
@@ -143,6 +148,12 @@ void Player::incrementFullness(string partyMember)
 //Decrements the fullness of the player
 void Player::decrementFullness(string partyMember)
 {
+    if(fullnessLevels[partyMember] <= 0)
+    {
+        this -> fullnessLevels[partyMember] = -1;
+        return;
+    }
+
     this -> fullnessLevels[partyMember] --;
 }
 
@@ -721,6 +732,21 @@ bool Player::wholeTeamDead()
     return true;
 }
 
+int Player::getNumSurvivingTeamMembers()
+{
+    int count = 0;
+
+    for(int i; i < 4; i ++)
+    {
+        if(isMemberAlive[i])
+        {
+            count ++;
+        }
+    }
+
+    return count;
+}
+
 //Sorcerer anger level methods
 
 int Player::getSorcererAngerLevel()
@@ -938,17 +964,17 @@ void Player::poisoned(){
     }
     if(getFullness(name)<=0){
         if(name==getPlayerName()){
-            std::cout<<"You have died from food poisening!\n";
+            std::cout<<"You have died from food poisoning!\n";
             setEndCode(1);
         }else{
-        std::cout<<name<<" has died from food poisening!"<<"***number of remaing players**"<<" players remain.\n";
+        std::cout<<name<<" has died from food poisoning! "<< getNumSurvivingTeamMembers() <<" players remain.\n";
         }
     }else{
         if(name==getPlayerName()){
-            std::cout<<"You have lost 10 fullness to food poisening!\n";
+            std::cout<<"You have lost 10 fullness to food poisoning!\n";
 
         }else{
-        std::cout<<name<<" has lost 10 fullness to food poisening!\n";
+        std::cout<<name<<" has lost 10 fullness to food poisoning!\n";
         }
     }
 }
@@ -977,16 +1003,12 @@ void Player::misfortunes(bool entering_a_room, Map &map){
     int chaos=rand()%200;
     if(chaos<30){
         robbed();
-        map.displayMap();
     }else if (chaos<40){
         broken();
-        map.displayMap();
     }else if (chaos<70){
         poisoned();
-        map.displayMap();
     }else if (chaos<100&&entering_a_room){
         locked();
-        map.displayMap();
     }
 }
 
