@@ -54,8 +54,6 @@ void Game::merchantInteraction(Player &player, Merchant &merchant){
 void Game::movementPhase(Player& player, Merchant &merchant)
 {
 
-    map.displayMap(); //Display map following merchant interaction
-
     char input = '-'; //Initial input value (set to invalid input)
 
     //update player row and column
@@ -71,6 +69,9 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         //Player dead
         //All team members dead
         //Sorcer level = 100
+
+        prompts.currentStatus(player, merchant);
+        map.displayMap();
 
         //Lose game conditions
         if(player.getFullness(player.getPlayerName()) < 0)
@@ -170,8 +171,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         cin.ignore(100, '\n');
 
         cin >> input;
-        cout << "Made it here\n";
-         
+        
         //If user input is a movement key
         if(map.isMovementKey(input))
         {
@@ -206,14 +206,12 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             {
                 map.setPlayerPosition(newRow, newCol); //Update position
                 map.updateMap(); //Update map data
-                prompts.currentStatus(player, merchant); //Prints status of player
-
+            
                 if(map.isNPCLocation(newRow, newCol))
                 {
                     map.exploreSpace(newRow, newCol);
                 }
 
-                map.displayMap(); // Displays new map
                 player.hungerMisfortune(100); //Random hunger misfortune
             }
             else
@@ -221,8 +219,6 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                 //Player tried to move out of bounds
                 prompts.invalidPositionPrompt();
 
-                prompts.currentStatus(player, merchant);
-                map.displayMap();
             }
 
         }
@@ -261,9 +257,6 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             {
                 prompts.npcInteractionPrompt(player, merchant, map, monster);
 
-                prompts.currentStatus(player, merchant);
-                map.displayMap();
-
                 map.exploreSpace(map.getPlayerRow(), map.getPlayerCol());
                 map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
             }
@@ -280,8 +273,6 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             //Create misfortune
             player.misfortunes(room, map);
 
-            prompts.currentStatus(player, merchant);
-            map.displayMap();
         }
         //Player chooses to cook food
         else if(input == 'c')
@@ -313,10 +304,6 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                     player.cookFood(servings,cookingWith); //Cook food
                 }
             }
-
-            //Prints the player's current status
-            prompts.currentStatus(player, merchant);
-            map.displayMap(); 
 
             //Calls misfortune
             player.misfortunes(room, map);
@@ -363,11 +350,11 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         else //Any other input is invalid
         {
             prompts.invalidInputPrompt();
-            map.displayMap();
         }
 
         player.incrementTurnsElapsed();
     }
+
 }   
 
 //Prints final score baord

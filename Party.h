@@ -171,6 +171,8 @@ class Player
         void surrenderTeamMember(); //Surrender team member to monster
         void loseTeamMember(); //Lose team member to the door when losing a game of Boulder, Parchment, Shears
 
+        void resurrectTeamMember(); //Brings team member back to life
+
         bool wholeTeamDead(); //Checks if entire team is dead
         int getNumSurvivingTeamMembers(); //Counts how many team members are presently alive
         void updateHungerStatus();

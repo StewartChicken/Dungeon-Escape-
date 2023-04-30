@@ -743,10 +743,6 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         player.surrenderTeamMember();
         player.monsterFightDecrementFullness(); //Each player has 50% chance of decrementing fullness
 
-        //Display player's status and the map
-        currentStatus(player, merchant);
-        map.displayMap();
-
         return;
     }
 
@@ -759,9 +755,6 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         //Surrender team member to monster
         player.surrenderTeamMember();
         player.monsterFightDecrementFullness(); //Each player has 50% chance of decrementing fullness
-
-        currentStatus(player, merchant);
-        map.displayMap();
 
         return;
     }
@@ -820,8 +813,6 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
             }
         }
 
-        currentStatus(player, merchant);
-        map.displayMap();
     }
     //Player loses fight
     else
@@ -844,8 +835,6 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
             }
         }
 
-        currentStatus(player, merchant);
-        map.displayMap();
     }
 }
 
@@ -884,7 +873,7 @@ void Prompts::brokePrompt()
 // Informs user which actions they can take within the movement menu
 void Prompts::movementExplorePrompt()
 {
-    cout << "Press 'w', 'a', 's' or 'd' to move. Press 'e' to explore the space.\nPress 'c' to cook ingrediants. Press 'f' to pick a fight. Press 'q' to give up.\n";
+    cout << "Press 'w', 'a', 's' or 'd' to move. Press 'e' to explore the space.\nPress 'c' to cook ingrediants. Press 'f' to pick a fight. Press 'r' to ressurect a team member.\nPress 'q' to give up.\n";
 }
 
 // Informs user which actions they can take when on a room space
