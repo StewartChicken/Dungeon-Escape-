@@ -1370,3 +1370,8 @@ void Player::addToInventory(string item, int itemCount, int price){
         setVorpalSwords(getVorpalSwords() + itemCount);
     }
 }
+
+int Player::getTotalWeapons(){
+    int total = getStoneClubs()+getIronSpears()+getMythrilRapiers()+getFlamingAxes()+getVorpalSwords();
+    return total;
+}

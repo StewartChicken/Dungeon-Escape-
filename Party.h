@@ -224,7 +224,11 @@ class Player
         //Compare similarity of two strings
         bool compareStrings(string a, string b);
 
+        //Adds items to player inventory
         void addToInventory(string item, int numItems, int price);
+
+        //returns the party's total number of weapons
+        int getTotalWeapons();
 
 };
 

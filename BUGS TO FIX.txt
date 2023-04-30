@@ -32,7 +32,7 @@ X	-Merchant selling treasure bounds
 X	-Teammember can be locked in a room and die from hunger
 X	-No remaining companions after surrendering them to the monster
 X	-End game stats - NPC and room included in spaces explored
--Fix merchant bug - doesn't give item after overbuying
+X   -Fix merchant bug - doesn't give item after overbuying
 	-Player doesn't have enough money to buy merchant goods
 -Max player weapons is 5
 -Cooking print three times - cauldron
