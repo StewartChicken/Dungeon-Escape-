@@ -40,5 +40,5 @@ X   -Max player weapons is 5
 X	-Cooking print three times - cauldron
 X	-Party member dying removes their weapon
 X	-picking a fight crashes game
--After NPC becomes evil/kill monster, prints map 3 times
+X	-After NPC becomes evil/kill monster, prints map 3 times
 -Team members must die at the start of the next round when hunger reaches 0
