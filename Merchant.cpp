@@ -102,3 +102,8 @@ void Merchant::incrementRoomsCleared()
 {
     this -> roomsCleared ++;
 }
+
+void Merchant::updateMultiplier()
+{
+    this -> multiplier = (0.25 * roomsCleared) + 1.0;
+}

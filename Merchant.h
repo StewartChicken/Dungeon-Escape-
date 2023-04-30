@@ -64,6 +64,7 @@ class Merchant
         void setRoomsCleared(int);
         void incrementRoomsCleared();
 
+        void updateMultiplier();
 };
 
 #endif

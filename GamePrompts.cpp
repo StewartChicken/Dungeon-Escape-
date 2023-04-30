@@ -658,6 +658,7 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
         player.winFight(roomsCleared + 2);
         merchant.incrementRoomsCleared();
+        merchant.updateMultiplier();
         player.monsterFightDecrementFullness();
         monster.killMonster(monsterName);
 

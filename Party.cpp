@@ -25,13 +25,13 @@ Player::Player()
     this -> ironSpears = 0;
     this -> mythrilRapiers = 0;
     this -> flamingAxes = 0;
-    this -> vorpalSwords = 0;
+    this -> vorpalSwords = 5;
     
-    this -> armorSuits = 0; 
+    this -> armorSuits = 5; 
 
     this -> combatScore = 0;
 
-    this -> sorcererAngerLevel = 95;
+    this -> sorcererAngerLevel = 0;
     this -> sorcererDefeated = false;
 
     this -> monstersDefeated = 0;
@@ -40,14 +40,14 @@ Player::Player()
     //cookware
     this -> ceramicPots = 0;
     this -> fryingPans = 0;
-    this -> cauldrons = 0;
+    this -> cauldrons = 5;
 
 
     //Party default inventory values
 
     this -> gold = 100;
     this -> numKeys = 0;
-    this -> ingredients = 0;
+    this -> ingredients = 30;
 
 
     //Treasures found
