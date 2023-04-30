@@ -789,6 +789,7 @@ void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map,
     }else{
         launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, false);
     } 
+
 }
 
 bool Prompts::barterPrompt(){
@@ -923,10 +924,16 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
         cout<<"How many servings (5kg each) of ingredients would you like to cook? Enter 0 to cancel.\n";
 
         cin >> quantity;
+
         if(!validNumericalInput(quantity))
         {
             quantity = "0";
             continue;
+        }
+
+        if(stoi(quantity) == 0)
+        {
+            return 0;
         }
 
         if(available < stoi(quantity))

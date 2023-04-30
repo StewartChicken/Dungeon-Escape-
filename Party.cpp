@@ -76,7 +76,7 @@ Player::Player()
 //Adds new party member
 void Player::addNewMember(std::string name, int index)
 {
-    this -> fullnessLevels[name] = 50;
+    this -> fullnessLevels[name] = 10;
     partyNames[index] = name;
 }
 
@@ -85,6 +85,7 @@ void Player::setFullnessLevel(string name, int fullness)
 {
     if(fullness >= 50)
     {
+        cout << name << " is full.\n";
         this -> fullnessLevels[name] = 50;
     }
     else

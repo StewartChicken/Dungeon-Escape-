@@ -203,6 +203,8 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             {
                 //Player tried to move out of bounds
                 prompts.invalidPositionPrompt();
+
+                prompts.currentStatus(player, merchant);
                 map.displayMap();
             }
 
@@ -241,6 +243,12 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                     && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
             {
                 prompts.npcInteractionPrompt(player, merchant, map, monster);
+
+                prompts.currentStatus(player, merchant);
+                map.displayMap();
+
+                map.exploreSpace(map.getPlayerRow(), map.getPlayerCol());
+                map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
             }
             //Interact with dungeon exit 
             else if(map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol()))
