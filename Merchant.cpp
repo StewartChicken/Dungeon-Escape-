@@ -1,5 +1,3 @@
-#include <iostream>
-#include <string>
 #include "Merchant.h"
 
 //Constructor
@@ -103,6 +101,7 @@ void Merchant::incrementRoomsCleared()
     this -> roomsCleared ++;
 }
 
+//Updates the merchant multplier after then number of rooms cleared changes
 void Merchant::updateMultiplier()
 {
     this -> multiplier = (0.25 * roomsCleared) + 1.0;

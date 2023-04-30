@@ -2,6 +2,7 @@
 #define MERCHANT_H
 
 #include <iostream>
+#include <string>
 
 class Merchant
 {
@@ -12,6 +13,9 @@ class Merchant
 
         //Determines the multiplier for the price of goods
         float multiplier;
+
+
+        //Constant values for prices    
 
         //Default prices for each commodity
         const int ingredientPrice = 1;
@@ -64,6 +68,7 @@ class Merchant
         void setRoomsCleared(int);
         void incrementRoomsCleared();
 
+        //Updates multiplier after number of rooms cleared changes
         void updateMultiplier();
 };
 

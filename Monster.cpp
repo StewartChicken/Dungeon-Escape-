@@ -148,6 +148,14 @@ string Monster::getRandomMonster(int roomsCleared)
     return chosenMonster;
 }
 
+
+//Return a specified monster's difficulty
+int Monster::getMonsterDifficulty(string monsterName)
+{
+    return Monsters[monsterName];
+}
+
+
 //isInRoomCombatOrder function definition
 //Checks to see if a given monster already exists within one of the rooms on the map
 //Parameter : string - monsterName
@@ -216,9 +224,4 @@ bool Monster::compareStrings(string a, string b)
 
     // All cases passed - return true
     return true;
-}
-
-int Monster::getMonsterDifficulty(string monsterName)
-{
-    return Monsters[monsterName];
 }

@@ -215,6 +215,7 @@ class Player
         void quit();
         bool hasQuit();
 
+        //Compare similarity of two strings
         bool compareStrings(string a, string b);
 
 };

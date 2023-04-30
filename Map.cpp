@@ -8,6 +8,7 @@ using namespace std;
 Map::Map()
 {
 
+    //Default - all map locations are unexplored and uncleared
     for(int i{}; i < numRows; i++)
     {
         for(int j{}; j < numCols; j++)
@@ -32,7 +33,7 @@ Map::Map()
     updateMap(); //Updates map to contain all calculated data
 }
 
-//Sets entirety of the ma to unexplored
+//Sets entirety of the map to unexplored and uncleared
 void Map::resetMap()
 {
     for(int i{}; i < numRows; i ++)
@@ -52,6 +53,7 @@ void Map::resetMap()
     }
 }
 
+//Update map data values for each turn of the game
 void Map::updateMap()
 {
 
@@ -86,7 +88,7 @@ void Map::updateMap()
     }
 
     //If any section is unexplored, change the character to '-'
-    /*for(int i{}; i < numRows; i ++)
+    for(int i{}; i < numRows; i ++)
     {
         for(int j{}; j < numCols; j ++)
         {
@@ -95,12 +97,13 @@ void Map::updateMap()
                 mapData[i][j] = '-';
             }
         }
-    }*/
+    }
 
     //Display player position
     mapData[positionData.at(0)][positionData[1]] = 'X';
 }
 
+//Calculate new position data for each room and NPC, as well as the dungeon exit
 void Map::calculatePositionData()
 {
     //Random number generator seed
@@ -200,6 +203,7 @@ void Map::checkOverlap()
     }
 }
 
+//Print map to console
 void Map::displayMap()
 {
     for(int i{}; i < numRows; i ++)
@@ -258,11 +262,13 @@ int Map::getNumSpacesExplored(){
 return numSpacesExplored;
 }
 
+//Is a specified space on the map - prevents player from exiting the bounds of the map
 bool Map::isOnMap(int row, int col)
 {
     return (row >= 0 && row < numRows && col >= 0 && col < numCols);
 }
 
+//Is a specified location an NPC?
 bool Map::isNPCLocation(int row, int col)
 {
     for(int i{}; i < 5; i ++)
@@ -276,6 +282,7 @@ bool Map::isNPCLocation(int row, int col)
     return false;
 }
 
+//Is a specified location a room?
 bool Map::isRoomLocation(int row, int col)
 {
     for(int i{}; i < 5; i ++)
@@ -289,6 +296,7 @@ bool Map::isRoomLocation(int row, int col)
     return false;
 }
 
+//Is a specified location explord?
 bool Map::isExplored(int row, int col)
 {
     return(exploredData[row][col] == 1);
@@ -300,11 +308,13 @@ bool Map::isFreeSpace(int row, int col)
     return(exploredData[row][col] == 0);
 }
 
+//Is a specified location the dungeon exit?
 bool Map::isDungeonExit(int row, int col)
 {
     return(row == positionData.at(2) && col == positionData.at(3));
 }
 
+//Has a specified location been cleared?
 bool Map::isCleared(int row, int col)
 {
     return(clearedData[row][col] == 1);
@@ -352,6 +362,8 @@ bool Map::isMovementKey(char key)
     };
 }
 
+//Setters
+
 void Map::setPlayerPosition(int row, int col)
 {
     positionData.at(0) = row;
@@ -366,11 +378,14 @@ void Map::setDungeonExit(int row, int col)
 void Map::incrementNumSpacesExplored(){
     numSpacesExplored++;
 }
+
+//Clear space
 void Map::clearSpace(int row, int col)
 {
     clearedData[row][col] = true;
 }
 
+//Explore space
 void Map::exploreSpace(int row, int col)
 {
     if(!exploredData[row][col]){
@@ -380,7 +395,7 @@ void Map::exploreSpace(int row, int col)
 }
 
 //Prints all the position data for each entity on the map
-// - mostly for debugging
+// - For debugging
 void Map::printPositionData()
 {
     cout << "Player row, col: " << positionData.at(0) << ", " << positionData.at(1) << endl;

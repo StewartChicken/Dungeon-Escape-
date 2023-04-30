@@ -51,6 +51,8 @@ class Monster
 
         string getRandomMonster(int roomsCleared);  // Gets random monster so long as it is not defeated or already present in a room
 
+        int getMonsterDifficulty(string monsterName); //Get a specified monster's difficulty
+
         bool isInRoomCombatOrder(string monsterName); // Checks if a given monster exists ithin one of the rooms
         bool isDefeatedMonster(string monsterName);  // Checks if a given monster has already been defeated by the player
 
@@ -58,7 +60,6 @@ class Monster
 
         bool compareStrings(string a, string b); // Compares two strings
 
-        int getMonsterDifficulty(string monsterName);
 
 };
 
