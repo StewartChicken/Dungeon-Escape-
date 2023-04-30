@@ -353,6 +353,8 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             prompts.invalidInputPrompt();
             map.displayMap();
         }
+
+        player.incrementTurnsElapsed();
     }
 }   
 

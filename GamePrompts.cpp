@@ -1244,7 +1244,7 @@ void Prompts::endgameStats(Player &player, Map &map){
         <<"| Treasures R:"<<player.getSilverRings()<<" | N: "<<player.getRubyNecklaces()<<" | B:"<<player.getEmeraldBracelets()<<" | C:"<<player.getDiamondCirclets()<<" | G:"<<player.getGemGoblets()<<"\n"
         <<"| Explored Spaces: "<<map.getNumSpacesExplored()<<"\n"
         <<"| Number of monsters defeated: "<<player.getMonstersDefeated()<<"\n"
-        <<"| Number of turns elapsed: "<<"**# of turns elapsed"<<"\n"
+        <<"| Number of turns elapsed: "<<player.getTurnsElapsed()<<"\n"
         <<"+------------------+\n\n";
     scores<<player.getPlayerName()<<"|"<<player.getGameScore()<<"|"<<player.getMember1Name()<<"|"<<player.getMember2Name()<<"|"<<player.getMember3Name()<<"|"<<player.getMember4Name()<<"|"<<player.getGold()<<"|"<<player.getSilverRings()<<"|"<<player.getRubyNecklaces()<<"|"<<player.getEmeraldBracelets()<<"|"<<player.getDiamondCirclets()<<"|"<<player.getGemGoblets()<<"\n";
 }

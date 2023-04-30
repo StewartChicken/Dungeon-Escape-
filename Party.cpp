@@ -38,6 +38,7 @@ Player::Player()
     //Stats
     this -> monstersDefeated = 0;
     this -> gameScore = 0;
+    this -> turnsElapsed = 0;
 
     //cookware
     this -> ceramicPots = 0;
@@ -942,6 +943,21 @@ int Player::getGameScore()
 void Player::setGameScore(int score)
 {
     gameScore = score;
+}
+
+int Player::getTurnsElapsed()
+{
+    return turnsElapsed;
+}
+
+void Player::setTurnsElapsed(int turns)
+{
+    turnsElapsed = turns;
+}
+
+void Player::incrementTurnsElapsed()
+{
+    turnsElapsed ++;
 }
 
 

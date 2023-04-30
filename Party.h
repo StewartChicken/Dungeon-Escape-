@@ -54,6 +54,7 @@ class Player
 
         int monstersDefeated; //Number of monsters defeated
         int gameScore; //Final score
+        int turnsElapsed; //Number of turns
 
         //Treasures - can be sold to merchant
         int silverRings; //10 gold - denoted E
@@ -185,6 +186,10 @@ class Player
 
         int getGameScore();
         void setGameScore(int number);
+
+        int getTurnsElapsed();
+        void setTurnsElapsed(int turns);
+        void incrementTurnsElapsed();
 
         //Cookware methods
 
