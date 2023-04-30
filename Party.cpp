@@ -50,7 +50,7 @@ Player::Player()
 
     this -> gold = 100;
     this -> numKeys = 0;
-    this -> ingredients = 0;
+    this -> ingredients = 33;
 
 
     //Treasures found
@@ -1390,7 +1390,7 @@ void Player::addToInventory(string item, int itemCount, int price){
         setVorpalSwords(getVorpalSwords() + itemCount);
     }
 }
-
+//keeps track fo the total weapons in the party
 int Player::getTotalWeapons(){
     int total = getStoneClubs()+getIronSpears()+getMythrilRapiers()+getFlamingAxes()+getVorpalSwords();
     return total;

@@ -318,8 +318,6 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             //Calls misfortune
             player.misfortunes(room, map);
 
-            prompts.currentStatus(player, merchant);
-            map.displayMap();
         }
         else if(input[0] == 'f') //If player wishes to pick a fight
         {
