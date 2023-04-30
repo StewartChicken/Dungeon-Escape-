@@ -170,6 +170,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         cin.ignore(100, '\n');
 
         cin >> input;
+        cout << "Made it here\n";
          
         //If user input is a movement key
         if(map.isMovementKey(input))
@@ -352,6 +353,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
 
 
         }
+
         else if(input == 'q') //Quit input
         {
             player.quit(); //Call quit function
