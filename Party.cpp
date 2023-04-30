@@ -83,7 +83,15 @@ void Player::addNewMember(std::string name, int index)
 //Adjust fullness level for specific party member
 void Player::setFullnessLevel(string name, int fullness)
 {
-    this -> fullnessLevels[name] = fullness;
+    if(fullness >= 50)
+    {
+        this -> fullnessLevels[name] = 50;
+    }
+    else
+    {
+        this -> fullnessLevels[name] = fullness;
+    }
+    
 }
 
 int Player::getFullness(string partyMember)
@@ -120,7 +128,15 @@ std::string Player::getMember4Name()
 //Increments the fullness of the player
 void Player::incrementFullness(string partyMember)
 {
-    this -> fullnessLevels[partyMember] ++;
+    if(fullnessLevels[partyMember] <= 50)
+    {
+        this -> fullnessLevels[partyMember] ++;
+    }
+    else
+    {
+        this -> fullnessLevels[partyMember] = 50;
+        cout << partyMember << " is full.\n";
+    }
 }
 
 //Decrements the fullness of the player
@@ -145,7 +161,7 @@ void Player::monsterFightDecrementFullness()
     }
 }
 
-//Random hunber misfortune - each player has a 20 percent chance of losing a fullness level
+//Random hunber misfortune - each player has a 50 percent chance of losing a fullness level (assuming the input is 40)
 void Player::hungerMisfortune(int chances){
     srand(time(0));
     int chaos[5];
@@ -313,11 +329,18 @@ void Player::cookFood(int servings,int cookingWith)
     }
     //Increase fullness for each serving
     if(cookedSuccessfully(cookingWith)){
+
+        cout << "Meal was cooked successfully.\n";
+
         setFullnessLevel(getPlayerName(), getFullness(getPlayerName())+fullness_earned);
         setFullnessLevel(getMember1Name(), getFullness(getMember1Name())+fullness_earned);
         setFullnessLevel(getMember2Name(), getFullness(getMember2Name())+fullness_earned);
         setFullnessLevel(getMember3Name(), getFullness(getMember3Name())+fullness_earned);
         setFullnessLevel(getMember4Name(), getFullness(getMember4Name())+fullness_earned);
+    }
+    else
+    {
+        cout << "Your cook failed! Ingredients were lost.\n";
     }
 }
 

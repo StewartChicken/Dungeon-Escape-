@@ -39,12 +39,12 @@ class Prompts
         bool canPurchaseGoods(Player &player, int amount, int price);
 
         //void currentStatus(Player &player, Merchant &merchant, Map &map);
-        void currentStatus(Player &player, Merchant &merchant, Map &map);
+        void currentStatus(Player &player, Merchant &merchant);
         
         void roomInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster);
         bool doorGameInteraction(Player &player);
         bool roomKeyPrompt(Player &player);
-        void launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName, Monster &monster);
+        void launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName, Monster &monster, bool enteredRoom);
 
         //Random single prompts
 

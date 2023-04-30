@@ -444,9 +444,9 @@ bool Prompts::canPurchaseGoods(Player &player, int amount, int price)
     return true;
 }
 
-void Prompts::currentStatus(Player &player, Merchant &merchant, Map &map){
+void Prompts::currentStatus(Player &player, Merchant &merchant){
     cout << "+-------------------+\n"
-         << "|  Status           | Rooms Cleared: "<< merchant.getRoomsCleared()<<" | Keys: "<<player.getNumKeys()<<" | Sorcerer's Anger Level: " << map.getNumSpacesExplored()
+         << "|  Status           | Rooms Cleared: "<< merchant.getRoomsCleared()<<" | Keys: "<<player.getNumKeys()<<" | Sorcerer's Anger Level: " << player.getSorcererAngerLevel()
          << "\n+-------------------+\n"
          << "+-------------------+\n"
          << "|  Inventory        |\n"
@@ -496,12 +496,13 @@ void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map
 
     if(enteredRoom)
     {   
+        player.decrementKeys();
+
         int numRoomsCleared = merchant.getRoomsCleared();
         double combatScore = player.calculateCombatScore(numRoomsCleared);
         string currentMonster = monster.getMonsterFromRoomCombatOrder(numRoomsCleared);
         
-        launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster);
-        //map.displayMap();
+        launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, enteredRoom);
     }
 }
 
@@ -586,8 +587,13 @@ bool Prompts::doorGameInteraction(Player &player)
     return false;
 }
 
-void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName, Monster &monster)
+void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName, Monster &monster, bool enteredRoom)
 {
+
+    if(player.isSorcererDefeated())
+    {
+        return;
+    }
 
     srand(time(0));
 
@@ -616,7 +622,7 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         player.surrenderTeamMember();
         player.monsterFightDecrementFullness(); //Each player has 50% chance of decrementing fullness
 
-        currentStatus(player, merchant, map);
+        currentStatus(player, merchant);
         map.displayMap();
 
         return;
@@ -630,7 +636,7 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         player.surrenderTeamMember();
         player.monsterFightDecrementFullness();
 
-        currentStatus(player, merchant, map);
+        currentStatus(player, merchant);
         map.displayMap();
 
         return;
@@ -638,6 +644,11 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
 
     if(player.winsFight(combatScore))
     {
+
+        srand(time(0));
+
+        int keyDrop = rand() % 10;
+
         if(merchant.getRoomsCleared() == 4)
         {
             player.defeatSorcerer();
@@ -652,7 +663,22 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
 
         player.setGameScore(player.getGameScore() + monster.getMonsterDifficulty(monsterName));
 
-        currentStatus(player, merchant, map);
+        if(keyDrop == 0)
+        {
+            player.incrementKeys();
+        }
+
+        if(enteredRoom)
+        {
+            int misFortuneChance = rand() % 10;
+
+            if(misFortuneChance <= 5)
+            {
+                player.misfortunes(false, map);
+            }
+        }
+
+        currentStatus(player, merchant);
         map.displayMap();
     }
     else
@@ -661,7 +687,17 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         player.loseFight();
         player.monsterFightDecrementFullness();
 
-        currentStatus(player, merchant, map);
+        if(enteredRoom)
+        {
+            int misFortuneChance = rand() % 10;
+
+            if(misFortuneChance <= 3)
+            {
+                player.misfortunes(false, map);
+            }
+        }
+
+        currentStatus(player, merchant);
         map.displayMap();
     }
 }
@@ -751,7 +787,7 @@ void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map,
             merchantPrompt(player,merchant);
         }
     }else{
-        launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster);
+        launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, false);
     } 
 }
 

@@ -26,7 +26,7 @@ void Game::start(Player &player, Merchant &merchant)
 void Game::merchantInteraction(Player &player, Merchant &merchant){
 
     prompts.merchantPrompt(player, merchant); // Initial merchant interaction
-    prompts.currentStatus(player, merchant, map); // Show player status
+    prompts.currentStatus(player, merchant); // Show player status
 }
 
 //Game::movementPhase function definition
@@ -123,6 +123,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
         {
             prompts.onRoomSpacePrompt();
+            player.incrementSorcererAnger();
         }
         //If player is over an NPC
         else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
@@ -130,6 +131,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                 && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
         {
             prompts.onNPCSpacePrompt();
+            player.incrementSorcererAnger();
         }
         //If player is over dungeon exit
         else if(map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol())
@@ -138,7 +140,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         {
            prompts.onExitSpacePrompt();
         }
-        //Invrement sorcerer level when player moves over unexplored area
+        //Increment sorcerer level when player moves over unexplored area
         else if(!map.isExplored(map.getPlayerRow(), map.getPlayerCol()))
         {
             prompts.movementExplorePrompt();
@@ -187,7 +189,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             {
                 map.setPlayerPosition(newRow, newCol); //Update position
                 map.updateMap(); //Update map data
-                prompts.currentStatus(player, merchant, map); //Prints status of player
+                prompts.currentStatus(player, merchant); //Prints status of player
 
                 if(map.isNPCLocation(newRow, newCol))
                 {
@@ -212,7 +214,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             if(!map.isExplored(map.getPlayerRow(), map.getPlayerCol()))
             {
                 //Update map and space status
-                prompts.currentStatus(player, merchant, map);
+                prompts.currentStatus(player, merchant);
                 map.exploreSpace(map.getPlayerRow(), map.getPlayerCol());
                 map.displayMap();
 
@@ -224,7 +226,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                     string currentMonster = monster.getRandomMonster(numRoomsCleared);
 
                     // Launch monster fight with random monster
-                    prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster); 
+                    prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, false); 
                 }
             }
             //Interact with room if the space is a room and hasn't been cleared
@@ -285,7 +287,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             }
 
             //Prints the player's current status
-            prompts.currentStatus(player, merchant, map);
+            prompts.currentStatus(player, merchant);
             map.displayMap(); 
 
             //Calls misfortune
@@ -293,6 +295,13 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         }
         else if(input == 'f') //If player wishes to pick a fight
         {
+
+            if(player.isSorcererDefeated())
+            {
+                cout << "The Sorcerer has been defeated and all other monsters have ran away. There are none to fight.\n";
+                continue;
+            }
+
             //Can't pick a fight on a room, npc, or dungeon exit
             if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
                 || map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
@@ -306,7 +315,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             string currentMonster = monster.getRandomMonster(numRoomsCleared);
 
             //Launch monster fight
-            prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster);
+            prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, false);
         }
         else if(input == 'q') //Quit input
         {
