@@ -1228,7 +1228,7 @@ Stats include :
  -Number of turns elapsed
  -Final score
 */
-void Prompts::endgameStats(Player &player, Map &map){
+void Prompts::endgameStats(Player &player, Merchant &merchant, Map &map){
 
     //Output stream to stats text file
     ofstream scores;
@@ -1248,6 +1248,7 @@ void Prompts::endgameStats(Player &player, Map &map){
         <<"+------------------+\n"
         <<"| Gold: "<<player.getGold()<<"\n"
         <<"| Treasures R:"<<player.getSilverRings()<<" | N: "<<player.getRubyNecklaces()<<" | B:"<<player.getEmeraldBracelets()<<" | C:"<<player.getDiamondCirclets()<<" | G:"<<player.getGemGoblets()<<"\n"
+        <<"| Rooms Cleared: "<<merchant.getRoomsCleared()<<"\n"
         <<"| Explored Spaces: "<<map.getNumSpacesExplored()<<"\n"
         <<"| Number of monsters defeated: "<<player.getMonstersDefeated()<<"\n"
         <<"| Number of turns elapsed: "<<player.getTurnsElapsed()<<"\n"

@@ -367,9 +367,9 @@ void Game::scoreBoard(){
 }
 
 //End game function
-void Game::endGame(Player &player)
+void Game::endGame(Player &player, Merchant &merchant)
 {
-    prompts.endgameStats(player, map);
+    prompts.endgameStats(player, merchant, map);
     scoreBoard();
 }
 

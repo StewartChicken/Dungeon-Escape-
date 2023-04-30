@@ -40,7 +40,7 @@ class Game
 
         void movementPhase(Player &player, Merchant &merchant); // Player interaction with the actual map - primary game functionality
         
-        void endGame(Player &player); //Ends game once player wins/loses
+        void endGame(Player &player, Merchant &merchant); //Ends game once player wins/loses
 
         void bubbleSort(vector<pair<string, int>> &scores); //Bubble sorting algorithm
 
