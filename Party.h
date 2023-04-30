@@ -224,6 +224,8 @@ class Player
         //Compare similarity of two strings
         bool compareStrings(string a, string b);
 
+        void addToInventory(string item, int numItems, int price);
+
 };
 
 #endif

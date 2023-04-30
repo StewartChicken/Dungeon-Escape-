@@ -24,7 +24,7 @@ Player::Player()
     this -> ironSpears = 0;
     this -> mythrilRapiers = 0;
     this -> flamingAxes = 0;
-    this -> vorpalSwords = 5;
+    this -> vorpalSwords = 1;
     
     //Armor
     this -> armorSuits = 5; 
@@ -1344,4 +1344,29 @@ bool Player::compareStrings(string a, string b)
 
     return true;
 
+}
+//Add To Inventory
+//adds the quauntity of a selected item to the player's inventory
+void Player::addToInventory(string item, int itemCount, int price){
+    if (item == "kg(s) of Ingredients"){
+        setIngredients(getIngredients() + itemCount);//Update user inventory
+    }else if (item == "Armor suit(s)"){
+        setArmorSuits(checkArmorSuitCap(itemCount,price)); 
+    }else if (item == "Ceramic pots"){
+        setCeramicPots(getCeramicPots() + itemCount);
+    }else if (item == "Frying pans"){
+        setFryingPans(getFryingPans() + itemCount);
+    }else if (item == "Cauldrons"){
+        setCauldrons(getCauldrons() + itemCount);
+    }else if (item ==  "Stone club(s)"){
+        setStoneClubs(getStoneClubs() + itemCount);
+    }else if (item == "Iron spear(s)"){
+        setIronSpears(getIronSpears() + itemCount);
+    }else if (item == "Mythril Rapier(s)"){
+        setMythrilRapiers(getMythrilRapiers() + itemCount);
+    }else if (item == "Battle Axe(s)"){
+        setFlamingAxes(getFlamingAxes() + itemCount);
+    }else if (item == "Vorpal Sword(s)"){
+        setVorpalSwords(getVorpalSwords() + itemCount);
+    }
 }

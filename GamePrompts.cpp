@@ -90,8 +90,7 @@ void Prompts::merchantInteraction(Player &player, Merchant &merchant, bool &acti
     switch(stoi(choice))
     {
         case 1:
-            itemCount = itemBuyMenu(player, merchant, merchant.getIngredientPrice(), "kg(s) of Ingredients"); //Ingredients for food
-            player.setIngredients(player.getIngredients() + itemCount); //User gains ingredients if they succesfully make a purchase
+            itemBuyMenu(player, merchant, merchant.getIngredientPrice(), "kg(s) of Ingredients"); //Ingredients for food
             break;
         case 2:
             cookwareBuyMenu(player, merchant); //User chooses to buy cookware
@@ -100,7 +99,7 @@ void Prompts::merchantInteraction(Player &player, Merchant &merchant, bool &acti
             weaponBuyMenu(player, merchant); //User chooses to buy weapons
             break;
         case 4:
-            itemCount = itemBuyMenu(player, merchant, merchant.getArmorSuitPrice(), "Armor suit(s)"); //User chooses to buy armor
+            itemBuyMenu(player, merchant, merchant.getArmorSuitPrice(), "Armor suit(s)"); //User chooses to buy armor
             player.setArmorSuits(player.checkArmorSuitCap(itemCount, merchant.getArmorSuitPrice())); //Update user inventory
             break;
         case 5:
@@ -145,7 +144,7 @@ void Prompts::merchantGreeting(Player &player)
 
 
 //Returns number of items bought
-int Prompts::itemBuyMenu(Player &player, Merchant &merchant, int price, string itemLabel)
+void Prompts::itemBuyMenu(Player &player, Merchant &merchant, int price, string itemLabel)
 {
     string amount = "-1";
 
@@ -175,15 +174,7 @@ int Prompts::itemBuyMenu(Player &player, Merchant &merchant, int price, string i
             //If user doesn't buy anything, sends user back to the item buy menu
             itemBuyMenu(player, merchant, price, itemLabel);
         }
-        else
-        {
-            //Returns number of items the user was able to purchase
-            return itemsBought;
-        }
     }
-
-    //Returns 0 by default
-    return 0;
 }
 
 //Computes number of items purchased
@@ -221,6 +212,7 @@ int Prompts::confirmPurchase(Player &player, Merchant &merchant, int numItems, i
             {
                 //Subtracts gold from user inventory
                 player.setGold(player.getGold() - numItems * price);
+                player.addToInventory(item,numItems,price);
                 return numItems;
             }
             else
@@ -371,7 +363,7 @@ void Prompts::cookwareBuyMenu(Player &player, Merchant &merchant)
     //Prompt user to select which item of cookware they wish to buy
     while(stoi(cookwareChoice) < 0 || stoi(cookwareChoice) > 3)
     {
-        //User's cookware opptions
+        //User's cookware options
         cout << "You need cookware in order to turn your ingredients into food wich, when consumed, will replenish\n"
             "your fullness levels or that of your companions.\n"
             "1.) Ceramic pot (25% chance of breaking)\n"
@@ -402,18 +394,15 @@ void Prompts::cookwareBuyMenu(Player &player, Merchant &merchant)
     {
         //User wants to buy ceramic pots
         case 1:
-            itemCount = itemBuyMenu(player, merchant, merchant.getCeramicPotPrice(), "Ceramic pots");
-            player.setCeramicPots(player.getCeramicPots() + itemCount);
+            itemBuyMenu(player, merchant, merchant.getCeramicPotPrice(), "Ceramic pots");
             break;
         //User wants to buy frying pans
         case 2:
-            itemCount = itemBuyMenu(player, merchant, merchant.getFryingPanPrice(), "Frying pans");
-            player.setFryingPans(player.getFryingPans() + itemCount);
+            itemBuyMenu(player, merchant, merchant.getFryingPanPrice(), "Frying pans");
             break;
         //User wnts to buy cauldrons
         case 3:
-            itemCount = itemBuyMenu(player, merchant, merchant.getCauldronPrice(), "Cauldrons");
-            player.setCauldrons(player.getCauldrons() + itemCount);
+            itemBuyMenu(player, merchant, merchant.getCauldronPrice(), "Cauldrons");
             break;
         //Error code - should not reach this case
         default:
@@ -470,28 +459,28 @@ void Prompts::weaponBuyMenu(Player &player, Merchant &merchant)
     {
         //User buys stone clubs
         case 1:
-            itemCount = itemBuyMenu(player, merchant, merchant.getStoneClubPrice(), "Stone club(s)");
-            player.setStoneClubs(player.getStoneClubs() + itemCount);
+            itemBuyMenu(player, merchant, merchant.getStoneClubPrice(), "Stone club(s)");
+           
             break;
         //User buys iron spears
         case 2:
-            itemCount = itemBuyMenu(player, merchant, merchant.getIronSpearPrice(), "Iron spear(s)");
-            player.setIronSpears(player.getIronSpears() + itemCount);
+            itemBuyMenu(player, merchant, merchant.getIronSpearPrice(), "Iron spear(s)");
+            
             break;
         //User buys mythril rapiers
         case 3:
-            itemCount = itemBuyMenu(player, merchant, merchant.getMythrilRapierPrice(), "Mythril Rapier(s)");
-            player.setMythrilRapiers(player.getMythrilRapiers() + itemCount);
+            itemBuyMenu(player, merchant, merchant.getMythrilRapierPrice(), "Mythril Rapier(s)");
+            
             break;
         //User buys flaming axes
         case 4:
-            itemCount = itemBuyMenu(player, merchant, merchant.getFlamingAxePrice(), "Battle Axe(s)");
-            player.setFlamingAxes(player.getFlamingAxes() + itemCount);
+            itemBuyMenu(player, merchant, merchant.getFlamingAxePrice(), "Battle Axe(s)");
+            
             break;
         //User buys vorpal swords
         case 5:
-            itemCount = itemBuyMenu(player, merchant, merchant.getVorpalSwordPrice(), "Vorpal Sword(s)");
-            player.setVorpalSwords(player.getVorpalSwords() + itemCount);
+            itemBuyMenu(player, merchant, merchant.getVorpalSwordPrice(), "Vorpal Sword(s)");
+           
             break;
         //Error code - should not reach this case
         default:

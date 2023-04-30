@@ -27,7 +27,7 @@ class Prompts
         void merchantGreeting(Player &player);
 
         //Major buy menu prompts
-        int itemBuyMenu(Player &player, Merchant &merchant, int price, string itemLabel);
+        void itemBuyMenu(Player &player, Merchant &merchant, int price, string itemLabel);
         int confirmPurchase(Player &player, Merchant &merchant, int numItems, int price, string item);
         void sellTreasureMenu(Player &player, Merchant &merchant);
     
