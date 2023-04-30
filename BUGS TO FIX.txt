@@ -32,13 +32,16 @@ X	-Merchant selling treasure bounds
 X	-Teammember can be locked in a room and die from hunger
 X	-No remaining companions after surrendering them to the monster
 X	-End game stats - NPC and room included in spaces explored
--Fix merchant bug - doesn't give item after overbuying
-	-Player doesn't have enough money to buy merchant goods
+X	-Fix merchant bug - doesn't give item after overbuying
+X		-Player doesn't have enough money to buy merchant goods
 -Max player weapons is 5
 -Cooking print three times - cauldron
 -picking a fight crashes game
 -After NPC becomes evil/kill monster, prints map 3 times
 -Party member dying removes their weapon
--Double prints message when player dies from hunger
--Keeps printing that a character has died from hunger
+
+-Double prints message when player dies from hunger - Party.cpp line 212 - if statement
+
+-Keeps printing that a character has died from hunger - Party.cpp line 210 - change <= to ==
+
 -Team members must die at the start of the next round when hunger reaches 0

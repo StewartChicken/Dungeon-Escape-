@@ -207,7 +207,7 @@ void Player::incrementFullness(string partyMember)
 void Player::decrementFullness(string partyMember)
 {
     //Player dies from hunger if fullness level is less than 1
-    if(fullnessLevels[partyMember] <= 0)
+    if(fullnessLevels[partyMember] <= 0) //S
     {
         this -> fullnessLevels[partyMember] = -1;
         cout << partyMember << " has died from hunger.\n";
