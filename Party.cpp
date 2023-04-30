@@ -843,6 +843,7 @@ void Player::surrenderTeamMember()
             isMemberAlive[i] = false;
             setFullnessLevel(partyNames[i + 1], -1);
             std::cout << partyNames[i + 1] << " Has been sacrificed to the monster. R.I.P.\n";
+            broken(true); //Lose team member weapon
             return;
         }
     }
@@ -870,6 +871,8 @@ void Player::loseTeamMember()
         if(isMemberAlive[removeIndex - 1])
         {
             std::cout << partyNames[removeIndex] << " Has been lost to the depths of the dungeon!\n";
+
+            broken(true); //Lose member weapon
 
             isMemberAlive[removeIndex - 1] = false;
             setFullnessLevel(partyNames[removeIndex], -1);
@@ -944,6 +947,7 @@ void Player::updateHungerStatus()
             if(isMemberAlive[i - 1])
             {
                 cout << partyMember << " has died from hunger.\n";
+                broken(true); //Remove a weapon from party
                 isMemberAlive[i - 1] = false;
                 return;
             }
@@ -1178,41 +1182,71 @@ void Player::robbed(){
 }
 
 //Misfortune : broken
-void Player::broken(){
+void Player::broken(bool memberDeath){
 
     //Randmo seed
     srand(time(0));
 
-    //Random number between 0 and 5
-    int chaos = rand() % 6;
-
     //Affected item
     std::string item;
 
-    //Stolen club broken
-    if(chaos==0){
-        setStoneClubs(getStoneClubs()-1);
-        item = "stone club";
-    //Iron spear broken
-    }else if (chaos==1){
-        setIronSpears(getIronSpears()-1);
-        item = "iron spear";
-    //Mythril Rapier broken
-    }else if (chaos==2){
-        setMythrilRapiers(getMythrilRapiers()-1);
-        item = " myhtril rapier";
-    //Flaming axe broken
-    }else if(chaos==3){
-        setFlamingAxes(getFlamingAxes()-1);
-        item = "flaming axe";
-    //Vorpal sword broken
-    }else if(chaos==4){
-        setVorpalSwords(getVorpalSwords()-1);
-        item = "vorpal sword";
-    //Armor suit broken
-    }else if(chaos==5){
-        setArmorSuits(getArmorSuits()-1);
-        item = "armor suit";
+    if(!memberDeath)
+    {
+        //Random number between 0 and 5
+        int chaos = rand() % 6;
+
+        //Stolen club broken
+        if(chaos==0){
+            setStoneClubs(getStoneClubs()-1);
+            item = "stone club";
+        //Iron spear broken
+        }else if (chaos==1){
+            setIronSpears(getIronSpears()-1);
+            item = "iron spear";
+        //Mythril Rapier broken
+        }else if (chaos==2){
+            setMythrilRapiers(getMythrilRapiers()-1);
+            item = " myhtril rapier";
+        //Flaming axe broken
+        }else if(chaos==3){
+            setFlamingAxes(getFlamingAxes()-1);
+            item = "flaming axe";
+        //Vorpal sword broken
+        }else if(chaos==4){
+            setVorpalSwords(getVorpalSwords()-1);
+            item = "vorpal sword";
+        //Armor suit broken
+        }else if(chaos==5){
+            setArmorSuits(getArmorSuits()-1);
+            item = "armor suit";
+        }
+    }
+    else
+    {
+        //Random number between 0 and 5
+        int chaos = rand() % 5;
+
+        //Stolen club broken
+        if(chaos==0){
+            setStoneClubs(getStoneClubs()-1);
+            item = "stone club";
+        //Iron spear broken
+        }else if (chaos==1){
+            setIronSpears(getIronSpears()-1);
+            item = "iron spear";
+        //Mythril Rapier broken
+        }else if (chaos==2){
+            setMythrilRapiers(getMythrilRapiers()-1);
+            item = " myhtril rapier";
+        //Flaming axe broken
+        }else if(chaos==3){
+            setFlamingAxes(getFlamingAxes()-1);
+            item = "flaming axe";
+        //Vorpal sword broken
+        }else if(chaos==4){
+            setVorpalSwords(getVorpalSwords()-1);
+            item = "vorpal sword";
+        }
     }
 
     //Lost item message
@@ -1319,7 +1353,7 @@ void Player::misfortunes(bool entering_a_room, Map &map){
         robbed();
     //5% chance of having an item break
     }else if (chaos<40){
-        broken();
+        broken(false);
     //15% chance of being poisoned
     }else if (chaos<70){
         poisoned();

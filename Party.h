@@ -208,7 +208,7 @@ class Player
         //misfortunes
         void misfortunes(bool entering_a_room, Map &map);
         void robbed();
-        void broken();
+        void broken(bool memberDeath);
         void poisoned();
         void locked();
         void cookwareTheft();
