@@ -170,6 +170,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         cin.ignore(100, '\n');
 
         cin >> input;
+        cout << "Made it here\n";
          
         //If user input is a movement key
         if(map.isMovementKey(input))
@@ -344,6 +345,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             //Launch monster fight
             prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, false);
         }
+
         else if(input == 'q') //Quit input
         {
             player.quit(); //Call quit function
