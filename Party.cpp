@@ -882,6 +882,23 @@ void Player::loseTeamMember()
     }
 }
 
+//Brings a fallen team member back to life
+void Player::resurrectTeamMember()
+{
+    for(int i = 0; i < 4; i++)
+    {
+        if(!isMemberAlive[i])
+        {
+            isMemberAlive[i] = true;
+            setFullnessLevel(partyNames[i + 1], 50);
+            cout << partyNames[i + 1] << " has been brought back to life.\n";
+            return;
+        }
+    }
+
+    cout << "All team members are alive and well!\n";
+}
+
 //Checks if entire team is dead
 bool Player::wholeTeamDead()
 {

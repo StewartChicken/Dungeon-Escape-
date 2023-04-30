@@ -873,7 +873,7 @@ void Prompts::brokePrompt()
 // Informs user which actions they can take within the movement menu
 void Prompts::movementExplorePrompt()
 {
-    cout << "Press 'w', 'a', 's' or 'd' to move. Press 'e' to explore the space.\nPress 'c' to cook ingrediants. Press 'f' to pick a fight. Press 'q' to give up.\n";
+    cout << "Press 'w', 'a', 's' or 'd' to move. Press 'e' to explore the space.\nPress 'c' to cook ingrediants. Press 'f' to pick a fight. Press 'r' to ressurect a team member.\nPress 'q' to give up.\n";
 }
 
 // Informs user which actions they can take when on a room space
