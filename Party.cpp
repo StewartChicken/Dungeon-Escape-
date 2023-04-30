@@ -24,7 +24,7 @@ Player::Player()
     this -> ironSpears = 0;
     this -> mythrilRapiers = 0;
     this -> flamingAxes = 0;
-    this -> vorpalSwords = 5;
+    this -> vorpalSwords = 0;
     
     //Armor
     this -> armorSuits = 5; 
@@ -951,7 +951,6 @@ void Player::updateHungerStatus()
             this -> fullnessLevels[partyMember] = 0;
             cout << partyMember << " is about to die from hunger!\n";
 
-            cout << "TEST " << fullnessLevels[partyMember] << "\n\n";
             return;
         }
 
@@ -1209,7 +1208,7 @@ void Player::broken(bool memberDeath){
     srand(time(0));
 
     //Affected item
-    std::string item;
+    std::string item = "";
 
     if(!memberDeath)
     {
@@ -1218,24 +1217,59 @@ void Player::broken(bool memberDeath){
 
         //Stolen club broken
         if(chaos==0){
-            setStoneClubs(getStoneClubs()-1);
-            item = "stone club";
+            if(stoneClubs > 0)
+            {
+                setStoneClubs(getStoneClubs()-1);
+                item = "stone club";
+            }
+            else
+            {
+                breakDefaultWeapon(item);
+            }
         //Iron spear broken
         }else if (chaos==1){
-            setIronSpears(getIronSpears()-1);
-            item = "iron spear";
+            if(ironSpears > 0)
+            {
+                setIronSpears(getIronSpears()-1);
+                item = "iron spear";
+            }
+            else
+            {
+                breakDefaultWeapon(item);
+            }
         //Mythril Rapier broken
         }else if (chaos==2){
-            setMythrilRapiers(getMythrilRapiers()-1);
-            item = " myhtril rapier";
+            if(mythrilRapiers > 0)
+            {
+                setMythrilRapiers(getMythrilRapiers()-1);
+                item = " myhtril rapier";
+            }
+            else
+            {
+                breakDefaultWeapon(item);
+            }
         //Flaming axe broken
         }else if(chaos==3){
-            setFlamingAxes(getFlamingAxes()-1);
-            item = "flaming axe";
+            if(flamingAxes > 0)
+            {
+                setFlamingAxes(getFlamingAxes()-1);
+                item = "flaming axe";
+            }
+            else
+            {
+                breakDefaultWeapon(item);
+            }
         //Vorpal sword broken
         }else if(chaos==4){
-            setVorpalSwords(getVorpalSwords()-1);
-            item = "vorpal sword";
+            if(vorpalSwords > 0)
+            {
+                setVorpalSwords(getVorpalSwords()-1);
+                item = "vorpal sword";
+            }
+            else
+            {
+                breakDefaultWeapon(item);
+            }
         //Armor suit broken
         }else if(chaos==5){
             setArmorSuits(getArmorSuits()-1);
@@ -1247,31 +1281,105 @@ void Player::broken(bool memberDeath){
         //Random number between 0 and 5
         int chaos = rand() % 5;
 
-        //Stolen club broken
+        ///Stolen club broken
         if(chaos==0){
-            setStoneClubs(getStoneClubs()-1);
-            item = "stone club";
+            if(stoneClubs > 0)
+            {
+                setStoneClubs(getStoneClubs()-1);
+                item = "stone club";
+            }
+            else
+            {
+                breakDefaultWeapon(item);
+            }
         //Iron spear broken
         }else if (chaos==1){
-            setIronSpears(getIronSpears()-1);
-            item = "iron spear";
+            if(ironSpears > 0)
+            {
+                setIronSpears(getIronSpears()-1);
+                item = "iron spear";
+            }
+            else
+            {
+                breakDefaultWeapon(item);
+            }
         //Mythril Rapier broken
         }else if (chaos==2){
-            setMythrilRapiers(getMythrilRapiers()-1);
-            item = " myhtril rapier";
+            if(mythrilRapiers > 0)
+            {
+                setMythrilRapiers(getMythrilRapiers()-1);
+                item = " myhtril rapier";
+            }
+            else
+            {
+                breakDefaultWeapon(item);
+            }
         //Flaming axe broken
         }else if(chaos==3){
-            setFlamingAxes(getFlamingAxes()-1);
-            item = "flaming axe";
+            if(flamingAxes > 0)
+            {
+                setFlamingAxes(getFlamingAxes()-1);
+                item = "flaming axe";
+            }
+            else
+            {
+                breakDefaultWeapon(item);
+            }
         //Vorpal sword broken
         }else if(chaos==4){
-            setVorpalSwords(getVorpalSwords()-1);
-            item = "vorpal sword";
+            if(vorpalSwords > 0)
+            {
+                setVorpalSwords(getVorpalSwords()-1);
+                item = "vorpal sword";
+            }
+            else
+            {
+                breakDefaultWeapon(item);
+            }
         }
     }
 
     //Lost item message
+    if(item == "")
+    {
+        return;
+    }
+
     std::cout<<"You have lost 1 "<<item<<".\n";
+}
+
+//Default order of weapon breaks
+void Player::breakDefaultWeapon(string &item)
+{
+    if(stoneClubs > 0)
+    {
+        setStoneClubs(getStoneClubs() - 1);
+        item = "stone club";
+    }
+    else if(ironSpears > 0)
+    {
+        setIronSpears(getIronSpears()-1);
+        item = "iron spear";
+    }
+    else if(mythrilRapiers > 0)
+    {
+        setMythrilRapiers(getMythrilRapiers() - 1);
+        item =  "mythril rapier";
+    }
+    else if(flamingAxes > 0)
+    {
+        setFlamingAxes(getFlamingAxes() - 1);
+        item = "flaming axe";
+    }
+    else if(vorpalSwords > 0)
+    {
+        setVorpalSwords(getVorpalSwords() - 1);
+        item = "vorpal sword";
+    }
+    else
+    {
+        item = "";
+    }
 }
 
 //Misfortune : poisioned

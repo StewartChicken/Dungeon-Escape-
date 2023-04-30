@@ -211,6 +211,7 @@ class Player
         void misfortunes(bool entering_a_room, Map &map);
         void robbed();
         void broken(bool memberDeath);
+        void breakDefaultWeapon(string &item);
         void poisoned();
         void locked();
         void cookwareTheft();
