@@ -15,6 +15,7 @@
 #include "Merchant.h"
 #include "GamePrompts.h"
 #include "Monster.h"
+#include "npc.h"
 
 //Game class definition
 class Game
@@ -26,6 +27,9 @@ class Game
 
         Prompts prompts;
         Monster monster;
+        npc riddler[4];
+        riddler[0].setName(" a lowly peasant");
+
 
         bool gameEnd = false; //When true, game ends
 
@@ -38,7 +42,7 @@ class Game
 
         void merchantInteraction(Player &player, Merchant &merchant); // Initial player interaction with merchant
 
-        void movementPhase(Player &player, Merchant &merchant); // Player interaction with the actual map - primary game functionality
+        void movementPhase(Player &player, Merchant &merchant, npc riddler[]); // Player interaction with the actual map - primary game functionality
         
         void endGame(Player &player, Merchant &merchant); //Ends game once player wins/loses
 

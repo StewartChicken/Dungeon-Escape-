@@ -51,7 +51,7 @@ void Game::merchantInteraction(Player &player, Merchant &merchant){
 // 
 //Arguments : player and merchant objects (passed by reference)
 //Return type : void
-void Game::movementPhase(Player& player, Merchant &merchant)
+void Game::movementPhase(Player& player, Merchant &merchant, npc riddler[])
 {
 
     char input = '-'; //Initial input value (set to invalid input)
@@ -60,7 +60,8 @@ void Game::movementPhase(Player& player, Merchant &merchant)
     int newRow;
     int newCol;
 
-    bool room; //Is in room
+    bool room;//Is in room
+
 
     //Loops until win or loss condition is met
     while(true)
@@ -255,7 +256,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             else if(map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
                     && !map.isCleared(map.getPlayerRow(), map.getPlayerCol()))
             {
-                prompts.npcInteractionPrompt(player, merchant, map, monster);
+                prompts.npcInteractionPrompt(player, merchant, map, monster,riddler);
 
                 map.exploreSpace(map.getPlayerRow(), map.getPlayerCol());
                 map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
