@@ -346,11 +346,13 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             int numRoomsCleared = merchant.getRoomsCleared();
             double combatScore = player.calculateCombatScore(numRoomsCleared);
             string currentMonster = monster.getRandomMonster(numRoomsCleared);
+        
 
-            
+            //checks if all monsters are deafeated
+            if(currentMonster!="NULL"){
             //Launch monster fight
             prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, false);
-
+            }
 
         }
 
