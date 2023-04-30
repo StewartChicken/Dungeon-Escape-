@@ -67,7 +67,7 @@ class Prompts
         void read(string file_name,string arr[][2], int array_size);
         void split(string input_string, char seperator, string arr[], int arr_size);
 
-        void exitInteractionPrompt(Player &player, Merchant &merchant);
+        void exitInteractionPrompt(Player &player, Merchant &merchant, bool &gameEnd);
 
         int foodQuantityPrompt(int available);
         int cookWithPrompts(Player &player);

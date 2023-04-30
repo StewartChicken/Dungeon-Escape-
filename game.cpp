@@ -46,7 +46,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
 
     map.displayMap(); //Display map following merchant interaction
 
-    char input = '-'; //Initial input value (set to invalid input)
+    string input = ""; //Initial input value (set to invalid input)
 
     //update player row and column
     int newRow;
@@ -80,6 +80,9 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             return;
         }
 
+        //Kills off any team members whose fullness level is 0
+        //player.killStarvedTeammembers();
+
         if(player.wholeTeamDead())
         {
             player.setEndCode(3); //Player has no team members left
@@ -89,18 +92,18 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             return;
         }
 
+        if(gameEnd)
+        {
+            player.setEndCode(4);
+            player.endgamePrompt(player.getEndCode());
+            
+            return;
+        }
+
         if(player.getSorcererAngerLevel() >= 100)
         {
             player.setEndCode(1); //Anger lever == 100
             player.endgamePrompt(player.getEndCode());
-
-            //Exit function
-            return;
-        }
-
-        if(player.isSorcererDefeated())
-        {
-            player.setEndCode(3); //Player win
 
             //Exit function
             return;
@@ -153,17 +156,21 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         }
 
         //User input
+
+        cin.clear();
+        cin.ignore(100, '\n');
+
         cin >> input;
-        
+         
         //If user input is a movement key
-        if(map.isMovementKey(input))
+        if(map.isMovementKey(input[0]))
         {
             //Update player location
             newRow = map.getPlayerRow();
             newCol = map.getPlayerCol();
 
             //Movement keys
-            switch(input)
+            switch(input[0])
             {
                 case 'w':
                     newRow --;
@@ -210,7 +217,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
 
         }
         //If player chooses to explore
-        else if(input == 'e')
+        else if(input[0] == 'e')
         {
             //If player location has not already been explored
             if(!map.isExplored(map.getPlayerRow(), map.getPlayerCol()))
@@ -253,7 +260,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             //Interact with dungeon exit 
             else if(map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol()))
             {
-                prompts.exitInteractionPrompt(player, merchant);
+                prompts.exitInteractionPrompt(player, merchant, gameEnd);
             }
             else
             {
@@ -267,7 +274,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             map.displayMap();
         }
         //Player chooses to cook food
-        else if(input == 'c')
+        else if(input[0] == 'c')
         {   
             //Can't cook food over room, NPC, or dungeon location
             if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
@@ -307,9 +314,8 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             prompts.currentStatus(player, merchant);
             map.displayMap();
         }
-        else if(input == 'f') //If player wishes to pick a fight
+        else if(input[0] == 'f') //If player wishes to pick a fight
         {
-
             if(player.isSorcererDefeated())
             {
                 cout << "The Sorcerer has been defeated and all other monsters have ran away. There are none to fight.\n";
@@ -331,7 +337,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             //Launch monster fight
             prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, false);
         }
-        else if(input == 'q') //Quit input
+        else if(input[0] == 'q') //Quit input
         {
             player.quit(); //Call quit function
         }

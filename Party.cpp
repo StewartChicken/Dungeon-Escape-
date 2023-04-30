@@ -20,14 +20,13 @@ Player::Player()
     //Party default combat values
     
     //weapons
-    this -> numWeapons = 0;
     this -> stoneClubs = 0;
     this -> ironSpears = 0;
     this -> mythrilRapiers = 0;
     this -> flamingAxes = 0;
     this -> vorpalSwords = 5;
     
-    this -> armorSuits = 5; 
+    this -> armorSuits = 100; 
 
     this -> combatScore = 0;
 
@@ -40,13 +39,13 @@ Player::Player()
     //cookware
     this -> ceramicPots = 0;
     this -> fryingPans = 0;
-    this -> cauldrons = 5;
+    this -> cauldrons = 50;
 
 
     //Party default inventory values
 
     this -> gold = 100;
-    this -> numKeys = 0;
+    this -> numKeys = 1000;
     this -> ingredients = 30;
 
 
@@ -76,7 +75,7 @@ Player::Player()
 //Adds new party member
 void Player::addNewMember(std::string name, int index)
 {
-    this -> fullnessLevels[name] = 50;
+    this -> fullnessLevels[name] = 5;
     partyNames[index] = name;
 }
 
@@ -149,7 +148,7 @@ void Player::incrementFullness(string partyMember)
 //Decrements the fullness of the player
 void Player::decrementFullness(string partyMember)
 {
-    if(fullnessLevels[partyMember] <= 0)
+    if(fullnessLevels[partyMember] <= 1)
     {
         this -> fullnessLevels[partyMember] = -1;
         cout << partyMember << " has died from hunger.\n";
@@ -172,6 +171,20 @@ void Player::monsterFightDecrementFullness()
         if(chance == 0)
         {
             decrementFullness(partyNames[i]);
+        }
+    }
+}
+
+void Player::killStarvedTeammembers()
+{
+    for(int i = 0; i < 4; i ++)
+    {
+        if(fullnessLevels[partyNames[i + 1]] == 0)
+        {
+            fullnessLevels[partyNames[i + 1] = -1];
+            isMemberAlive[i + 1] = false;
+
+            cout << partyNames[i + 1] << " has died from hunger.\n";
         }
     }
 }
@@ -453,7 +466,13 @@ void Player::incrementKeys()
 
 void Player::decrementKeys()
 {
-    this -> numKeys --;
+    if(numKeys > 0)
+    {
+        this -> numKeys --;
+        return;
+    }
+
+    numKeys = 0;
 }
 
 void Player::incrementImaginaryGlasses()
@@ -968,7 +987,7 @@ void Player::poisoned(){
     if(getFullness(name)<=0){
         if(name==getPlayerName()){
             std::cout<<"You have died from food poisoning!\n";
-            setEndCode(1);
+            setEndCode(2);
         }else{
         std::cout<<name<<" has died from food poisoning! "<< getNumSurvivingTeamMembers() <<" players remain.\n";
         }

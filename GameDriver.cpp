@@ -23,7 +23,5 @@ int main()
 
     game.endGame(player);//Initiates end game sequence
     
-    
-
     return 0;
 }

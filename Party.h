@@ -95,6 +95,8 @@ class Player
         void incrementFullness(string);
         void decrementFullness(string);
         void monsterFightDecrementFullness();
+
+        void killStarvedTeammembers();
         
         //Cooks and eats food in increments of 5kgs
         bool cookedSuccessfully(int);

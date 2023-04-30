@@ -649,7 +649,7 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
 
         int keyDrop = rand() % 10;
 
-        if(merchant.getRoomsCleared() == 4)
+        if(merchant.getRoomsCleared() == 4 && enteredRoom)
         {
             player.defeatSorcerer();
         }
@@ -657,8 +657,13 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         cout << "\n\nNot to fear, your team is strong enough to overcome the adversary!\n\n";
         map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
         player.winFight(roomsCleared + 2);
-        merchant.incrementRoomsCleared();
-        merchant.updateMultiplier();
+        
+        if(enteredRoom)
+        {
+            merchant.incrementRoomsCleared();
+            merchant.updateMultiplier();
+        }
+        
         player.monsterFightDecrementFullness();
         monster.killMonster(monsterName);
 
@@ -872,7 +877,7 @@ void Prompts::split(string input_string, char seperator, string arr[], int arr_s
     }
 }
 
-void Prompts::exitInteractionPrompt(Player &player, Merchant &merchant)
+void Prompts::exitInteractionPrompt(Player &player, Merchant &merchant, bool &gameEnd)
 {
     if(!player.isSorcererDefeated())
     {
@@ -880,8 +885,7 @@ void Prompts::exitInteractionPrompt(Player &player, Merchant &merchant)
     }
     else
     {
-        player.setEndCode(4);
-        player.endgamePrompt(player.getEndCode());
+        gameEnd = true;
     }
 }
 

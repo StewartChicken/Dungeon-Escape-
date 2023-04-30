@@ -86,7 +86,7 @@ void Map::updateMap()
     }
 
     //If any section is unexplored, change the character to '-'
-    for(int i{}; i < numRows; i ++)
+    /*for(int i{}; i < numRows; i ++)
     {
         for(int j{}; j < numCols; j ++)
         {
@@ -95,7 +95,7 @@ void Map::updateMap()
                 mapData[i][j] = '-';
             }
         }
-    }
+    }*/
 
     //Display player position
     mapData[positionData.at(0)][positionData[1]] = 'X';

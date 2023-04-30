@@ -27,6 +27,8 @@ class Game
         Prompts prompts;
         Monster monster;
 
+        bool gameEnd = false;
+
     public:
 
         //Function declarations
