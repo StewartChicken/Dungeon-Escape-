@@ -140,13 +140,13 @@ string Monster::getRandomMonster(int roomsCleared)
     string chosenMonster = monsterNames[chosenMonsterIndex];
 
     // If the monster already exists within a room or has already been defeated, recall the function
-    if(defeatedMonsters.size()<32){
-    while((isInRoomCombatOrder(chosenMonster) || isDefeatedMonster(chosenMonster))&&chosenMonsterIndex<33)
+    if(defeatedMonsters.size()<33){
+    while(isInRoomCombatOrder(chosenMonster) || isDefeatedMonster(chosenMonster))
     {
         // Recursive function call
         chosenMonsterIndex++;
         chosenMonster = monsterNames[chosenMonsterIndex];
-        std::cout<<"Chosen Monster Index\n"<<chosenMonsterIndex;
+        //std::cout<<"Chosen Monster Index\n"<<chosenMonsterIndex;
 
     }
     }else{
