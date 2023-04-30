@@ -90,7 +90,7 @@ void Prompts::merchantInteraction(Player &player, Merchant &merchant, bool &acti
     switch(stoi(choice))
     {
         case 1:
-            itemBuyMenu(player, merchant, merchant.getIngredientPrice(), "kg(s) of Ingredients"); //Ingredients for food
+            itemBuyMenu(player, merchant, merchant.getIngredientPrice(), "kg(s) of Ingredients",false); //Ingredients for food
             break;
         case 2:
             cookwareBuyMenu(player, merchant); //User chooses to buy cookware
@@ -99,7 +99,7 @@ void Prompts::merchantInteraction(Player &player, Merchant &merchant, bool &acti
             weaponBuyMenu(player, merchant); //User chooses to buy weapons
             break;
         case 4:
-            itemBuyMenu(player, merchant, merchant.getArmorSuitPrice(), "Armor suit(s)"); //User chooses to buy armor
+            itemBuyMenu(player, merchant, merchant.getArmorSuitPrice(), "Armor suit(s)",false); //User chooses to buy armor
             player.setArmorSuits(player.checkArmorSuitCap(itemCount, merchant.getArmorSuitPrice())); //Update user inventory
             break;
         case 5:
@@ -144,7 +144,7 @@ void Prompts::merchantGreeting(Player &player)
 
 
 //Returns number of items bought
-void Prompts::itemBuyMenu(Player &player, Merchant &merchant, int price, string itemLabel)
+void Prompts::itemBuyMenu(Player &player, Merchant &merchant, int price, string itemLabel, bool weapon)
 {
     string amount = "-1";
 
@@ -152,7 +152,7 @@ void Prompts::itemBuyMenu(Player &player, Merchant &merchant, int price, string 
     {
         cout << "How many " << itemLabel << " would you like to buy? (" << price << " Gold each). Press 0 to cancel.\n";
         cin >> amount;
-        if(stoi(amount)+player.getTotalWeapons()>5){
+        if(stoi(amount)+player.getTotalWeapons()>5&&weapon){
             cout<<"Your party can only have 5 weapons total.\n";
             amount = "-1";
         }
@@ -175,7 +175,7 @@ void Prompts::itemBuyMenu(Player &player, Merchant &merchant, int price, string 
         if(itemsBought == 0)
         {
             //If user doesn't buy anything, sends user back to the item buy menu
-            itemBuyMenu(player, merchant, price, itemLabel);
+            itemBuyMenu(player, merchant, price, itemLabel,weapon);
         }
     }
 }
@@ -397,15 +397,15 @@ void Prompts::cookwareBuyMenu(Player &player, Merchant &merchant)
     {
         //User wants to buy ceramic pots
         case 1:
-            itemBuyMenu(player, merchant, merchant.getCeramicPotPrice(), "Ceramic pots");
+            itemBuyMenu(player, merchant, merchant.getCeramicPotPrice(), "Ceramic pots",false);
             break;
         //User wants to buy frying pans
         case 2:
-            itemBuyMenu(player, merchant, merchant.getFryingPanPrice(), "Frying pans");
+            itemBuyMenu(player, merchant, merchant.getFryingPanPrice(), "Frying pans",false);
             break;
         //User wnts to buy cauldrons
         case 3:
-            itemBuyMenu(player, merchant, merchant.getCauldronPrice(), "Cauldrons");
+            itemBuyMenu(player, merchant, merchant.getCauldronPrice(), "Cauldrons",false);
             break;
         //Error code - should not reach this case
         default:
@@ -462,27 +462,27 @@ void Prompts::weaponBuyMenu(Player &player, Merchant &merchant)
         {
             //User buys stone clubs
             case 1:
-                itemBuyMenu(player, merchant, merchant.getStoneClubPrice(), "Stone club(s)");
+                itemBuyMenu(player, merchant, merchant.getStoneClubPrice(), "Stone club(s)",true);
             
                 break;
             //User buys iron spears
             case 2:
-                itemBuyMenu(player, merchant, merchant.getIronSpearPrice(), "Iron spear(s)");
+                itemBuyMenu(player, merchant, merchant.getIronSpearPrice(), "Iron spear(s)",true);
                 
                 break;
             //User buys mythril rapiers
             case 3:
-                itemBuyMenu(player, merchant, merchant.getMythrilRapierPrice(), "Mythril Rapier(s)");
+                itemBuyMenu(player, merchant, merchant.getMythrilRapierPrice(), "Mythril Rapier(s)",true);
                 
                 break;
             //User buys flaming axes
             case 4:
-                itemBuyMenu(player, merchant, merchant.getFlamingAxePrice(), "Battle Axe(s)");
+                itemBuyMenu(player, merchant, merchant.getFlamingAxePrice(), "Battle Axe(s)", true);
                 
                 break;
             //User buys vorpal swords
             case 5:
-                itemBuyMenu(player, merchant, merchant.getVorpalSwordPrice(), "Vorpal Sword(s)");
+                itemBuyMenu(player, merchant, merchant.getVorpalSwordPrice(), "Vorpal Sword(s)",true);
             
                 break;
             //Error code - should not reach this case

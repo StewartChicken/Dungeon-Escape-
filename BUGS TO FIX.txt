@@ -36,7 +36,7 @@ X	-Fix merchant bug - doesn't give item after overbuying
 X		-Player doesn't have enough money to buy merchant goods
 X	-Double prints message when player dies from hunger
 X	-Keeps printing that a character has died from hunger
--Max player weapons is 5
+X   -Max player weapons is 5
 -Cooking print three times - cauldron
 -picking a fight crashes game
 -After NPC becomes evil/kill monster, prints map 3 times
