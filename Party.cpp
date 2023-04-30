@@ -73,10 +73,33 @@ Player::Player()
 //Player and team member name/hunger management methods
 
 //Adds new party member
-void Player::addNewMember(std::string name, int index)
+bool Player::addNewMember(std::string name, int index)
 {
-    this -> fullnessLevels[name] = 5;
-    partyNames[index] = name;
+    if(!isTakenName(name))
+    {
+        this -> fullnessLevels[name] = 5;
+        partyNames[index] = name;
+        return true;
+    }
+    else
+    {
+        cout << "You cannot enter the same name twice!\n";
+        return false;
+    }
+}
+
+//Ensures user can't enter the same name for team mates
+bool Player::isTakenName(string name)
+{
+    for(int i = 0; i < 5; i ++)
+    {
+        if(compareStrings(name, partyNames[i]))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 //Adjust fullness level for specific party member
@@ -1054,4 +1077,24 @@ void Player::quit()
 bool Player::hasQuit()
 {
     return playerQuit;
+}
+
+//Compares two strings
+bool Player::compareStrings(string a, string b)
+{
+    if(a.length() != b.length())
+    {
+        return false;
+    }
+
+    for(int i=0; i < a.length(); i ++)
+    {
+        if(a[i] != b[i])
+        {
+            return false;
+        }
+    }
+
+    return true;
+
 }

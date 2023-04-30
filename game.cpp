@@ -7,14 +7,24 @@
 //Return type : void
 void Game::start(Player &player, Merchant &merchant)
 {
-    //Player name prompt
-    player.addNewMember(prompts.playerNamePrompt(), 0);
 
-    //Add four team members
-    player.addNewMember(prompts.memberNamePrompt(), 1);
-    player.addNewMember(prompts.memberNamePrompt(), 2);
-    player.addNewMember(prompts.memberNamePrompt(), 3);
-    player.addNewMember(prompts.memberNamePrompt(), 4);
+    //Prompts user to input their user name and the names of their team members
+    for(int i = 0; i < 5; i ++)
+    {
+        bool successfullAdd = false;
+
+        while(!successfullAdd)
+        {
+            if(i == 0) //First member is player username
+            {
+                successfullAdd = player.addNewMember(prompts.playerNamePrompt(), i); //Username prompt
+            }
+            else
+            {
+                successfullAdd = player.addNewMember(prompts.memberNamePrompt(), i); //Teammember prompt
+            }
+        }
+    }
 
     //Greet team members
     prompts.teamGreetingPrompt(player.getPlayerName(), player.getMember1Name(), player.getMember2Name(), player.getMember3Name(), player.getMember4Name());

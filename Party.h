@@ -77,7 +77,8 @@ class Player
         Player();
         
         //Adds new team member at a given index
-        void addNewMember(string, int);
+        bool addNewMember(string, int);
+        bool isTakenName(string name);
 
         //Sets the fullness level of a given player or team member to the passed fullness level
         void setFullnessLevel(string, int);
@@ -213,6 +214,8 @@ class Player
         //Player gives up
         void quit();
         bool hasQuit();
+
+        bool compareStrings(string a, string b);
 
 };
 
