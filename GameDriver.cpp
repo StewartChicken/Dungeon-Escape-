@@ -21,7 +21,9 @@ int main()
 
     game.movementPhase(player, merchant); // Progress to map interaction and the actual game
 
-    game.endGame(player);
+    game.endGame(player);//Initiates end game sequence
+    
+    
 
     return 0;
 }
