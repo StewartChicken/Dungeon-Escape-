@@ -931,6 +931,7 @@ int Player::getNumSurvivingTeamMembers()
     return count;
 }
 
+//Checks which team members are about to die and which members are dead
 void Player::updateHungerStatus()
 {
 
@@ -956,7 +957,6 @@ void Player::updateHungerStatus()
 
         else if(fullnessLevels[partyMember] == 0)
         {
-            cout << "Made it here\n";
             if(compareStrings(partyMember, getPlayerName()))
             {
                 this -> fullnessLevels[partyMember] = -1;
