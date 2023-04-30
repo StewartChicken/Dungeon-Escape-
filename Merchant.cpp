@@ -3,7 +3,7 @@
 //Constructor
 Merchant::Merchant()
 {
-    this -> roomsCleared = 4;
+    this -> roomsCleared = 0;
     this -> multiplier = (0.25 * roomsCleared) + 1.0;
 }
 

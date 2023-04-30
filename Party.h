@@ -78,6 +78,7 @@ class Player
         //Adds new team member at a given index
         bool addNewMember(string, int);
         bool isTakenName(string name);
+        bool isTeamMember(string name);
 
         //Sets the fullness level of a given player or team member to the passed fullness level
         void setFullnessLevel(string, int);
@@ -158,6 +159,8 @@ class Player
         void setArmorSuits(int);
 
         void decrementArmorSuits();
+
+        int checkArmorSuitCap(int numSuitsBought, int suitPrice); //Ensures the player can only have 5 suits of armor - refunds excess money spent
 
         //Calculates combat score - chance of winning a fight against
         // a monster. Takes the current monster challenge rating as an argument. 

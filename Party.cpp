@@ -13,9 +13,9 @@ Player::Player()
 
     //Are the members alive?
     this -> isMemberAlive[0] = true;
-    this -> isMemberAlive[0] = true;
-    this -> isMemberAlive[0] = true;
-    this -> isMemberAlive[0] = true;
+    this -> isMemberAlive[1] = true;
+    this -> isMemberAlive[2] = true;
+    this -> isMemberAlive[3] = true;
 
     //Party default combat values
     
@@ -27,7 +27,7 @@ Player::Player()
     this -> vorpalSwords = 5;
     
     //Armor
-    this -> armorSuits = 100; 
+    this -> armorSuits = 5; 
 
     this -> combatScore = 0;
 
@@ -43,14 +43,14 @@ Player::Player()
     //cookware
     this -> ceramicPots = 0;
     this -> fryingPans = 0;
-    this -> cauldrons = 50;
+    this -> cauldrons = 10;
 
 
     //Party default inventory values
 
     this -> gold = 100;
-    this -> numKeys = 1000;
-    this -> ingredients = 30;
+    this -> numKeys = 0;
+    this -> ingredients = 0;
 
 
     //Treasures found
@@ -82,7 +82,7 @@ bool Player::addNewMember(std::string name, int index)
     //Checks if user input name is a duplicate
     if(!isTakenName(name))
     {
-        this -> fullnessLevels[name] = 5;
+        this -> fullnessLevels[name] = 50;
         partyNames[index] = name;
         return true;
     }
@@ -109,6 +109,20 @@ bool Player::isTakenName(string name)
     return false;
 }
 
+//Checks if a given name is a team member and not the player
+bool Player::isTeamMember(string name)
+{
+    for(int i = 1; i < 5; i ++)
+    {
+        if(compareStrings(name, partyNames[i]))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 //Adjust fullness level for specific party member
 void Player::setFullnessLevel(string name, int fullness)
 {
@@ -122,8 +136,17 @@ void Player::setFullnessLevel(string name, int fullness)
     else if(fullness <= 0)
     {
         this -> fullnessLevels[name] = -1;
-        cout << name << " has died from hunger.\n";
-        return;
+ 
+        //Iterates through each party name (skipping player) and finds the index within partyNames that matches
+        // uses this index to kill player that died of starvation
+        for(int i = 0; i < 4; i ++)
+        {
+            if(compareStrings(name, partyNames[i + 1]))
+            {
+                isMemberAlive[i] = false;
+                return;
+            }
+        }
     }
     else
     {
@@ -184,14 +207,22 @@ void Player::incrementFullness(string partyMember)
 void Player::decrementFullness(string partyMember)
 {
     //Player dies from hunger if fullness level is less than 1
-    if(fullnessLevels[partyMember] <= 1)
+    if(fullnessLevels[partyMember] <= 0)
     {
         this -> fullnessLevels[partyMember] = -1;
         cout << partyMember << " has died from hunger.\n";
 
-        return;
+        //Iterates through each party name (skipping player) and finds the index within partyNames that matches
+        // uses this index to kill player that died of starvation
+        for(int i = 0; i < 4; i ++)
+        {
+            if(compareStrings(partyMember, partyNames[i + 1]))
+            {
+                isMemberAlive[i] = false;
+                return;
+            }
+        }
     }
-
     this -> fullnessLevels[partyMember] --;
 }
 
@@ -654,6 +685,20 @@ void Player::decrementArmorSuits()
     }
 }
 
+//Party cannot have more than 5 armor suits - this function refunds user the gold spent on extra suits
+int Player::checkArmorSuitCap(int numSuitsBought, int suitCost)
+{
+    if((numSuitsBought + armorSuits) > 5)
+    {
+        gold = gold + ((numSuitsBought + armorSuits) - 5) * suitCost; //Refunds user the money they spent on excess suits
+
+        cout << "You can only have 5 armor suits at a time.\n";
+        return 5;
+    }
+
+    return numSuitsBought + armorSuits;;
+}
+
 //Calculates the combat score for the team based on the weapons within the inventory
 //Formula : (r1 * w + d) - (r2 * c)/a
 // w is the number of weapons the party possesses + bonus points for upgraded weapons
@@ -882,7 +927,6 @@ int Player::getNumSurvivingTeamMembers()
 
     return count;
 }
-
 //Sorcerer anger level methods
 
 int Player::getSorcererAngerLevel()

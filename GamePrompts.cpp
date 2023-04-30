@@ -101,7 +101,7 @@ void Prompts::merchantInteraction(Player &player, Merchant &merchant, bool &acti
             break;
         case 4:
             itemCount = itemBuyMenu(player, merchant, merchant.getArmorSuitPrice(), "Armor suit(s)"); //User chooses to buy armor
-            player.setArmorSuits(player.getArmorSuits() + itemCount); //Update user inventory
+            player.setArmorSuits(player.checkArmorSuitCap(itemCount, merchant.getArmorSuitPrice())); //Update user inventory
             break;
         case 5:
             sellTreasureMenu(player, merchant); //User chooses to sell treasure
@@ -253,7 +253,7 @@ void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
 
     string choice = "-1";
 
-    while(stoi(choice) < 0)
+    while(stoi(choice) < 0 || stoi(choice) > 5)
     {
         //Print values of each item - pulls information from the merchant class
         cout << "During your journey, you may encounter pieces of treasure in each room. When you The price of each treasure\n"
@@ -273,6 +273,12 @@ void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
             choice = "-1";
             continue;
         }
+    }
+
+    //User cancels transaction
+    if(stoi(choice) == 0)
+    {
+        return;
     }
 
     //User selection - which item will they sell to the merchant?
@@ -1230,7 +1236,7 @@ void Prompts::endgameStats(Player &player, Map &map){
 
     //Congratulates user if they beat the sorcerer, otherwise just displays their stats
     if(player.isSorcererDefeated())std::cout << "Congratulations "<<player.getPlayerName()<<"!\nYou made it through the dungeon with";
-    else std::cout<<player.getPlayerName()<<"'s final stats\n";
+    else std::cout<<player.getPlayerName()<<"'s final stats\nSurviving team members:\n";
     if(player.getFullness(player.getMember1Name())>=0)std::cout<<" "<<player.getMember1Name();
     if(player.getFullness(player.getMember1Name())>=0&&player.getFullness(player.getMember2Name())>=0)std::cout<<",";
     if(player.getFullness(player.getMember2Name())>=0)std::cout<<" "<<player.getMember2Name();

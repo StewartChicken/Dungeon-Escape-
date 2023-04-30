@@ -76,7 +76,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         if(player.getFullness(player.getPlayerName()) < 0)
         {
             //Player gets food poisoned
-            if(player.getEndCode() == 1)
+            if(player.getEndCode() == 2)
             {
                 player.endgamePrompt(player.getEndCode());
 
