@@ -24,8 +24,6 @@ class Player
 
         //Combat values
 
-        int numWeapons;
-
         //Weapons (5 max)
         int stoneClubs; //2 gold - denoted C
         int ironSpears; //2 gold - denoted S

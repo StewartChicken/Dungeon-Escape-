@@ -26,13 +26,16 @@ Player::Player()
     this -> flamingAxes = 0;
     this -> vorpalSwords = 5;
     
+    //Armor
     this -> armorSuits = 100; 
 
     this -> combatScore = 0;
 
+    //Sorcerer variables
     this -> sorcererAngerLevel = 0;
     this -> sorcererDefeated = false;
 
+    //Stats
     this -> monstersDefeated = 0;
     this -> gameScore = 0;
 
@@ -75,6 +78,7 @@ Player::Player()
 //Adds new party member
 bool Player::addNewMember(std::string name, int index)
 {
+    //Checks if user input name is a duplicate
     if(!isTakenName(name))
     {
         this -> fullnessLevels[name] = 5;
@@ -83,6 +87,7 @@ bool Player::addNewMember(std::string name, int index)
     }
     else
     {
+        //Duplicate name warning
         cout << "You cannot enter the same name twice!\n";
         return false;
     }
@@ -93,6 +98,7 @@ bool Player::isTakenName(string name)
 {
     for(int i = 0; i < 5; i ++)
     {
+        //Compare names
         if(compareStrings(name, partyNames[i]))
         {
             return true;
@@ -105,11 +111,13 @@ bool Player::isTakenName(string name)
 //Adjust fullness level for specific party member
 void Player::setFullnessLevel(string name, int fullness)
 {
+    //Max fullness level is 50
     if(fullness >= 50)
     {
         cout << name << " is full.\n";
         this -> fullnessLevels[name] = 50;
     }
+    //Min fullness level is 0
     else if(fullness <= 0)
     {
         this -> fullnessLevels[name] = -1;
@@ -122,6 +130,8 @@ void Player::setFullnessLevel(string name, int fullness)
     }
     
 }
+
+//Getters
 
 int Player::getFullness(string partyMember)
 {
@@ -157,6 +167,7 @@ std::string Player::getMember4Name()
 //Increments the fullness of the player
 void Player::incrementFullness(string partyMember)
 {
+    //Max fullness is 50 - can only increment if fullness level is less than 50
     if(fullnessLevels[partyMember] <= 50)
     {
         this -> fullnessLevels[partyMember] ++;
@@ -171,6 +182,7 @@ void Player::incrementFullness(string partyMember)
 //Decrements the fullness of the player
 void Player::decrementFullness(string partyMember)
 {
+    //Player dies from hunger if fullness level is less than 1
     if(fullnessLevels[partyMember] <= 1)
     {
         this -> fullnessLevels[partyMember] = -1;
@@ -185,12 +197,16 @@ void Player::decrementFullness(string partyMember)
 //After every monster fight, each team member has a 50 percent chance of losing a fullness level
 void Player::monsterFightDecrementFullness()
 {
+    //Random seed
     srand(time(0));
 
+    //Iterate through every team member
     for(int i{}; i < 5; i++)
     {
+        //Random number between 0 and 1
         int chance = rand() % 2;
 
+        //50% chance to decrement fullness
         if(chance == 0)
         {
             decrementFullness(partyNames[i]);
@@ -200,12 +216,18 @@ void Player::monsterFightDecrementFullness()
 
 //Random hunber misfortune - each player has a 50 percent chance of losing a fullness level (assuming the input is 40)
 void Player::hungerMisfortune(int chances){
+
+    //Random seed
     srand(time(0));
+
+    //Array of 5 random numbers
     int chaos[5];
+
     for(int i=0;i < 5; i++){
         chaos[i] = rand() % chances;
     }
 
+    //20% chance to decrement fullness - independent for each team member
     if(chaos[0]<20){
         decrementFullness(getPlayerName());   
     }
@@ -227,18 +249,23 @@ void Player::hungerMisfortune(int chances){
 //Increment treasure depending on how many rooms were cleared
 void Player::incrementTreasure(int roomsCleared){
     switch(roomsCleared){
+        //0 rooms cleared
         case 0:
             this -> silverRings ++;
         break;
+        //1 room cleared
         case 1:
             this -> rubyNecklaces ++;
         break;
+        //2 rooms cleared
         case 2:
             this -> emeraldBracelets ++;
         break;
+        //3 rooms cleared
         case 3:
             this -> diamondCirclets ++;
         break;
+        //4 rooms cleared
         case 4:
             this -> gemGoblets ++;
         break;
@@ -251,11 +278,14 @@ void Player::incrementTreasure(int roomsCleared){
 //3 - Shears
 bool Player::winsDoorTrapGame(int playerChoice, int doorChoice)
 {
+
+    //If tie, player loses
     if(playerChoice == doorChoice)
     {
         return false;
     }
 
+    //Door win scenarios
     if(doorChoice == 3 && playerChoice == 2)
     {
         return false;
@@ -271,6 +301,7 @@ bool Player::winsDoorTrapGame(int playerChoice, int doorChoice)
         return false;
     }
     
+    //If door doesn't win or tie, player wins
     return true;
 }
 
@@ -278,7 +309,10 @@ bool Player::winsDoorTrapGame(int playerChoice, int doorChoice)
 bool Player::investigate(int roomsCleared)
 {
 
+    //Random seed
     srand(time(0));
+
+    //Random number between 0 and 99
     int chaos = rand() % 100;
 
     bool monsterFight = false; // Monster fight is not active at the start
@@ -343,7 +377,7 @@ bool Player::investigate(int roomsCleared)
             }
             break;
         default:
-            cout << "ERROR - cookedSuccessfully\n"; //Error code
+            cout << "ERROR - cookedSuccessfully\n"; //Error code - should not reach this case
             break;
     }
     return success;
@@ -382,6 +416,9 @@ void Player::cookFood(int servings,int cookingWith)
 }
 
 //Inventory methods
+
+
+//Getters
 
 int Player::getGold()
 {
@@ -428,6 +465,8 @@ int Player::getImaginaryGlasses()
     return imaginaryGlasses;
 }
 
+//Setters
+
 void Player::setGold(int gold)
 {
     this -> gold = gold;
@@ -468,6 +507,8 @@ void Player::setGemGoblets(int gemGoblets)
     this -> gemGoblets = gemGoblets;
 }
 
+//Increment/Decrement
+
 void Player::incrementKeys()
 {
     this -> numKeys ++;
@@ -475,6 +516,8 @@ void Player::incrementKeys()
 
 void Player::decrementKeys()
 {
+
+    //numKeys cannot be negative
     if(numKeys > 0)
     {
         this -> numKeys --;
@@ -491,15 +534,12 @@ void Player::incrementImaginaryGlasses()
 
 
 //Combat methods
-int Player::countNumWeapons()
+int Player::countNumWeapons() //Total number of weapons on team
 {
     return stoneClubs + ironSpears + mythrilRapiers + flamingAxes + vorpalSwords;
 }
 
-int Player::getNumWeapons()
-{
-    return numWeapons;
-}
+//Getters
 
 int Player::getStoneClubs()
 {
@@ -531,8 +571,11 @@ int Player::getArmorSuits()
     return armorSuits;
 }
 
+//Setters
+
 void Player::setStoneClubs(int clubs)
 {
+    //Cannot have negative value
     if(clubs <= 0)
     {
         this -> stoneClubs = 0;
@@ -544,6 +587,7 @@ void Player::setStoneClubs(int clubs)
 
 void Player::setIronSpears(int spears)
 {
+    //Cannot have negative value
     if(spears <= 0)
     {
         this -> ironSpears = 0;
@@ -554,6 +598,7 @@ void Player::setIronSpears(int spears)
 
 void Player::setMythrilRapiers(int rapiers)
 {
+    //Cannot have negative value
     if(rapiers <= 0)
     {
         this -> mythrilRapiers = 0;
@@ -565,6 +610,7 @@ void Player::setMythrilRapiers(int rapiers)
 
 void Player::setFlamingAxes(int axes)
 {
+    //Cannot have negative value
     if(axes <= 0)
     {
         this -> flamingAxes = 0;
@@ -576,6 +622,7 @@ void Player::setFlamingAxes(int axes)
 
 void Player::setVorpalSwords(int swords)
 {
+    //Cannot have negative value
     if(swords <= 0)
     {
         this -> vorpalSwords = 0;
@@ -587,6 +634,7 @@ void Player::setVorpalSwords(int swords)
 
 void Player::setArmorSuits(int suits)
 {
+    //Cannot have negative value
     if(suits <= 0)
     {
         this -> armorSuits = 0;
@@ -598,6 +646,7 @@ void Player::setArmorSuits(int suits)
 
 void Player::decrementArmorSuits()
 {
+    //Cannot have negative value
     if(armorSuits > 0)
     {
         this -> armorSuits --;
@@ -624,7 +673,7 @@ double Player::calculateCombatScore(int roomsCleared)
     //weapon weighting
     int w = countNumWeapons() + mythrilRapiers + 2 * flamingAxes + 3 * vorpalSwords;
 
-    //Calculate d
+    //Calculate d - if every party member has a different weapon, d = 4. Otherwise, d = 0
     int d;
     if(stoneClubs == 1 && ironSpears == 1 && mythrilRapiers == 1 && flamingAxes == 1 && vorpalSwords == 1)
     {
@@ -639,7 +688,8 @@ double Player::calculateCombatScore(int roomsCleared)
     //number of armor suits
     int a = armorSuits;
 
-    if(a == 0)
+    //If team has no armor, they lose the fight 
+    if(a == 0) 
     {
         return 0;
     }
@@ -648,25 +698,32 @@ double Player::calculateCombatScore(int roomsCleared)
 
     switch(roomsCleared)
     {
+        //0 rooms cleared
         case 0:
             c = 2;
             break;
+        //1 room cleared
         case 1:
             c = 3;
             break;
+        //2 rooms cleared
         case 2:
             c = 4;
             break;
+        //3 rooms cleared
         case 3:
             c = 5;
             break;
+        //4 rooms cleared
         case 4:
             c = 6;
             break;
+        //Default case : should not reach this
         default:
             break;
     };
 
+    //Return final combat score
     return (r1 * w + d) - double(r2 * c) / double(a);
 
 }
@@ -680,13 +737,17 @@ bool Player::winsFight(double combatScore)
 //If player wins fight against monster
 void Player::winFight(double challengeRating)
 {
+    //Random seed
     srand(time(0));
 
+    //Random number between 0 and 9
     int keyChance = rand() % 10;
 
+    //Gives player gold and ingredients 
     setGold((challengeRating * 10) + gold);
     setIngredients((challengeRating * 5) + ingredients);
 
+    //10% chance of getting a key
     if(keyChance == 0)
     {
         incrementKeys();
@@ -744,8 +805,10 @@ void Player::loseFight()
 //Surrender team member to monster
 void Player::surrenderTeamMember()
 {
+    //Loop through every team member to check which ones are alive
     for(int i = 3; i >= 0; i --)
     {
+        //If member at this specific index is alive, surrender them to monster
         if(isMemberAlive[i])
         {
             isMemberAlive[i] = false;
@@ -755,6 +818,7 @@ void Player::surrenderTeamMember()
         }
     }
 
+    //Should never print this - if all members are dead, should register it long before this method is ever called
     std::cout << "All Team Members are dead.\n";
 }
 
@@ -762,13 +826,18 @@ void Player::surrenderTeamMember()
 void Player::loseTeamMember()
 {
 
+    //Random  seed
     srand(time(0));
     
+    //Member successfully removed from team
     bool successfulRemoval = false;
     
     while(!successfulRemoval)
     {
+        //Random number between 1 and 4
         int removeIndex = (rand() % 4) + 1;
+
+        //If member is alive, lose them to the depths of the dungeon
         if(isMemberAlive[removeIndex - 1])
         {
             std::cout << partyNames[removeIndex] << " Has been lost to the depths of the dungeon!\n";
@@ -784,6 +853,7 @@ void Player::loseTeamMember()
 //Checks if entire team is dead
 bool Player::wholeTeamDead()
 {
+    //If any team member is alive, return false
     for(int i = 0; i < 4; i++)
     {
         if(isMemberAlive[i])
@@ -795,6 +865,7 @@ bool Player::wholeTeamDead()
     return true;
 }
 
+//Count number of presently living team members
 int Player::getNumSurvivingTeamMembers()
 {
     int count = 0;
@@ -803,6 +874,7 @@ int Player::getNumSurvivingTeamMembers()
     {
         if(isMemberAlive[i])
         {
+            //Increment count
             count ++;
         }
     }
@@ -842,20 +914,25 @@ bool Player::isSorcererDefeated()
     return sorcererDefeated;
 }
 
+//Number of monsters defeated
 int Player::getMonstersDefeated()
 {
     return monstersDefeated;
 }
 
+//Changes the number of monsters defeated
 void Player::setMonstersDefeated(int number)
 {
     monstersDefeated = number;
 }
 
+//Increment the number of monsters defeated by 1
 void Player::incrementMonstersDefeated()
 {
     monstersDefeated ++;
 }
+
+//Game score methods
 
 int Player::getGameScore()
 {
@@ -867,7 +944,10 @@ void Player::setGameScore(int score)
     gameScore = score;
 }
 
+
 //Cookware methods
+
+//Getters
 
 int Player::getCeramicPots()
 {
@@ -884,6 +964,7 @@ int Player::getCauldrons()
     return cauldrons;
 }
 
+//Setters
 
 void Player::setCeramicPots(int ceramicPots)
 {
@@ -899,116 +980,171 @@ void Player::setCauldrons(int cauldrons)
 {
     this -> cauldrons = cauldrons;
 }
+
+//Misfortune : hippies stole some of your cookware
 void Player::cookwareTheft(){
+
+    //Random seed
     srand(time(0));
+
+    //Random number between 0 and 2 - 0 = ceramic pot, 1 = frying pan, 2 = cauldron
     int chaos = rand() % 3;
+
     std::cout<<"You come back to your campsite to find Dirty Hippies actively rummaging through your stuff.";
+
+    //Ceramic pots chosen at random - they take precedence 
     if(chaos==0){
         if(getCeramicPots() > 0)
         {
             setCeramicPots(getCeramicPots() - 1);
             cout << " You chase them off before they can take much.\n\nYou have lost one ceramic pot\n";
+        //If no ceramic pots
         }else if(getFryingPans() > 0)
         {
             setFryingPans(getFryingPans() - 1);
             std::cout << " You chase them off before they can take much.\n\nYou have lost one frying pan\n";
+        //If no frying pans
         }else if(getCauldrons() > 0)
         {
             setCauldrons(getCauldrons() - 1);
             std::cout << " You chase them off before they can take much.\n\nYou have lost one cauldron\n";
+        //Nothing to steal
         }else{
             cout << " They took nothing because there was nothing to take...\n\n";
         }
+    //Frying pans chosen at random - they take precedence
     }else if (chaos==1){
         if(getFryingPans() > 0)
         {
             setFryingPans(getFryingPans() - 1);
             cout << " You chase them off before they can take much.\n\nYou have lost one frying pan\n";
+        //If no frying pans found
         }else if(getCeramicPots() > 0)
         {
             setCeramicPots(getCeramicPots() - 1);
             std::cout << " You chase them off before they can take much.\n\nYou have lost one frying pan\n";
+        //If no ceramic pots found
         }else if(getCauldrons() > 0)
         {
             setCauldrons(getCauldrons() - 1);
             std::cout << " You chase them off before they can take much.\n\nYou have lost one cauldron\n";
+        //Nothing to steal
         }else{
             cout << " They took nothing because there was nothing to take...\n\n";
         }
+    //Cauldrons chosen at random - they take precedence
     }else if (chaos==2){
         if(getCauldrons() > 0)
         {
             setCauldrons(getCauldrons() - 1);
             cout << " You chase them off before they can take much.\n\nYou have lost one cauldron\n";
+        //If no cauldrons found
         }else if(getFryingPans() > 0)
         {
             setFryingPans(getFryingPans() - 1);
             std::cout << " You chase them off before they can take much.\n\nYou have lost one frying pan\n";
+        //If no frying pans found
         }else if(getCeramicPots() > 0)
         {
             setCeramicPots(getCeramicPots() - 1);
             std::cout << " You chase them off before they can take much.\n\nYou have lost one ceramic pot\n";
+        //Nothing to steal
         }else{
             cout << " They took nothing because there was nothing to take...\n\n";
         }
     }
 }
 
+//Misfortune : robbed
 void Player::robbed(){
+
+    //Random seed
     srand(time(0));
+
+    //Random number between 0 and 2
     int chaos = rand() % 3;
+
+    //Ingredients stolen by hobbits
     if(chaos==0){
         std::cout<<"While you were destracted, feral hobbits snuck into your reserves and stole some food!\n\n You have lost 10kg of ingredients.\n";
         if(getIngredients() > 0 && getIngredients() < 10)
         {
             setIngredients(0);
+        //No ingredients to be stolen
         }else if(getIngredients() == 0)
         {
             std::cout << "The hobbots were shocked by your lack of food and called you a peasant before waddling into the distance\n";
         }else{
             setIngredients(getIngredients()-10);
         }
+    //Armor stolen by bandits
     }else if (chaos==1){
         std::cout<<"You are held at sword tip by bandits!\n\nYou have lost 1 suit of armor.\n";
         if(getArmorSuits() > 0)
         {
             decrementArmorSuits();
         }
+    //Cookware stolen
     }else if (chaos==2){
         cookwareTheft();
     }
 }
 
+//Misfortune : broken
 void Player::broken(){
+
+    //Randmo seed
     srand(time(0));
+
+    //Random number between 0 and 5
     int chaos = rand() % 6;
+
+    //Affected item
     std::string item;
+
+    //Stolen club broken
     if(chaos==0){
         setStoneClubs(getStoneClubs()-1);
         item = "stone club";
+    //Iron spear broken
     }else if (chaos==1){
         setIronSpears(getIronSpears()-1);
         item = "iron spear";
+    //Mythril Rapier broken
     }else if (chaos==2){
         setMythrilRapiers(getMythrilRapiers()-1);
         item = " myhtril rapier";
+    //Flaming axe broken
     }else if(chaos==3){
         setFlamingAxes(getFlamingAxes()-1);
         item = "flaming axe";
+    //Vorpal sword broken
     }else if(chaos==4){
         setVorpalSwords(getVorpalSwords()-1);
         item = "vorpal sword";
+    //Armor suit broken
     }else if(chaos==5){
         setArmorSuits(getArmorSuits()-1);
         item = "armor suit";
     }
+
+    //Lost item message
     std::cout<<"You have lost 1 "<<item<<".\n";
 }
 
+//Misfortune : poisioned
 void Player::poisoned(){
+
+    //Random seed
     srand(time(0));
+
+    //Random number between 0 and 5
     int chaos=rand()%5;
+
+    //Name of affected team member
     std::string name;
+
+    //Randomly select a team member
     if(chaos==0){
         name=getPlayerName();
     }else if(chaos==1){
@@ -1020,11 +1156,15 @@ void Player::poisoned(){
     }else if(chaos==4){
         name=getMember4Name();
     }
-    if(getFullness(name)>=0){
-    setFullnessLevel(name, getFullness(name)-10);
+    //If player/team member alive, subtract 10 from fullness
+    if(getFullness(name)>=0)
+    {
+        setFullnessLevel(name, getFullness(name)-10);
+    //Player or team member is dead, recursively call poisioned()
     }else{
         poisoned();
     }
+    //Checks if the poisoning has resulted in a death of either the player or a team member
     if(getFullness(name)<=0){
         if(name==getPlayerName()){
             std::cout<<"You have died from food poisoning!\n";
@@ -1032,6 +1172,7 @@ void Player::poisoned(){
         }else{
         std::cout<<name<<" has died from food poisoning! "<< getNumSurvivingTeamMembers() <<" players remain.\n";
         }
+    //Player/team member hasn't died, just lost 10 fullness points
     }else{
         if(name==getPlayerName()){
             std::cout<<"You have lost 10 fullness to food poisoning!\n";
@@ -1041,10 +1182,20 @@ void Player::poisoned(){
         }
     }
 }
+
+//Lose team member to a locked room
 void Player::locked(){
+
+    //Random seed
     srand(time(0));
+
+    //Random number betwen 0 and 3
     int chaos = rand() % 4;
+
+    //Affected player or team member
     std::string name;
+
+    //Select a random team member at random
     if(chaos == 0 ){
         name=getMember1Name();
     }else if(chaos == 1){
@@ -1054,27 +1205,44 @@ void Player::locked(){
     }else if(chaos == 3){
         name=getMember4Name();
     }
+    
+    //If the selected player is alive, they are locked in the previous room and killed
     if(getFullness(name)>=0){
         std::cout<<name<<" has been locked in the previous room.\n";
         setFullnessLevel(name, -1);
     }else{
+
+        //If the selected player is dead, recursively call the locked() function
         locked();
     }
 }
+
+//Misfortune function:
+//party can be robbed, poisoned, have their equipment broken, or lose a member (locked in previous room)
 void Player::misfortunes(bool entering_a_room, Map &map){
+
+    //Random seed
     srand(time(0));
+
+    //Random number between 0 and 199
     int chaos=rand()%200;
+
+    //15% chance of being robbed
     if(chaos<30){
         robbed();
+    //5% chance of having an item break
     }else if (chaos<40){
         broken();
+    //15% chance of being poisoned
     }else if (chaos<70){
         poisoned();
+    //15% chance of member being locked in a room, if the party is presently entering a room
     }else if (chaos<100&&entering_a_room){
         locked();
     }
 }
 
+//End game methods
 int Player::getEndCode(){
     return endCode;
 }
@@ -1086,6 +1254,7 @@ void  Player::endgamePrompt(int index){
     std::cout<<endgameArray[index];
 }
 
+//Player quits game
 void Player::quit()
 {
     endCode = 5;
