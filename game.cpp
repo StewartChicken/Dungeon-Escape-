@@ -56,7 +56,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
 
     map.displayMap(); //Display map following merchant interaction
 
-    string input = ""; //Initial input value (set to invalid input)
+    char input = '-'; //Initial input value (set to invalid input)
 
     //update player row and column
     int newRow;
@@ -172,14 +172,14 @@ void Game::movementPhase(Player& player, Merchant &merchant)
         cin >> input;
          
         //If user input is a movement key
-        if(map.isMovementKey(input[0]))
+        if(map.isMovementKey(input))
         {
             //Update player location
             newRow = map.getPlayerRow();
             newCol = map.getPlayerCol();
 
             //Movement keys
-            switch(input[0])
+            switch(input)
             {
                 case 'w':
                     newRow --;
@@ -226,7 +226,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
 
         }
         //If player chooses to explore
-        else if(input[0] == 'e')
+        else if(input == 'e')
         {
             //If player location has not already been explored
             if(!map.isExplored(map.getPlayerRow(), map.getPlayerCol()))
@@ -283,7 +283,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             map.displayMap();
         }
         //Player chooses to cook food
-        else if(input[0] == 'c')
+        else if(input == 'c')
         {   
             //Can't cook food over room, NPC, or dungeon location
             if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
@@ -321,7 +321,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             player.misfortunes(room, map);
 
         }
-        else if(input[0] == 'f') //If player wishes to pick a fight
+        else if(input == 'f') //If player wishes to pick a fight
         {
             if(player.isSorcererDefeated())
             {
@@ -344,7 +344,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             //Launch monster fight
             prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, false);
         }
-        else if(input[0] == 'q') //Quit input
+        else if(input == 'q') //Quit input
         {
             player.quit(); //Call quit function
         }
