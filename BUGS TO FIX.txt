@@ -38,7 +38,7 @@ X	-Double prints message when player dies from hunger
 X	-Keeps printing that a character has died from hunger
 X   -Max player weapons is 5
 X	-Cooking print three times - cauldron
--Party member dying removes their weapon
--picking a fight crashes game
+X	-Party member dying removes their weapon
+X	-picking a fight crashes game
 -After NPC becomes evil/kill monster, prints map 3 times
 -Team members must die at the start of the next round when hunger reaches 0
