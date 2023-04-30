@@ -27,7 +27,7 @@ class Game
         Prompts prompts;
         Monster monster;
 
-        bool gameEnd = false;
+        bool gameEnd = false; //When true, game ends
 
     public:
 
@@ -42,7 +42,7 @@ class Game
         
         void endGame(Player &player); //Ends game once player wins/loses
 
-        void bubbleSort(vector<pair<string, int>> &scores); 
+        void bubbleSort(vector<pair<string, int>> &scores); //Bubble sorting algorithm
 
         void scoreBoard(); //Prints score board
 };

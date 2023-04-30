@@ -375,6 +375,11 @@ void Game::endGame(Player &player)
 }
 
 //Sorts a vector of pairs using a bubble sort
+//Will traverse through the vector comparing two elements at a time
+//If the elements are out of order, will flip their positions in the vector
+// and increment the index. Will continue to do this until the end of 
+// the vector is reached. The process repeats until the function detects
+// that no swaps have been made within the loop
 void Game::bubbleSort(std::vector<pair<string, int>> &vec)
 {
     bool sorted = false;

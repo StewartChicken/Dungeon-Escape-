@@ -41,25 +41,35 @@ class Prompts
         //void currentStatus(Player &player, Merchant &merchant, Map &map);
         void currentStatus(Player &player, Merchant &merchant);
         
+        //User interacts with a room entity
         void roomInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster);
+
+        //User plays Boulder, Parchment, Shears with a door
         bool doorGameInteraction(Player &player);
+
+        //Does the user want to use a key to enter a room?
         bool roomKeyPrompt(Player &player);
+
+        //Launch a monster fight with the user
         void launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName, Monster &monster, bool enteredRoom);
 
         //Random single prompts
 
-        void imaginaryGlassesPrompt();
-        void brokePrompt();
+        void imaginaryGlassesPrompt(); //Player tries to sell something he/she doesn't have
+        void brokePrompt(); //Player can't afford to make a purchase from the merchant
         
+        //Different prompts depending on which map entity the player is over
         void movementExplorePrompt();
         void onRoomSpacePrompt();
         void onNPCSpacePrompt();
         void onExitSpacePrompt();
 
+        //Invalid movement prompts
         void movementErrorPrompt();
         void invalidPositionPrompt();
         void invalidInputPrompt();
 
+        //User interacts with NPC's 
         void npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster);
         void npcWelcomeMessage();
         bool npcRiddle();
@@ -67,15 +77,17 @@ class Prompts
         void read(string file_name,string arr[][2], int array_size);
         void split(string input_string, char seperator, string arr[], int arr_size);
 
+        //User interacts with the dungeon exit
         void exitInteractionPrompt(Player &player, Merchant &merchant, bool &gameEnd);
 
+        //User cooks food prompts
         int foodQuantityPrompt(int available);
         int cookWithPrompts(Player &player);
 
-        //random
-
+        //Is a string value a digit?
         bool validNumericalInput(string userInput);
 
+        //Endgame functions
         void endgameStats(Player &player, Map &map);
         void vectorSplit(std::string line, std::vector<std::pair<string, int>> &vect);
         void vectorRead(std::string file_name, std::vector<std::pair<string, int>> &vect);
