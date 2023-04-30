@@ -134,6 +134,7 @@ string Monster::getRandomMonster(int roomsCleared)
 
     // Random index depending on the difficulty
     int chosenMonsterIndex = (rand() % 8) + (8 * monsterMultiplier);
+    std::cout<<"Chosen Monster Index\n"<<chosenMonsterIndex;
 
     // Name of the monster at the chosen index
     string chosenMonster = monsterNames[chosenMonsterIndex];

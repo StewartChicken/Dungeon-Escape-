@@ -329,6 +329,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
                 continue;
             }
 
+
             //Can't pick a fight on a room, npc, or dungeon exit
             if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
                 || map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
@@ -336,13 +337,20 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             {
                 continue; //Continue loop
             }
+            
+            //int numRoomsCleared = 1;
+            //double combatScore = 1;
+            //string currentMonster = "Mammoth";
 
             int numRoomsCleared = merchant.getRoomsCleared();
             double combatScore = player.calculateCombatScore(numRoomsCleared);
             string currentMonster = monster.getRandomMonster(numRoomsCleared);
 
+            
             //Launch monster fight
             prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, false);
+
+
         }
         else if(input == 'q') //Quit input
         {
