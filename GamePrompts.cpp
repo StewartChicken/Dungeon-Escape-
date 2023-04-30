@@ -915,14 +915,14 @@ void Prompts::invalidInputPrompt()
 //User interacts with NPC on map - must solve a riddle to access
 //Failure to solve riddle spawns a monster
 //Success spawns a merchant
-void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster){ 
+void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster, npc &riddler[]){ 
 
     //Monster data should the user fail to solve the riddle
     int numRoomsCleared = merchant.getRoomsCleared();
     double combatScore = player.calculateCombatScore(numRoomsCleared);
     string currentMonster = monster.getRandomMonster(numRoomsCleared);
     
-    npcWelcomeMessage();
+    npcWelcomeMessage(riddler);
 
     //Does user successfully solve the riddle?
     if(npcRiddle()){
@@ -966,7 +966,7 @@ bool Prompts::barterPrompt(){
 }
 
 //Randomm npc welcom messsage
-void Prompts::npcWelcomeMessage(){
+void Prompts::npcWelcomeMessage(npc &riddler[]){
 
     //Random seed
     srand(time (0));
