@@ -1,6 +1,5 @@
 // Todo:
-//   teamMemberNamePrompt needs to account for duplicate names - they should not be allowed
-//   Dead players are not updated until the next move - should remove them immediately
+//Wyatt explain vector split function and score board
 
 #include <iostream>
 #include <string>
@@ -423,8 +422,10 @@ void Prompts::weaponBuyMenu(Player &player, Merchant &merchant)
 {
     string choice = "-1";
 
+    //Prompts user until they enter a valid input
     while(stoi(choice) < 0 || stoi(choice) > 5)
     {
+        //Informs user of their options of weapons
         cout << "You need weapons to be able to fend off\n"
             "monsters, otherwise, you can only run\n!"
             "Equipping your team with the maximum\n"
@@ -441,7 +442,9 @@ void Prompts::weaponBuyMenu(Player &player, Merchant &merchant)
             "5.) +3 Longsword\n"
             "Which weapon catches your fancy? (Enter a positive integer, or 0 to cancel)\n";
         
-        cin >> choice;
+        cin >> choice; //User input
+
+        //Does the user input a digit?
         if(!validNumericalInput(choice))
         {
             choice = "-1";
@@ -449,34 +452,42 @@ void Prompts::weaponBuyMenu(Player &player, Merchant &merchant)
         }
     }
 
+    //User cancels purchase
     if(stoi(choice) == 0)
     {
         return;
     }
 
-    int itemCount;
+    int itemCount; //Number of items user buys
+
     switch(stoi(choice))
     {
+        //User buys stone clubs
         case 1:
             itemCount = itemBuyMenu(player, merchant, merchant.getStoneClubPrice(), "Stone club(s)");
             player.setStoneClubs(player.getStoneClubs() + itemCount);
             break;
+        //User buys iron spears
         case 2:
             itemCount = itemBuyMenu(player, merchant, merchant.getIronSpearPrice(), "Iron spear(s)");
             player.setIronSpears(player.getIronSpears() + itemCount);
             break;
+        //User buys mythril rapiers
         case 3:
             itemCount = itemBuyMenu(player, merchant, merchant.getMythrilRapierPrice(), "Mythril Rapier(s)");
             player.setMythrilRapiers(player.getMythrilRapiers() + itemCount);
             break;
+        //User buys flaming axes
         case 4:
             itemCount = itemBuyMenu(player, merchant, merchant.getFlamingAxePrice(), "Battle Axe(s)");
             player.setFlamingAxes(player.getFlamingAxes() + itemCount);
             break;
+        //User buys vorpal swords
         case 5:
             itemCount = itemBuyMenu(player, merchant, merchant.getVorpalSwordPrice(), "Vorpal Sword(s)");
             player.setVorpalSwords(player.getVorpalSwords() + itemCount);
             break;
+        //Error code - should not reach this case
         default:
             "Error - weaponBuyMenu\n";
             break;
@@ -496,6 +507,19 @@ bool Prompts::canPurchaseGoods(Player &player, int amount, int price)
     return true;
 }
 
+//Displays the user's current status within the game
+//Information includes: 
+//  -Rooms cleared
+//  -Number of keys
+//  -Sorcerer anger level
+//  -Player gold
+//  -Player kgs of ingredients
+//  -Player number of cooking items
+//  -Player number of weapons
+//  -Player number of armor suits
+//  -Player amount of treasures
+//  -Player number of imaginary glasses
+//  -Team member and player fullness levels
 void Prompts::currentStatus(Player &player, Merchant &merchant){
     cout << "+-------------------+\n"
          << "|  Status           | Rooms Cleared: "<< merchant.getRoomsCleared()<<" | Keys: "<<player.getNumKeys()<<" | Sorcerer's Anger Level: " << player.getSorcererAngerLevel()
@@ -519,14 +543,24 @@ void Prompts::currentStatus(Player &player, Merchant &merchant){
          cout<< "\n\n+---------------------+\n";
  }
 
+//Player decides to interact with a Room entity on the map
+//Player can open the door to the room if they have a key
+//If they don't have a key, they engage in a game of Boulder, Parchment, Shears
+// with the door. Should they win, they gain access to the room. Losing means
+// they player loses a team member. If they have a key, the player is 
+// immediately confronted with a monster fight
 void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster)
 {
+    //Has the player successfully entered the room
     bool enteredRoom;
 
+    //If they player has keys
     if(player.getNumKeys() > 0)
     {
+        //Player chooses to open the door or not
         enteredRoom = roomKeyPrompt(player);
     }
+    //If the player doesn't have any keys
     else
     {
         cout << "You do not have enough keys to access this room!\n" <<
@@ -539,30 +573,40 @@ void Prompts::roomInteractionPrompt(Player &player, Merchant &merchant, Map &map
             player.loseTeamMember();
             return;
         } 
+        //Player wins door trap game
         else
         {
             cout << "You have conquered the door's trap! You may now proceed to the room\n";
-            enteredRoom = true;
+            enteredRoom = true; //Enters room without key
         }
     }
 
+    //If the player has successfully entered the room
     if(enteredRoom)
     {   
+        //Decrease number of keys by 1
         player.decrementKeys();
 
-        int numRoomsCleared = merchant.getRoomsCleared();
-        double combatScore = player.calculateCombatScore(numRoomsCleared);
-        string currentMonster = monster.getMonsterFromRoomCombatOrder(numRoomsCleared);
+        int numRoomsCleared = merchant.getRoomsCleared(); //Number of rooms cleared
+        double combatScore = player.calculateCombatScore(numRoomsCleared); //Temas's combat score
+        string currentMonster = monster.getMonsterFromRoomCombatOrder(numRoomsCleared); //Which monster does the player encounter
         
+        //Launches monster fight with specified monster
         launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, enteredRoom);
     }
 }
 
-
+//Game the player plays with the door when they try to
+// enter a room without a key. Game is called Boulder, Parchment, Shears.
+//If they player wins one round, they door lets him/her pass. If they lose
+//or tie three rounds in a row, they lsoe the game and the player loses a 
+//team member
 bool Prompts::doorGameInteraction(Player &player)
 {
+    //Random seed
     srand(time(0));
 
+    //Player has three attempts
     int attemptsRemaining = 3;
 
     cout << "\nYou have three attempts to beat the door. If you do so, you will be granted access to the room.\n" <<
@@ -570,6 +614,7 @@ bool Prompts::doorGameInteraction(Player &player)
 
     for(int i = 0; i < 3; i ++)
     {
+        //Player selection - 1 = Boulder, 2 = Parchment, 3 = Shears
         string playerChoice = "0";
 
         while(stoi(playerChoice) != 1 && stoi(playerChoice) != 2 && stoi(playerChoice) != 3)
@@ -581,6 +626,7 @@ bool Prompts::doorGameInteraction(Player &player)
 
             std::cin >> playerChoice;
 
+            //Does the player enter a digit
             if(!validNumericalInput(playerChoice))
             {
                 playerChoice = "0";
@@ -588,8 +634,10 @@ bool Prompts::doorGameInteraction(Player &player)
             }
         }
 
+        //Door makes a random choice 
         int doorChoice = (rand() % 3) + 1;
 
+        //Convert player and door values to strings
         string doorChoiceString;
         string playerChoiceString;
 
@@ -604,6 +652,7 @@ bool Prompts::doorGameInteraction(Player &player)
             case 3:
                 doorChoiceString = "Shears";
                 break;
+            //Error code - should not reach this case
             default:
                 cout << "Error - doorGameInteraction\n";
                 break;
@@ -620,37 +669,54 @@ bool Prompts::doorGameInteraction(Player &player)
             case 3:
                 playerChoiceString = "Shears";
                 break;
+            //Error code - should not reach this case
             default:
                 cout << "Error - doorGameInteraction\n";
                 break;
         };
         
+        //Round results
         std::cout << "\nYou chose: " << playerChoiceString <<  "\nThe door chose:" << doorChoiceString << "\n";
 
+        //Compares player to door choice
         if(player.winsDoorTrapGame(stoi(playerChoice), doorChoice))
         {
-            return true;
+            return true; //Return true if player wins
         }
 
+        //Door wins round - decrement attempts remaining
         cout << "The door won that round! Try again.\n";
         attemptsRemaining --;
     }
 
+    //If player doesn't win one round, player loses game - return false
     return false;
 }
 
+//Launches a monster fight for the player
+//If the sorcerer has been defeated, no fight is launched. Function exits
+//Player can choose to surrender to the monster or to fight it
+//If the player doesn't have a weapon to fight the monster with, they
+// are forced to surrender
+//If the player wins the fight, the room is cleared. There is a 10% chance of a key drop
+// and the monster is removed from the pool of possible monster encounters. 
+//If the player defeats a monster within the fifth room, the sorcerer has been defeated. 
+//If the fight takes place within a room and the player wins, number of rooms updates
 void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName, Monster &monster, bool enteredRoom)
 {
 
+    //Sorcerer has been defeated. No fight is launched. Function exits.
     if(player.isSorcererDefeated())
     {
         return;
     }
 
+    //Random seed
     srand(time(0));
 
     string combatChoice = "0";
 
+    //Player chooses weather to fight or to surrender
     while(stoi(combatChoice) != 1 && stoi(combatChoice) != 2)
     {
         cout << monsterName << " ahead!! They got beef wit u bro! Would you like to take the fight or surrender?\n" <<
@@ -659,6 +725,7 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
 
         cin >> combatChoice;
 
+        //Does player enter digit?
         if(!validNumericalInput(combatChoice))
         {
             combatChoice = "0";
@@ -666,11 +733,29 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         }
     }
 
-    //Player chooses to surrender
+    //Player chooses to surrender. Loses teammember to monster
     if(stoi(combatChoice) == 2)
     {
         cout << "\n\nYou chose to surrender at the expense of a team member.\n\n";
 
+        //Surrender team member to monster
+        player.surrenderTeamMember();
+        player.monsterFightDecrementFullness(); //Each player has 50% chance of decrementing fullness
+
+        //Display player's status and the map
+        currentStatus(player, merchant);
+        map.displayMap();
+
+        return;
+    }
+
+    //Player has no weapons to fight - must surrender. Loses teammember to monster
+    if(player.countNumWeapons() < 1)
+    {
+        cout << "\n\nYou encountered a hostile " << monsterName << " but you did not have a single weapon to defend yourself with!\n" <<
+        "You are forced to surrender and one of your team mates was lost to the wrath of the monster. R.I.P.\n\n";
+
+        //Surrender team member to monster
         player.surrenderTeamMember();
         player.monsterFightDecrementFullness(); //Each player has 50% chance of decrementing fullness
 
@@ -680,47 +765,42 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         return;
     }
 
-    if(player.countNumWeapons() < 1)
-    {
-        cout << "\n\nYou encountered a hostile " << monsterName << " but you did not have a single weapon to defend yourself with!\n" <<
-        "You are forced to surrender and one of your team mates was lost to the wrath of the monster. R.I.P.\n\n";
-
-        player.surrenderTeamMember();
-        player.monsterFightDecrementFullness();
-
-        currentStatus(player, merchant);
-        map.displayMap();
-
-        return;
-    }
-
+    //If player wins the fight with the monster 
     if(player.winsFight(combatScore))
     {
-
+        //Random seed
         srand(time(0));
 
+        //Random number between 0 and 9
         int keyDrop = rand() % 10;
 
+        //If the player was in the 5th room, the sorcerer was defeated
         if(merchant.getRoomsCleared() == 4 && enteredRoom)
         {
             player.defeatSorcerer();
         }
         
+        //Player gains rewards for winning fight - space is cleared
         cout << "\n\nNot to fear, your team is strong enough to overcome the adversary!\n\n";
         map.clearSpace(map.getPlayerRow(), map.getPlayerCol());
         player.winFight(roomsCleared + 2);
         
+        //If fight takes place within a room
         if(enteredRoom)
         {
+            //Update merchant multiplier and advance number of rooms cleared
             merchant.incrementRoomsCleared();
             merchant.updateMultiplier();
         }
         
+        //Each team member has a 50 percent chance of losing a level of fullness
         player.monsterFightDecrementFullness();
-        monster.killMonster(monsterName);
 
-        player.setGameScore(player.getGameScore() + monster.getMonsterDifficulty(monsterName));
+        monster.killMonster(monsterName); //Monster is removed from combat pool
 
+        player.setGameScore(player.getGameScore() + monster.getMonsterDifficulty(monsterName)); //Increase player's score
+
+        //10% chance of key drop
         if(keyDrop == 0)
         {
             player.incrementKeys();
@@ -728,10 +808,13 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
 
         if(enteredRoom)
         {
+            //Random number between 0 and 9
             int misFortuneChance = rand() % 10;
 
+            //60 % chance of misfortune occuring
             if(misFortuneChance <= 5)
             {
+                //Misfortune - player not presently entering a room
                 player.misfortunes(false, map);
             }
         }
@@ -739,16 +822,21 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         currentStatus(player, merchant);
         map.displayMap();
     }
+    //Player loses fight
     else
     {
+        //Consequences for losing the fight - lose resources
         cout << "\n\nYou were too weak to defeat the monster, you have endured heavy losses\n\n";
         player.loseFight();
         player.monsterFightDecrementFullness();
 
+        //If player was within a room
         if(enteredRoom)
         {
+            //Random number between 0 and 9
             int misFortuneChance = rand() % 10;
 
+            //40% chance of a misfortune
             if(misFortuneChance <= 3)
             {
                 player.misfortunes(false, map);
@@ -760,7 +848,7 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
     }
 }
 
-
+//Player interacts with a room - can either use a key to enter the room or exit interaction
 bool Prompts::roomKeyPrompt(Player &player)
 {
     char confirm = '-';
@@ -773,10 +861,10 @@ bool Prompts::roomKeyPrompt(Player &player)
 
     if(confirm == 'y')
     {
-        player.decrementKeys();
+        player.decrementKeys(); //Use key - lose one key from inventory
     }
 
-    return confirm == 'y';
+    return confirm == 'y'; //Does the user use a key to enter the room
 }
 
 
@@ -834,24 +922,37 @@ void Prompts::invalidInputPrompt()
     cout << "Invalid Input\n";
 }
 
+//User interacts with NPC on map - must solve a riddle to access
+//Failure to solve riddle spawns a monster
+//Success spawns a merchant
 void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster){ 
+
+    //Monster data should the user fail to solve the riddle
     int numRoomsCleared = merchant.getRoomsCleared();
     double combatScore = player.calculateCombatScore(numRoomsCleared);
     string currentMonster = monster.getRandomMonster(numRoomsCleared);
     
     npcWelcomeMessage();
+
+    //Does user successfully solve the riddle?
     if(npcRiddle()){
+        //Would the user like to barter?
         if(barterPrompt()){
+            //Spawns merchant - user can buy/sell things to the merchant
             merchantPrompt(player,merchant);
         }
+    //Failure to solve riddle spawns monster fight
     }else{
         launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, false);
     } 
 
 }
 
+//User succeeds in solving riddle - has the option to trade with the npc as a merchant
 bool Prompts::barterPrompt(){
     char confirm;
+
+    //Prompts user until they input a valid character
     do{
         cout<<"\n\n\nYou have succeeded. Do you wish to barter? (y/n)\n";
         cin>>confirm;
@@ -859,18 +960,31 @@ bool Prompts::barterPrompt(){
             cout<<"\nplease enter a valid input.\n";
         }
     }while(confirm!='n'&&confirm!='y');
+
+    //Checks user decision
     switch(confirm){
+        //User chooses to barter
         case 'y':
             return true;
+        //User chooses not to barter
         case 'n':
             return false;
+        //Default - should not enter this case
         default:
             return false;
     }
 }
+
+//Randomm npc welcom messsage
 void Prompts::npcWelcomeMessage(){
+
+    //Random seed
     srand(time (0));
+
+    //Random number between 0 and 3
     int chaos=rand()%4;
+    
+    //Four types of NPCs - randomly selected
     if(chaos==3){
         std::cout<<"You have encountered a lowly peasant\n\n***extremely raspy voice*** Helllo there stranger. I have an offer for you. If you answer my riddle, I will let you take a look at my wares.\n\n";
     }else if(chaos==2){
@@ -883,18 +997,32 @@ void Prompts::npcWelcomeMessage(){
     
 }
 
+//Loads random riddle from txt file
 bool Prompts::npcRiddle(){
+
     bool success = false;
+
     string answer;
-    string arr[6][2];
+    string arr[6][2]; //Array of strings which stores six riddles and their answers
+
+    //Random seed
     srand(time (0));
-    int chaos=rand()%6;
+
+    //Random number between 0 and 5
+    int chaos = rand() % 6;
+
+    //User has three total tries to solve the riddle
     int remaining_attempts = 2;
+
+    //Reads riddle from text file
     read("riddles.txt", arr, 6);
-    cout<<arr[chaos][0]<<endl;
-    //cout<<"checking answer:"<<arr[chaos][1];
+
+    //Print random riddle
+    cout << arr[chaos][0] << endl;
+    
     cin.clear ();    // Restore input stream to working state
     cin.ignore ( 100 , '\n' );
+
     for(int i=0; i<3 && !success;i++){
         cin.clear ();    // Restore input stream to working state
         //cin.ignore ( 100 , '\n' );    
@@ -902,13 +1030,19 @@ bool Prompts::npcRiddle(){
         if(arr[chaos][1]==answer){
             success =true;
         }else{
+            //Incorrect answer
             cout<<"you have failed, you have " << remaining_attempts << " attempts left.\n";
         }
+        
+        //Decrement user's remaining tries
         remaining_attempts--;
     }
+
+    //Returns user's success
     return success;
 }
 
+//Split function - divides string into multiple parts at a delimiter - loads parts into an array
 void Prompts::split(string input_string, char seperator, string arr[], int arr_size){
     //initalizing required variables
     int j=0;
@@ -929,6 +1063,9 @@ void Prompts::split(string input_string, char seperator, string arr[], int arr_s
     }
 }
 
+//User interacts with dungeon exit - if the sorcerer is defeated, 
+// player is allowed to exit - game ends
+//Otherwise, player cannot exit - is told to clear all rooms
 void Prompts::exitInteractionPrompt(Player &player, Merchant &merchant, bool &gameEnd)
 {
     if(!player.isSorcererDefeated())
@@ -941,6 +1078,7 @@ void Prompts::exitInteractionPrompt(Player &player, Merchant &merchant, bool &ga
     }
 }
 
+//Reads riddles from txt file
 void Prompts::read(string file_name,string arr[][2], int array_size){  
     string arr2[2];
     string line;    // variable for storing each line as we read it
@@ -973,6 +1111,7 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     }
 }
 
+//Determines how many kg of ingredients to cook
  int Prompts::foodQuantityPrompt(int available){
     string quantity = "0";
 
@@ -982,17 +1121,20 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
 
         cin >> quantity;
 
+        //User inputs digit
         if(!validNumericalInput(quantity))
         {
             quantity = "0";
             continue;
         }
 
+        //0 to exit
         if(stoi(quantity) == 0)
         {
             return 0;
         }
 
+        //User doesn't have the necessary ingredients
         if(available < stoi(quantity))
         {
             cout << "You don't have enough ingredients for this meal. Please enter a valid quantity\n";
@@ -1000,11 +1142,17 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
             continue;
         }
     }
+
+    //Return the number of servings they wish to cook
     return stoi(quantity);
  }
 
+//User chooses which cooking item they wish to cook with
  int Prompts::cookWithPrompts(Player &player){
+
     string choice = "0";
+
+    //User can choose a ceramic pot, frying pan, or cauldron
     do{
     cout<<"What would you like to cook your food with? Enter 0 to cancel.(please select an item you have in your inventory)\n"
     <<"1.) Ceramic pot\n"
@@ -1012,30 +1160,36 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     <<"3.) Cauldron\n";
     cin>>choice;
 
+    //User inputs digit
     if(!validNumericalInput(choice))
     {
         choice = "0";
         continue;
     }
+
     switch(stoi(choice)){
+        //User chooses ceramic pot - checks if it exists in their inventory
         case 1:
             if(player.getCeramicPots() < 1){
                 cout<<"You do not have any cermaic pots.\n";
                 return-1;
             }
             break;
+        //User chooses frying pan - checks if it exists in their inventory
         case 2:
             if(player.getFryingPans() < 1){
                 cout<<"You do not have any frying pans.\n";
                 return-1;
             }
             break;
+        //User chooses cauldron - checks if it exists in their inventory
         case 3:
             if(player.getCauldrons() < 1){
                 cout<<"You do not have any cauldrons.\n";
                 return-1;
             }
             break;
+        //Invalid input
         default:
             cout<<"Please enter a valid input\n";
             break;
@@ -1044,6 +1198,7 @@ void Prompts::read(string file_name,string arr[][2], int array_size){
     return stoi(choice);
  }
 
+//Checks if a string is a number
 bool Prompts::validNumericalInput(string userInput)
 {
     for(int i = 0; i < userInput.length(); i ++)
@@ -1056,10 +1211,24 @@ bool Prompts::validNumericalInput(string userInput)
 
     return true;
 }
+
+//Final stats once the game ends
+/*
+Stats include : 
+ -Surviving team members
+ -Player gold
+ -Player treasures
+ -Number of spaces explored
+ -Number of turns elapsed
+ -Final score
+*/
 void Prompts::endgameStats(Player &player, Map &map){
+
+    //Output stream to stats text file
     ofstream scores;
     scores.open("stats.txt",std::ios_base::app);
 
+    //Congratulates user if they beat the sorcerer, otherwise just displays their stats
     if(player.isSorcererDefeated())std::cout << "Congratulations "<<player.getPlayerName()<<"!\nYou made it through the dungeon with";
     else std::cout<<player.getPlayerName()<<"'s final stats\n";
     if(player.getFullness(player.getMember1Name())>=0)std::cout<<" "<<player.getMember1Name();
@@ -1079,11 +1248,12 @@ void Prompts::endgameStats(Player &player, Map &map){
         <<"+------------------+\n\n";
     scores<<player.getPlayerName()<<"|"<<player.getGameScore()<<"|"<<player.getMember1Name()<<"|"<<player.getMember2Name()<<"|"<<player.getMember3Name()<<"|"<<player.getMember4Name()<<"|"<<player.getGold()<<"|"<<player.getSilverRings()<<"|"<<player.getRubyNecklaces()<<"|"<<player.getEmeraldBracelets()<<"|"<<player.getDiamondCirclets()<<"|"<<player.getGemGoblets()<<"\n";
 }
+
+//Split function for vectors - 
 void Prompts::vectorSplit(std::string line, std::vector<std::pair<string, int>> &vect){
     string c_data;
     pair<string, int> c_pair;
     int j = 0;
-    //cout<<line<<endl;
     if(line!=""){
         for(int i=0; j<2; i++){
             if(line[i]!='|'){
@@ -1092,7 +1262,6 @@ void Prompts::vectorSplit(std::string line, std::vector<std::pair<string, int>> 
                 if(j==0){
                     c_pair.first=c_data;
                 }else{
-                    //cout<<c_data<<endl;
                     c_pair.second=stoi(c_data);
                 }
                 c_data="";
@@ -1103,6 +1272,8 @@ void Prompts::vectorSplit(std::string line, std::vector<std::pair<string, int>> 
     }
 
 }
+
+//Reads from text file and adds data to a vector 
 void Prompts::vectorRead(std::string file_name, std::vector<std::pair<string, int>> &vect){
     ifstream info;
     string line;
@@ -1112,6 +1283,8 @@ void Prompts::vectorRead(std::string file_name, std::vector<std::pair<string, in
     }
 
 }
+
+//Print score board
 void Prompts::printBoard(std::vector<pair<std::string, int>> &vect){
     cout<<"|++++++++++  High Scores  +++++++++++|\n";
     for(int i=0; i<vect.size(); i++){
