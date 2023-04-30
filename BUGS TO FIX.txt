@@ -43,6 +43,6 @@ X	-picking a fight crashes game
 X	-After NPC becomes evil/kill monster, prints map 3 times
 X	-Resurrect team mates
 X	-Lose random weapon only if has in inventory
--Team members must die at the start of the next round when hunger reaches 0
+X	-Team members must die at the start of the next round when hunger reaches 0
 -Final boss battle - riddle to kill sorcerer
 
