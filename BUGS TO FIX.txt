@@ -39,9 +39,6 @@ X		-Player doesn't have enough money to buy merchant goods
 -picking a fight crashes game
 -After NPC becomes evil/kill monster, prints map 3 times
 -Party member dying removes their weapon
-
--Double prints message when player dies from hunger - Party.cpp line 212 - if statement
-
--Keeps printing that a character has died from hunger - Party.cpp line 210 - change <= to ==
-
+-Double prints message when player dies from hunger
+-Keeps printing that a character has died from hunger
 -Team members must die at the start of the next round when hunger reaches 0

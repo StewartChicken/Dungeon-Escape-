@@ -416,78 +416,81 @@ void Prompts::cookwareBuyMenu(Player &player, Merchant &merchant)
 void Prompts::weaponBuyMenu(Player &player, Merchant &merchant)
 {
     string choice = "-1";
-
-    //Prompts user until they enter a valid input
-    while(stoi(choice) < 0 || stoi(choice) > 5)
-    {
-        //Informs user of their options of weapons
-        cout << "You need weapons to be able to fend off\n"
-            "monsters, otherwise, you can only run\n!"
-            "Equipping your team with the maximum\n"
-            "number of weapons (1 weapon per person)\n"
-            "and buying upgraded weapons that are\n"
-            "worth 5 gold pieces will maximize you\n"
-            "chances of survival during an attack. You can\n"
-            "have a maximum of 5 weapons. These are\n"
-            " the different types of weapons: \n"
-            "1.) Club\n"
-            "2.) Spear\n"
-            "3.) +1 Rapier\n"
-            "4.) +2 Battle-axe\n"
-            "5.) +3 Longsword\n"
-            "Which weapon catches your fancy? (Enter a positive integer, or 0 to cancel)\n";
-        
-        cin >> choice; //User input
-
-        //Does the user input a digit?
-        if(!validNumericalInput(choice))
+    if(player.getTotalWeapons() < 5){
+        //Prompts user until they enter a valid input
+        while(stoi(choice) < 0 || stoi(choice) > 5)
         {
-            choice = "-1";
-            continue;
+            //Informs user of their options of weapons
+            cout << "You need weapons to be able to fend off\n"
+                "monsters, otherwise, you can only run\n!"
+                "Equipping your team with the maximum\n"
+                "number of weapons (1 weapon per person)\n"
+                "and buying upgraded weapons that are\n"
+                "worth 5 gold pieces will maximize you\n"
+                "chances of survival during an attack. You can\n"
+                "have a maximum of 5 weapons. These are\n"
+                " the different types of weapons: \n"
+                "1.) Club\n"
+                "2.) Spear\n"
+                "3.) +1 Rapier\n"
+                "4.) +2 Battle-axe\n"
+                "5.) +3 Longsword\n"
+                "Which weapon catches your fancy? (Enter a positive integer, or 0 to cancel)\n";
+            
+            cin >> choice; //User input
+
+            //Does the user input a digit?
+            if(!validNumericalInput(choice))
+            {
+                choice = "-1";
+                continue;
+            }
         }
+
+        //User cancels purchase
+        if(stoi(choice) == 0)
+        {
+            return;
+        }
+
+        int itemCount; //Number of items user buys
+
+        switch(stoi(choice))
+        {
+            //User buys stone clubs
+            case 1:
+                itemBuyMenu(player, merchant, merchant.getStoneClubPrice(), "Stone club(s)");
+            
+                break;
+            //User buys iron spears
+            case 2:
+                itemBuyMenu(player, merchant, merchant.getIronSpearPrice(), "Iron spear(s)");
+                
+                break;
+            //User buys mythril rapiers
+            case 3:
+                itemBuyMenu(player, merchant, merchant.getMythrilRapierPrice(), "Mythril Rapier(s)");
+                
+                break;
+            //User buys flaming axes
+            case 4:
+                itemBuyMenu(player, merchant, merchant.getFlamingAxePrice(), "Battle Axe(s)");
+                
+                break;
+            //User buys vorpal swords
+            case 5:
+                itemBuyMenu(player, merchant, merchant.getVorpalSwordPrice(), "Vorpal Sword(s)");
+            
+                break;
+            //Error code - should not reach this case
+            default:
+                "Error - weaponBuyMenu\n";
+                break;
+
+        };
+    }else {
+        cout << "\n\n\nYou already have as many weapons as your party can carry.\n\n\n";
     }
-
-    //User cancels purchase
-    if(stoi(choice) == 0)
-    {
-        return;
-    }
-
-    int itemCount; //Number of items user buys
-
-    switch(stoi(choice))
-    {
-        //User buys stone clubs
-        case 1:
-            itemBuyMenu(player, merchant, merchant.getStoneClubPrice(), "Stone club(s)");
-           
-            break;
-        //User buys iron spears
-        case 2:
-            itemBuyMenu(player, merchant, merchant.getIronSpearPrice(), "Iron spear(s)");
-            
-            break;
-        //User buys mythril rapiers
-        case 3:
-            itemBuyMenu(player, merchant, merchant.getMythrilRapierPrice(), "Mythril Rapier(s)");
-            
-            break;
-        //User buys flaming axes
-        case 4:
-            itemBuyMenu(player, merchant, merchant.getFlamingAxePrice(), "Battle Axe(s)");
-            
-            break;
-        //User buys vorpal swords
-        case 5:
-            itemBuyMenu(player, merchant, merchant.getVorpalSwordPrice(), "Vorpal Sword(s)");
-           
-            break;
-        //Error code - should not reach this case
-        default:
-            "Error - weaponBuyMenu\n";
-            break;
-
-    };
     
 }
 
