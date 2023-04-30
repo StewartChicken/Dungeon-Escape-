@@ -712,6 +712,19 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
         return;
     }
 
+    if(roomsCleared == 4)
+    {
+        //If player solves the sorcerer's riddle
+        if(launchSorcererInteraction())
+        {
+            cout << "You have solved the riddle! The sorcerer demands a trial by combat.\n";
+        }
+        else
+        {
+            cout << "You failed to solve the riddle..maybe practice first before challenging the mighty sorcerer.\n";
+            return;
+        }
+    }
     //Random seed
     srand(time(0));
 
@@ -838,6 +851,55 @@ void Prompts::launchMonsterFight(Player &player, Merchant &merchant, Map &map, d
     }
 }
 
+
+//Launches first interaction with sorcerer
+bool Prompts::launchSorcererInteraction()
+{
+	char input = '-';
+	bool solveRiddle;
+
+	while(input != 'y' && input != 'n')
+	{
+		cout << "You have made it to the final room and must now battle the sorcerer!\n"
+		<< "To defeat the sorcerer, you must solve his riddle and then defeat him in combat.\n\n"
+		<< "Are you ready? (y/n)\n";
+	}
+
+	if(input == 'y')
+	{
+		solveRiddle = sorcererRiddle();
+	}
+	else
+	{
+		solveRiddle = false;
+	}
+	
+	return solveRiddle;
+}
+
+//Launches
+bool Prompts::sorcererRiddle()
+{
+	bool solved = false;
+
+	string riddle = "You will always find me in the past.\n I can be created in the present, but the future can never change me. \nWhat am I? (one word, all lower case)";
+
+	string answer = "history";
+
+	string userInput;
+
+	cout << riddle << "\n";
+
+	cin >> userInput;
+
+	if(userInput == answer)
+	{
+		solved = true;
+	}
+
+
+	return solved;
+}
 //Player interacts with a room - can either use a key to enter the room or exit interaction
 bool Prompts::roomKeyPrompt(Player &player)
 {

@@ -52,6 +52,8 @@ class Prompts
 
         //Launch a monster fight with the user
         void launchMonsterFight(Player &player, Merchant &merchant, Map &map, double combatScore, int roomsCleared, string monsterName, Monster &monster, bool enteredRoom);
+        bool launchSorcererInteraction();
+        bool sorcererRiddle();
 
         //Random single prompts
 
