@@ -545,45 +545,77 @@ int Player::getArmorSuits()
     return armorSuits;
 }
 
-void Player::setNumWeapons(int numWeapons)
+void Player::setStoneClubs(int clubs)
 {
-    this -> numWeapons = numWeapons;
+    if(clubs <= 0)
+    {
+        this -> stoneClubs = 0;
+        return;
+    }
+
+    this -> stoneClubs = clubs;
 }
 
-
-void Player::setStoneClubs(int stoneClubs)
+void Player::setIronSpears(int spears)
 {
-    this -> stoneClubs = stoneClubs;
+    if(spears <= 0)
+    {
+        this -> ironSpears = 0;
+        return;
+    }
+    this -> ironSpears = spears;
 }
 
-void Player::setIronSpears(int ironSpears)
+void Player::setMythrilRapiers(int rapiers)
 {
-    this -> ironSpears = ironSpears;
+    if(rapiers <= 0)
+    {
+        this -> mythrilRapiers = 0;
+        return;
+    }
+
+    this -> mythrilRapiers = rapiers;
 }
 
-void Player::setMythrilRapiers(int mythrilRapiers)
+void Player::setFlamingAxes(int axes)
 {
-    this -> mythrilRapiers = mythrilRapiers;
+    if(axes <= 0)
+    {
+        this -> flamingAxes = 0;
+        return;
+    }
+
+    this -> flamingAxes = axes;
 }
 
-void Player::setFlamingAxes(int flamingAxes)
+void Player::setVorpalSwords(int swords)
 {
-    this -> flamingAxes = flamingAxes;
+    if(swords <= 0)
+    {
+        this -> vorpalSwords = 0;
+        return;
+    }
+
+    this -> vorpalSwords = swords;
 }
 
-void Player::setVorpalSwords(int vorpalSwords)
+void Player::setArmorSuits(int suits)
 {
-    this -> vorpalSwords = vorpalSwords;
-}
+    if(suits <= 0)
+    {
+        this -> armorSuits = 0;
+        return;
+    }
 
-void Player::setArmorSuits(int armorSuits)
-{
-    this -> armorSuits = armorSuits;
+    this -> armorSuits = suits;
 }
 
 void Player::decrementArmorSuits()
 {
-    this -> armorSuits --;
+    if(armorSuits > 0)
+    {
+        this -> armorSuits --;
+    }
 }
 
 //Calculates the combat score for the team based on the weapons within the inventory
