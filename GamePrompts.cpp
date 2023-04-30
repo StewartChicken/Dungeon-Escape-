@@ -11,7 +11,7 @@ using std::cin;
 using std::cout;
 using std::string;
 
-// playerName prompt
+// playerName prompt - asks player to enter their user name
 string Prompts::playerNamePrompt()
 {
     string playerName;
@@ -22,7 +22,7 @@ string Prompts::playerNamePrompt()
     return playerName;
 }
 
-// memberName prompt
+// memberName prompt - asks player to enter each of his/her team members' names
 string Prompts::memberNamePrompt()
 {
     string memberName;
@@ -33,6 +33,7 @@ string Prompts::memberNamePrompt()
     return memberName;
 }
 
+//Greets the newly created team
 void Prompts::teamGreetingPrompt(string playerName, string member1, string member2, string member3, string member4)
 {
     cout << "Welcome " << playerName << "!\n";
@@ -42,18 +43,19 @@ void Prompts::teamGreetingPrompt(string playerName, string member1, string membe
     cout << "Welcome " << member4 << "!\n";
 }
 
-// Good luck
+// Wishes team good luck
 void Prompts::goodLuckPrompt()
 {
     cout << "Good Luck!\n";
 }
 
-// Merchant prompt
+// High level merchent prompt function
 void Prompts::merchantPrompt(Player &player, Merchant &merchant)
 {
-    int choice = 0;
-    bool merchantMenuActive = true;
+    int choice = 0; //User input selection
+    bool merchantMenuActive = true; 
 
+    //While the menu is active, establish a merchant interaction with the user
     while(merchantMenuActive)
     {
         merchantInteraction(player, merchant, merchantMenuActive);
@@ -61,16 +63,20 @@ void Prompts::merchantPrompt(Player &player, Merchant &merchant)
     
 }
 
+//Merchant interaction with the user
 void Prompts::merchantInteraction(Player &player, Merchant &merchant, bool &active)
 {
+    //User input - initual value is set to 0
     string choice = "0";
 
-    //While the input is not a valid choice
+    //Prompt user until they enter a valid input
     while(stoi(choice) < 1 || stoi(choice) > 6)
     {
+        //Merchant greets user
         merchantGreeting(player);
-        cin >> choice;
+        cin >> choice; 
 
+        //Checks to see if the user entered a digit for input - prevents errors with stoi() function
         if(!validNumericalInput(choice))
         {
             choice = "0";
@@ -78,34 +84,34 @@ void Prompts::merchantInteraction(Player &player, Merchant &merchant, bool &acti
         }
     }
 
+    //Number of items the user is purchasing
     int itemCount;
 
+    //User selection - which goods did they choose to purchase
     switch(stoi(choice))
     {
         case 1:
-            itemCount = itemBuyMenu(player, merchant, merchant.getIngredientPrice(), "kg(s) of Ingredients");
-            player.setIngredients(player.getIngredients() + itemCount);
+            itemCount = itemBuyMenu(player, merchant, merchant.getIngredientPrice(), "kg(s) of Ingredients"); //Ingredients for food
+            player.setIngredients(player.getIngredients() + itemCount); //User gains ingredients if they succesfully make a purchase
             break;
         case 2:
-            cookwareBuyMenu(player, merchant);
+            cookwareBuyMenu(player, merchant); //User chooses to buy cookware
             break;
         case 3:
-            weaponBuyMenu(player, merchant);
+            weaponBuyMenu(player, merchant); //User chooses to buy weapons
             break;
         case 4:
-            itemCount = itemBuyMenu(player, merchant, merchant.getArmorSuitPrice(), "Armor suit(s)");
-
-            //check if player's suits exceed 5 - create method later
-            player.setArmorSuits(player.getArmorSuits() + itemCount);
+            itemCount = itemBuyMenu(player, merchant, merchant.getArmorSuitPrice(), "Armor suit(s)"); //User chooses to buy armor
+            player.setArmorSuits(player.getArmorSuits() + itemCount); //Update user inventory
             break;
         case 5:
-            sellTreasureMenu(player, merchant);
+            sellTreasureMenu(player, merchant); //User chooses to sell treasure
             break;
         case 6:
-            active = false;
+            active = false; //Deactivates menu - user chooses to exit merchant interaction
             break;
         default:
-            cout << "Error - merchantInteraction\n";
+            cout << "Error - merchantInteraction\n"; //Error code - this case should never be reached
             break;
     };
 }
@@ -116,6 +122,7 @@ void Prompts::merchantGreeting(Player &player)
     cout << "If you're looking to get supplies, you've come to the right place.\n";
     cout << "I would be happy to part with some of my wares...for the proper price!\n\n\n";
 
+    //Displays user inventory - pulls information from the player class
     cout << "+-------------------+\n"
          << "|  Inventory        |\n"
          << "+-------------------+\n"
@@ -148,6 +155,7 @@ int Prompts::itemBuyMenu(Player &player, Merchant &merchant, int price, string i
         cout << "How many " << itemLabel << " would you like to buy? (" << price << " Gold each). Press 0 to cancel.\n";
         cin >> amount;
 
+        //Checks if user inputs a digit
         if(!validNumericalInput(amount))
         {
             cout << "Invalid amount.\n";
@@ -157,35 +165,48 @@ int Prompts::itemBuyMenu(Player &player, Merchant &merchant, int price, string i
 
     }
 
+    //If valid amount was input by user
     if(stoi(amount) > 0)
     {
+        //How many items would the user like to buy?
         int itemsBought = confirmPurchase(player, merchant, stoi(amount), price, itemLabel);
 
         if(itemsBought == 0)
         {
+            //If user doesn't buy anything, sends user back to the item buy menu
             itemBuyMenu(player, merchant, price, itemLabel);
         }
         else
         {
+            //Returns number of items the user was able to purchase
             return itemsBought;
         }
     }
 
+    //Returns 0 by default
     return 0;
 }
 
-//Returns number of items purchased
+//Computes number of items purchased
+//Takes user input for requested number of items
+//Multiplies requested number by price of each item
+// Checks if user can afford itetm
+//If the user can afford it, confirms purchase
 int Prompts::confirmPurchase(Player &player, Merchant &merchant, int numItems, int price, string item)
 {
     char confirmation;
 
+    //Transaction in progress
     bool transaction = true;
 
+    //While transaction is in progress
     while(transaction)
     {
+        //Confirmation
         cout << "Are you sure you want to buy " << numItems << " " << item << "? (y/n)\n";
         cin >> confirmation;
         
+        //Invalid input check
         if(confirmation != 'y' && confirmation != 'n')
         {
             cout << "Invalid input\n\n";
@@ -196,31 +217,38 @@ int Prompts::confirmPurchase(Player &player, Merchant &merchant, int numItems, i
         {
         case 'y':
             
+            //Checks if user can afford purchase
             if(canPurchaseGoods(player, numItems, price))
             {
+                //Subtracts gold from user inventory
                 player.setGold(player.getGold() - numItems * price);
                 return numItems;
             }
             else
             {
+                //User is too broke to afford goods
                 brokePrompt();
                 return 0;
             }
 
             break;
+        //User cancels transaction
         case 'n':
             transaction = false;
             break;
         default:
+            //Error case - should not reach this case
             cout << "Error - confirmIngredientPurchase\n";
             break;
         };
     }
 
+    //Returns 0 by default
     return 0;
 }
 
-// Sell treasure menu
+//Sell treasure menu
+//Allows user to sell treasures they find to the merchant
 void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
 {
 
@@ -228,6 +256,7 @@ void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
 
     while(stoi(choice) < 0)
     {
+        //Print values of each item - pulls information from the merchant class
         cout << "During your journey, you may encounter pieces of treasure in each room. When you The price of each treasure\n"
             "depends upon the number of rooms cleared when it was found. Once you sell a piece of treasure, I cannot sell\n"
             "it back to you\n"
@@ -239,6 +268,7 @@ void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
             "What do you have for me?\n";
         cin >> choice;
 
+        //Is user input a digit
         if(!validNumericalInput(choice))
         {
             choice = "-1";
@@ -246,20 +276,28 @@ void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
         }
     }
 
+    //User selection - which item will they sell to the merchant?
+    //If, at any point, the user tries to sell the merchant treasures they do not possess,
+    // the merchant calls them out and gives them imaginary glasses so they can find the 
+    // imaginary treasure they just tried to sell
     switch(stoi(choice))
     {
+        //User sells silver rings
         case 1:
+            //If user doesn't have the treasure
             if(player.getSilverRings() <= 0)
             {
                 imaginaryGlassesPrompt();
-                player.incrementImaginaryGlasses();
+                player.incrementImaginaryGlasses(); //Add one pair of imaginary glasses to user inventory
                 break;
             }
             else
             {
+                //Sell all silver rings
                 player.setGold(player.getGold() + player.getSilverRings() * merchant.getSilverRingValue());
                 player.setSilverRings(0);
             }
+        //User sells ruby necklaces
         case 2:
             if(player.getRubyNecklaces() <= 0)
             {
@@ -272,6 +310,7 @@ void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
                 player.setGold(player.getGold() + player.getRubyNecklaces() * merchant.getRubyNecklaceValue());
                 player.setRubyNecklaces(0);
             }
+        //User sells emerald bracelets
         case 3:
             if(player.getEmeraldBracelets() <= 0)
             {
@@ -284,6 +323,7 @@ void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
                 player.setGold(player.getGold() + player.getEmeraldBracelets() * merchant.getEmeraldBraceletValue());
                 player.setEmeraldBracelets(0);
             }
+        //User sells diamond circlets
         case 4:
             if(player.getDiamondCirclets() <= 0)
             {
@@ -296,6 +336,7 @@ void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
                 player.setGold(player.getGold() + player.getDiamondCirclets() * merchant.getDiamondCircletValue());
                 player.setDiamondCirclets(0);
             }
+        //User sells gem goblets
         case 5:
             if(player.getGemGoblets() <= 0)
             {
@@ -308,6 +349,7 @@ void Prompts::sellTreasureMenu(Player &player, Merchant &merchant)
                 player.setGold(player.getGold() + player.getGemGoblets() * merchant.getGemGobletValue());
                 player.setGemGoblets(0);
             }
+        //Error code - should not reach this case
         default:
             cout << "Error - sellTreasureMenu\n";
             break;
@@ -321,8 +363,10 @@ void Prompts::cookwareBuyMenu(Player &player, Merchant &merchant)
 
     string cookwareChoice = "-1";
 
+    //Prompt user to select which item of cookware they wish to buy
     while(stoi(cookwareChoice) < 0 || stoi(cookwareChoice) > 3)
     {
+        //User's cookware opptions
         cout << "You need cookware in order to turn your ingredients into food wich, when consumed, will replenish\n"
             "your fullness levels or that of your companions.\n"
             "1.) Ceramic pot (25% chance of breaking)\n"
@@ -332,6 +376,8 @@ void Prompts::cookwareBuyMenu(Player &player, Merchant &merchant)
             "(Enter a positive integer, or 0 to cancel)\n";
 
         cin >> cookwareChoice;
+
+        //Does the user enter a digit?
         if(!validNumericalInput(cookwareChoice))
         {
             cookwareChoice = "-1";
@@ -339,26 +385,32 @@ void Prompts::cookwareBuyMenu(Player &player, Merchant &merchant)
         }
     }
 
+    //If user cancels the transaction
     if(stoi(cookwareChoice) == 0)
     {
         return;
     }
 
-    int itemCount;
+    int itemCount; //Number of cookware items the user purchases
+
     switch(stoi(cookwareChoice))
     {
+        //User wants to buy ceramic pots
         case 1:
             itemCount = itemBuyMenu(player, merchant, merchant.getCeramicPotPrice(), "Ceramic pots");
             player.setCeramicPots(player.getCeramicPots() + itemCount);
             break;
+        //User wants to buy frying pans
         case 2:
             itemCount = itemBuyMenu(player, merchant, merchant.getFryingPanPrice(), "Frying pans");
             player.setFryingPans(player.getFryingPans() + itemCount);
             break;
+        //User wnts to buy cauldrons
         case 3:
             itemCount = itemBuyMenu(player, merchant, merchant.getCauldronPrice(), "Cauldrons");
             player.setCauldrons(player.getCauldrons() + itemCount);
             break;
+        //Error code - should not reach this case
         default:
             cout << "Error - cookwareBuyMenu\n";
             break;
