@@ -1003,7 +1003,7 @@ void Prompts::endgameStats(Player &player, Map &map){
     ofstream scores;
     scores.open("stats.txt",std::ios_base::app);
 
-    if(player.getFullness(player.getPlayerName())>=0&&(0<=player.getFullness(player.getMember1Name())||0<=player.getFullness(player.getMember2Name())||0<=player.getFullness(player.getMember3Name())||0<=player.getFullness(player.getMember4Name())))std::cout << "Congradulations "<<player.getPlayerName()<<"!\nYou made it through the dungeon with";
+    if(player.isSorcererDefeated())std::cout << "Congratulations "<<player.getPlayerName()<<"!\nYou made it through the dungeon with";
     else std::cout<<player.getPlayerName()<<"'s final stats\n";
     if(player.getFullness(player.getMember1Name())>=0)std::cout<<" "<<player.getMember1Name();
     if(player.getFullness(player.getMember1Name())>=0&&player.getFullness(player.getMember2Name())>=0)std::cout<<",";

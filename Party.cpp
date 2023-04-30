@@ -31,7 +31,7 @@ Player::Player()
 
     this -> combatScore = 0;
 
-    this -> sorcererAngerLevel = 0;
+    this -> sorcererAngerLevel = 95;
     this -> sorcererDefeated = false;
 
     this -> monstersDefeated = 0;
@@ -63,8 +63,8 @@ Player::Player()
 
     //End game statements
     this -> endgameArray[0]="You have died from hunger.\n\n GAME OVER!\n\n\n";
-    this -> endgameArray[1]="You have died from food poisoning.\n\n GAME OVER!\n\n\n";
-    this -> endgameArray[2]="You have upset the sorcer.\n\n GAME OVER!\n\n\n";
+    this -> endgameArray[1]="You have upset the sorcer.\n\n GAME OVER!\n\n\n";
+    this -> endgameArray[2]="You have died from food poisoning.\n\n GAME OVER!\n\n\n";
     this -> endgameArray[3]="You have no remaining companions.\n\n GAME OVER!\n\n\n";
     this -> endgameArray[4]="You have Escaped the Dungeon.\n\n YOU WIN!\n\n\n";
     this -> endgameArray[5]="You gave up. *Loser* (don't get butthurt pls)\n\n GAME OVER!\n\n\n";
@@ -76,7 +76,7 @@ Player::Player()
 //Adds new party member
 void Player::addNewMember(std::string name, int index)
 {
-    this -> fullnessLevels[name] = 10;
+    this -> fullnessLevels[name] = 50;
     partyNames[index] = name;
 }
 
@@ -91,6 +91,7 @@ void Player::setFullnessLevel(string name, int fullness)
     else if(fullness <= 0)
     {
         this -> fullnessLevels[name] = -1;
+        cout << name << " has died from hunger.\n";
         return;
     }
     else
@@ -151,6 +152,8 @@ void Player::decrementFullness(string partyMember)
     if(fullnessLevels[partyMember] <= 0)
     {
         this -> fullnessLevels[partyMember] = -1;
+        cout << partyMember << " has died from hunger.\n";
+
         return;
     }
 

@@ -82,7 +82,7 @@ void Game::movementPhase(Player& player, Merchant &merchant)
 
         if(player.wholeTeamDead())
         {
-            player.setEndCode(2); //Player has no team members left
+            player.setEndCode(3); //Player has no team members left
             player.endgamePrompt(player.getEndCode());
 
             //Exit function
