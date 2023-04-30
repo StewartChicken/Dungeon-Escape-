@@ -342,7 +342,19 @@ void Game::movementPhase(Player& player, Merchant &merchant)
             }
 
         }
+        else if(input = 'r')
+        {
+            //Can't resurrect on a room, npc, or dungeon exit
+            if(map.isRoomLocation(map.getPlayerRow(), map.getPlayerCol())
+                || map.isNPCLocation(map.getPlayerRow(), map.getPlayerCol())
+                || map.isDungeonExit(map.getPlayerRow(), map.getPlayerCol()))
+            {
+                continue; //Continue loop
+            }
 
+            player.resurrectTeamMember();
+        }
+        
         else if(input == 'q') //Quit input
         {
             player.quit(); //Call quit function

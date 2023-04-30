@@ -82,7 +82,7 @@ bool Player::addNewMember(std::string name, int index)
     //Checks if user input name is a duplicate
     if(!isTakenName(name))
     {
-        this -> fullnessLevels[name] = 50;
+        this -> fullnessLevels[name] = 5;
         partyNames[index] = name;
         return true;
     }
@@ -943,18 +943,21 @@ void Player::updateHungerStatus()
         {
             if(compareStrings(partyMember, getPlayerName()))
             {
-                cout << "You are about to die! Eat food to continue living.\n";
+                cout << "You are about to die from hunger! Eat food to continue living.\n";
                 this -> fullnessLevels[partyMember] = -1;
                 return;
             }
 
-            this -> fullnessLevels[partyMember] = -1;
+            this -> fullnessLevels[partyMember] = 0;
             cout << partyMember << " is about to die from hunger!\n";
+
+            cout << "TEST " << fullnessLevels[partyMember] << "\n\n";
             return;
         }
 
         else if(fullnessLevels[partyMember] == 0)
         {
+            cout << "Made it here\n";
             if(compareStrings(partyMember, getPlayerName()))
             {
                 this -> fullnessLevels[partyMember] = -1;
@@ -973,6 +976,7 @@ void Player::updateHungerStatus()
 
         }
     }
+
 }
 
 //Sorcerer anger level methods
