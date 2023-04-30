@@ -37,8 +37,8 @@ X		-Player doesn't have enough money to buy merchant goods
 X	-Double prints message when player dies from hunger
 X	-Keeps printing that a character has died from hunger
 X   -Max player weapons is 5
--Cooking print three times - cauldron
+X	-Cooking print three times - cauldron
+-Party member dying removes their weapon
 -picking a fight crashes game
 -After NPC becomes evil/kill monster, prints map 3 times
--Party member dying removes their weapon
 -Team members must die at the start of the next round when hunger reaches 0

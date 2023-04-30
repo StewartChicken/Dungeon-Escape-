@@ -24,7 +24,7 @@ Player::Player()
     this -> ironSpears = 0;
     this -> mythrilRapiers = 0;
     this -> flamingAxes = 0;
-    this -> vorpalSwords = 1;
+    this -> vorpalSwords = 5;
     
     //Armor
     this -> armorSuits = 5; 
@@ -49,7 +49,7 @@ Player::Player()
     //Party default inventory values
 
     this -> gold = 100;
-    this -> numKeys = 0;
+    this -> numKeys = 100;
     this -> ingredients = 33;
 
 
@@ -82,7 +82,7 @@ bool Player::addNewMember(std::string name, int index)
     //Checks if user input name is a duplicate
     if(!isTakenName(name))
     {
-        this -> fullnessLevels[name] = 2;
+        this -> fullnessLevels[name] = 50;
         partyNames[index] = name;
         return true;
     }
