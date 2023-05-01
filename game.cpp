@@ -1,3 +1,8 @@
+// CSCI 1300 Spring 2023
+// Author: Wyatt Massey & Evan Poon
+// Recitation: 202 – Lin Shi
+// Project 3 - Game
+
 #include "Game.h"
 
 //start function definition

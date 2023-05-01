@@ -1,3 +1,7 @@
+// CSCI 1300 Spring 2023
+// Author: Wyatt Massey & Evan Poon
+// Recitation: 202 – Lin Shi
+// Project 3 - Game Driver
 /**
  * This class acts as the driver for the entire game
  * It instantiates a "Game" object and calls its various functions which control 
