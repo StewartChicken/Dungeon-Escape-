@@ -51,7 +51,7 @@ void Game::merchantInteraction(Player &player, Merchant &merchant){
 // 
 //Arguments : player and merchant objects (passed by reference)
 //Return type : void
-void Game::movementPhase(Player& player, Merchant &merchant, npc riddler[])
+void Game::movementPhase(Player& player, Merchant &merchant)
 {
 
     char input = '-'; //Initial input value (set to invalid input)
@@ -247,7 +247,7 @@ void Game::movementPhase(Player& player, Merchant &merchant, npc riddler[])
 
                     int numRoomsCleared = merchant.getRoomsCleared();
                     double combatScore = player.calculateCombatScore(numRoomsCleared);
-                    string currentMonster = monster.getRandomMonster(numRoomsCleared);
+                    string currentMonster = monster.getMonsterFromRoomCombatOrder(numRoomsCleared);
 
                     // Launch monster fight with random monster
                     prompts.launchMonsterFight(player, merchant, map, combatScore, numRoomsCleared, currentMonster, monster, false); 
