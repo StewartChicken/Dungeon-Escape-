@@ -863,6 +863,8 @@ bool Prompts::launchSorcererInteraction()
 		cout << "You have made it to the final room and must now battle the sorcerer!\n"
 		<< "To defeat the sorcerer, you must solve his riddle and then defeat him in combat.\n\n"
 		<< "Are you ready? (y/n)\n";
+
+        cin >> input;
 	}
 
 	if(input == 'y')
@@ -977,7 +979,7 @@ void Prompts::invalidInputPrompt()
 //User interacts with NPC on map - must solve a riddle to access
 //Failure to solve riddle spawns a monster
 //Success spawns a merchant
-void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster, npc &riddler[]){ 
+void Prompts::npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster, npc riddler[]){ 
 
     //Monster data should the user fail to solve the riddle
     int numRoomsCleared = merchant.getRoomsCleared();
@@ -1028,7 +1030,7 @@ bool Prompts::barterPrompt(){
 }
 
 //Randomm npc welcom messsage
-void Prompts::npcWelcomeMessage(npc &riddler[]){
+void Prompts::npcWelcomeMessage(npc riddler[]){
 
     //Random seed
     srand(time (0));
@@ -1037,17 +1039,7 @@ void Prompts::npcWelcomeMessage(npc &riddler[]){
     int chaos=rand()%4;
     
     //Four types of NPCs - randomly selected
-        chout<<"You have encountered "<<riddler[choas].getName()<<"\n\n"<<riddler[chaos].getIntro();
-    if(chaos==3){
-        std::cout<<"You have encountered a lowly peasant\n\n***extremely raspy voice*** Helllo there stranger. I have an offer for you. If you answer my riddle, I will let you take a look at my wares.\n\n";
-    }else if(chaos==2){
-        std::cout<<"You have encountered Porcha\n\nLet's see if you have any brain behind all that brawn. I am thinking of something, if you can guess it, I'll let you see what I have to offer.\n\n";       
-    }else if(chaos==1){
-        std::cout<<"You have encountered a friendly goblin\n\n***some goblin gibberish*** riddle for wares???\n proceeds to read you the following scripture:\n\n";
-    }else if(chaos==0){
-        std::cout<<"You have encountered a scholar\n\n***Smiles in a highly condesending way***A warrior? Im assuming you would like to buy some crude object to bluggon or stab your enemys with. It seems a fool such as yourself would be served better by sharpening your mind. answer my riddle, and I'll let you peruse my collection.\n\n";
-    }
-    
+    cout<<"You have encountered "<<riddler[chaos].getName()<<"\n\n"<<riddler[chaos].getIntro();
 }
 
 //Loads random riddle from txt file

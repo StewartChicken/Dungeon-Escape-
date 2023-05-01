@@ -24,7 +24,7 @@ Player::Player()
     this -> ironSpears = 0;
     this -> mythrilRapiers = 0;
     this -> flamingAxes = 0;
-    this -> vorpalSwords = 0;
+    this -> vorpalSwords = 5;
     
     //Armor
     this -> armorSuits = 5; 
@@ -82,7 +82,7 @@ bool Player::addNewMember(std::string name, int index)
     //Checks if user input name is a duplicate
     if(!isTakenName(name))
     {
-        this -> fullnessLevels[name] = 5;
+        this -> fullnessLevels[name] = 50;
         partyNames[index] = name;
         return true;
     }
