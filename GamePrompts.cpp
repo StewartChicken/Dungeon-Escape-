@@ -2,8 +2,7 @@
 // Author: Wyatt Massey & Evan Poon
 // Recitation: 202 – Lin Shi
 // Project 3 - Game Prompts
-// Todo:
-//Wyatt explain vector split function and score board
+
 
 #include <iostream>
 #include <string>

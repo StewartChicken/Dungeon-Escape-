@@ -1,7 +1,7 @@
 // CSCI 1300 Spring 2023
 // Author: Wyatt Massey & Evan Poon
 // Recitation: 202 – Lin Shi
-// Project 3 - Game Prompts
+// Project 3 - Map
 #include <iostream>
 #include <cstdlib>
 #include <time.h>

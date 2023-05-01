@@ -1,3 +1,7 @@
+// CSCI 1300 Spring 2023
+// Author: Wyatt Massey & Evan Poon
+// Recitation: 202 – Lin Shi
+// Project 3 - Merchant
 #ifndef MERCHANT_H
 #define MERCHANT_H
 
