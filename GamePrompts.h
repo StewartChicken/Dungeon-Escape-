@@ -7,6 +7,7 @@
 #include "Merchant.h"
 #include "Map.h"
 #include "Monster.h"
+#include "npc.h"
 
 using std::string;
 
