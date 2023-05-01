@@ -24,10 +24,10 @@ Player::Player()
     this -> ironSpears = 0;
     this -> mythrilRapiers = 0;
     this -> flamingAxes = 0;
-    this -> vorpalSwords = 5;
+    this -> vorpalSwords = 0;
     
     //Armor
-    this -> armorSuits = 5; 
+    this -> armorSuits = 0; 
 
     this -> combatScore = 0;
 
@@ -43,14 +43,14 @@ Player::Player()
     //cookware
     this -> ceramicPots = 0;
     this -> fryingPans = 0;
-    this -> cauldrons = 10;
+    this -> cauldrons = 0;
 
 
     //Party default inventory values
 
     this -> gold = 100;
-    this -> numKeys = 100;
-    this -> ingredients = 33;
+    this -> numKeys = 0;
+    this -> ingredients = 0;
 
 
     //Treasures found
@@ -668,18 +668,15 @@ void Player::decrementArmorSuits()
     }
 }
 
-//Party cannot have more than 5 armor suits - this function refunds user the gold spent on extra suits
+//Party cannot have more than 5 armor suits 
 int Player::checkArmorSuitCap(int numSuitsBought, int suitCost)
 {
     if((numSuitsBought + armorSuits) > 5)
     {
-        gold = gold + ((numSuitsBought + armorSuits) - 5) * suitCost; //Refunds user the money they spent on excess suits
-
         cout << "You can only have 5 armor suits at a time.\n";
-        return 5;
     }
 
-    return numSuitsBought + armorSuits;;
+    return 0;
 }
 
 //Calculates the combat score for the team based on the weapons within the inventory

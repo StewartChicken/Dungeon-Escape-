@@ -152,7 +152,7 @@ void Prompts::itemBuyMenu(Player &player, Merchant &merchant, int price, string 
     {
         cout << "How many " << itemLabel << " would you like to buy? (" << price << " Gold each). Press 0 to cancel.\n";
         cin >> amount;
-        if(stoi(amount)+player.getTotalWeapons()>5&&weapon){
+        if(stoi(amount)+player.getTotalWeapons() > 5 && weapon){
             cout<<"Your party can only have 5 weapons total.\n";
             amount = "-1";
         }
