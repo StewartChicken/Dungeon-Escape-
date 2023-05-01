@@ -975,6 +975,7 @@ void Prompts::npcWelcomeMessage(npc &riddler[]){
     int chaos=rand()%4;
     
     //Four types of NPCs - randomly selected
+        chout<<"You have encountered "<<riddler[choas].getName()<<"\n\n"<<riddler[chaos].getIntro();
     if(chaos==3){
         std::cout<<"You have encountered a lowly peasant\n\n***extremely raspy voice*** Helllo there stranger. I have an offer for you. If you answer my riddle, I will let you take a look at my wares.\n\n";
     }else if(chaos==2){

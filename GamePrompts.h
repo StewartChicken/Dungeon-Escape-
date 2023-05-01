@@ -70,8 +70,8 @@ class Prompts
         void invalidInputPrompt();
 
         //User interacts with NPC's 
-        void npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster);
-        void npcWelcomeMessage();
+        void npcInteractionPrompt(Player &player, Merchant &merchant, Map &map, Monster &monster, npc riddler[]);
+        void npcWelcomeMessage(npc riddler[]);
         bool npcRiddle();
         bool barterPrompt();
         void read(string file_name,string arr[][2], int array_size);

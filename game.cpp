@@ -62,6 +62,14 @@ void Game::movementPhase(Player& player, Merchant &merchant, npc riddler[])
 
     bool room;//Is in room
 
+    riddler[0].setName("a lowly peasant");
+    riddler[1].setName("Porcha");
+    riddler[2].setName("a friendly goblin");
+    riddler[3].setName("a scholar");
+    riddler[0].setIntro("***extremely raspy voice*** Helllo there stranger. I have an offer for you. If you answer my riddle, I will let you take a look at my wares.\n\n");
+    riddler[1].setIntro("Let's see if you have any brain behind all that brawn. I am thinking of something, if you can guess it, I'll let you see what I have to offer.\n\n");
+    riddler[2].setIntro("***some goblin gibberish*** riddle for wares???\n proceeds to read you the following scripture:\n\n");
+    riddler[3].setIntro("***Smiles in a highly condesending way***A warrior? Im assuming you would like to buy some crude object to bluggon or stab your enemys with. It seems a fool such as yourself would be served better by sharpening your mind. answer my riddle, and I'll let you peruse my collection.\n\n");
 
     //Loops until win or loss condition is met
     while(true)

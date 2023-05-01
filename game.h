@@ -28,7 +28,6 @@ class Game
         Prompts prompts;
         Monster monster;
         npc riddler[4];
-        riddler[0].setName(" a lowly peasant");
 
 
         bool gameEnd = false; //When true, game ends
@@ -36,7 +35,6 @@ class Game
     public:
 
         //Function declarations
-
 
         void start(Player &player, Merchant &merchant); // Game start
 
